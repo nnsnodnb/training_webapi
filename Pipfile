@@ -8,6 +8,7 @@ django = "*"
 djangorestframework = "*"
 djangorestframework-simplejwt = "*"
 drf-yasg = "*"
+drf-rw-serializers = "*"
 
 [dev-packages]
 bpython = "*"
