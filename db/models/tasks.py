@@ -5,7 +5,7 @@ from django.utils import timezone
 
 class Task(models.Model):
     class StatusChoices(models.TextChoices):
-        BACKLOG = "backlog" "バックログ"
+        BACKLOG = "backlog", "バックログ"
         IN_PROGRESS = "in_progress", "進行中"
         IN_REVIEWS = "in_reviews", "レビュー中"
         FINISHED = "finished", "完了"
