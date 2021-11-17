@@ -30,7 +30,7 @@ class TaskListCreateAPIView(ListCreateAPIView):
     @swagger_auto_schema(
         request_body=WriteTaskModelSerializer,
         responses={
-            status.HTTP_201_CREATED: openapi.Response("response", ReadTaskModelSerializer),
+            status.HTTP_201_CREATED: openapi.Response("created", ReadTaskModelSerializer),
             status.HTTP_400_BAD_REQUEST: openapi.Response("validation error"),
         },
     )
