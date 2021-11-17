@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "drf_yasg",
     "rest_framework",
+    "db",
     "webapi",
 ]
 
