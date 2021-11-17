@@ -1,7 +1,7 @@
 from drf_rw_serializers.generics import ListCreateAPIView
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework import status, permissions
+from rest_framework import permissions, status
 
 from db.models.tasks import Task
 from webapi.serializers.tasks import PaginationTaskSerializer, ReadTaskModelSerializer, WriteTaskModelSerializer
@@ -13,6 +13,7 @@ class TaskListCreateAPIView(ListCreateAPIView):
 
     post: タスクの新規作成
     """
+
     queryset = Task.objects.select_related("user")
     permission_classes = (permissions.IsAuthenticated,)
     read_serializer_class = ReadTaskModelSerializer

@@ -1,10 +1,10 @@
-from rest_framework.generics import RetrieveUpdateDestroyAPIView
-from rest_framework import permissions, status
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework import permissions, status
+from rest_framework.generics import RetrieveUpdateDestroyAPIView
 
 from db.models.tasks import Task
-from webapi.serializers.tasks import WriteTaskModelSerializer, ReadTaskModelSerializer
+from webapi.serializers.tasks import ReadTaskModelSerializer, WriteTaskModelSerializer
 
 
 class TaskRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
@@ -15,6 +15,7 @@ class TaskRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 
     delete: 指定したタスクの削除
     """
+
     http_method_names = ["get", "put", "delete"]
     queryset = Task.objects.select_related("user")
     serializer_class = WriteTaskModelSerializer
@@ -38,7 +39,7 @@ class TaskRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
             status.HTTP_200_OK: openapi.Response("updated", ReadTaskModelSerializer),
             status.HTTP_400_BAD_REQUEST: openapi.Response("validation error"),
             status.HTTP_404_NOT_FOUND: openapi.Response("not found"),
-        }
+        },
     )
     def update(self, request, *args, **kwargs):
         return super().put(request, *args, **kwargs)
