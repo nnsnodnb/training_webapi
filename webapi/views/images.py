@@ -1,7 +1,7 @@
 from drf_rw_serializers.generics import CreateAPIView
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework import permissions, status
+from rest_framework import status
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 
@@ -14,7 +14,6 @@ class ImageCreateAPIView(CreateAPIView):
     """
 
     parser_classes = (MultiPartParser,)
-    permission_classes = (permissions.IsAuthenticated,)
     read_serializer_class = ReadImageSerializer
     write_serializer_class = WriteImageSerializer
 

@@ -1,6 +1,6 @@
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework import permissions, status
+from rest_framework import status
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 
 from db.models.tasks import Task
@@ -19,7 +19,6 @@ class TaskRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     http_method_names = ["get", "put", "delete"]
     queryset = Task.objects.select_related("user")
     serializer_class = WriteTaskModelSerializer
-    permission_classes = (permissions.IsAuthenticated,)
 
     def filter_queryset(self, queryset):
         return queryset.filter(user=self.request.user)
