@@ -9,6 +9,7 @@ djangorestframework = "*"
 djangorestframework-simplejwt = "*"
 drf-yasg = "*"
 drf-rw-serializers = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 bpython = "*"
