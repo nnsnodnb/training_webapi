@@ -16,6 +16,7 @@ bpython = "*"
 django-extensions = "*"
 black = "*"
 isort = "*"
+flake8 = "*"
 
 [requires]
 python_version = "3.9"
