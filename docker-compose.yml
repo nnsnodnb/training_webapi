@@ -1,0 +1,65 @@
+version: "3"
+
+services:
+  backend:
+    build:
+      context: ./
+      dockerfile: ./dockerfiles/Dockerfile.backend
+    image: training_backend
+    container_name: training_backend
+    restart: always
+    depends_on:
+      - db
+      - storage
+    volumes:
+      - type: bind
+        source: ./
+        target: /app
+      - type: volume
+        source: staticfiles
+        target: /app/staticfiles
+    environment:
+      DATABASE_HOST: db
+    links:
+      - db
+      - storage
+
+  db:
+    image: postgres:14.1
+    container_name: training_db
+    restart: always
+    volumes:
+      - type: volume
+        source: db_data
+        target: /var/lib/postgres/data
+    environment:
+      POSTGRES_INITDB_ARGS: --encoding=UTF-8 --locale=C
+      POSTGRES_PASSWORD: training_very_secret_password
+      POSTGRES_NAME: training
+      POSTGRES_USER: training
+      PGDATA: /var/lib/postgresql/data
+      TZ: Asia/Tokyo
+    expose:
+      - 5432
+
+  storage:
+    image: minio/minio:RELEASE.2020-12-29T23-29-29Z
+    container_name: training_storage
+    restart: always
+    volumes:
+      - type: volume
+        source: minio_data
+        target: /data
+    environment:
+      MINIO_ACCESS_KEY: access_key
+      MINIO_SECRET_KEY: secret_key
+    ports:
+      - "9000:9000"
+    expose:
+      - 9000
+    command: server /data
+
+volumes:
+  staticfiles:
+  db_data:
+  minio_data:

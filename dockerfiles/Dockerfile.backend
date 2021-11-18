@@ -1,0 +1,29 @@
+FROM python:3.9.8-buster
+
+ENV DOCKERIZE_VERSION v0.6.1
+
+RUN apt-get update && apt-get install -y wget
+
+ENV DOCKERIZE_VERSION v0.6.1
+RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+
+ARG USERNAME=webapi
+ARG GROUPNAME=webapi
+ARG UID=1000
+ARG GID=1000
+RUN groupadd -g ${GID} ${GROUPNAME} && \
+    useradd -m -s /bin/bash -u ${UID} -g ${GID} ${USERNAME}
+USER ${USERNAME}
+WORKDIR /home/${USERNAME}/
+
+ENV HOME /home/${USERNAME}
+ENV PIPENV_VENV_IN_PROJECT 1
+ENV AWS_PROFILE default
+
+WORKDIR /app
+
+COPY ./dockerfiles/files/start_server.sh /
+
+CMD [ "/start_server.sh" ]

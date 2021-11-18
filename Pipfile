@@ -17,6 +17,7 @@ django-extensions = "*"
 black = "*"
 isort = "*"
 flake8 = "*"
+awscli = "*"
 
 [requires]
 python_version = "3.9"
