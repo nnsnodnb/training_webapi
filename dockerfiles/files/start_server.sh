@@ -30,7 +30,7 @@ EOF
 fi
 
 # Create S3 Bucket
-if pipenv run aws s3 ls s3://training-store 2>&1 | grep -q 'NoSuchBucket'; then
+if pipenv run aws s3 ls s3://training-store --endpoint-url http://storage:9000 2>&1 | grep -q 'NoSuchBucket'; then
     pipenv run aws s3api create-bucket \
         --bucket training-store \
         --endpoint-url http://storage:9000
