@@ -218,3 +218,4 @@ dmypy.json
 cython_debug/
 
 staticfiles
+tmp

@@ -1,7 +1,7 @@
 .PHONY: setup
 setup:
-	@(MAKE) build
-	@(MAKE) start
+	@$(MAKE) build
+	@$(MAKE) start
 
 .PHONY: build
 build:

@@ -14,9 +14,7 @@ python -m pipenv run aws configure set aws_secret_access_key secret_key --profil
 python -m pipenv run aws configure set default.region ap-northeast-1
 
 # Create S3 Bucket
-if python -m pipenv run aws s3api head-bucket --bucket training-store 2>/dev/null; then
-    echo "bucket is exists"
-else
+if python -m pipenv run aws s3 ls s3://training-store 2>&1 | grep -q 'NoSuchBucket'; then
     python -m pipenv run aws s3api create-bucket \
         --bucket training-store \
         --endpoint-url http://storage:9000
@@ -30,4 +28,5 @@ fi
 python -m pipenv run python manage.py migrate
 
 # Run server
-python -m pipenv run python manage.py runserver
+mkdir -p tmp
+python -m pipenv run uwsgi --ini uwsgi.ini --env DJANGO_SETTINGS_MODULE=training.settings

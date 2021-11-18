@@ -10,7 +10,7 @@ djangorestframework-simplejwt = "*"
 drf-yasg = "*"
 drf-rw-serializers = "*"
 psycopg2-binary = "*"
-gunicorn = {extras = ["gevent"], version = "*"}
+uwsgi = "*"
 
 [dev-packages]
 bpython = "*"
