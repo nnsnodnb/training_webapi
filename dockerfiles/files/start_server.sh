@@ -28,4 +28,4 @@ fi
 python -m pipenv run python manage.py migrate
 
 # Run server
-python -m pipenv run gunicorn training.wsgi:application -c gunicorn_conf.py
+python -m pipenv run gunicorn training.wsgi:application -k gevent -c gunicorn_conf.py
