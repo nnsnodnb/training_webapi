@@ -28,5 +28,4 @@ fi
 python -m pipenv run python manage.py migrate
 
 # Run server
-mkdir -p tmp
-python -m pipenv run uwsgi --ini uwsgi.ini --env DJANGO_SETTINGS_MODULE=training.settings
+python -m pipenv run gunicorn training.wsgi:application -c gunicorn_conf.py

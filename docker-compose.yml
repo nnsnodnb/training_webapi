@@ -16,6 +16,9 @@ services:
         source: ./
         target: /app
       - type: volume
+        source: socket
+        target: /run/webapi
+      - type: volume
         source: staticfiles
         target: /app/staticfiles
     environment:
@@ -23,9 +26,13 @@ services:
     links:
       - db
       - storage
+    ports:
+      - "80:8000"
+    expose:
+      - 8000
 
   db:
-    image: postgres:14.1
+    image: postgres:11.13
     container_name: training_db
     restart: always
     volumes:
@@ -60,6 +67,7 @@ services:
     command: server /data
 
 volumes:
+  socket:
   staticfiles:
   db_data:
   minio_data:
