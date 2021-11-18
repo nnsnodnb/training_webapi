@@ -9,6 +9,7 @@ services:
     container_name: training_backend
     restart: always
     depends_on:
+      - proxy
       - db
       - storage
     volumes:
@@ -17,19 +18,35 @@ services:
         target: /app
       - type: volume
         source: socket
-        target: /run/webapi
+        target: /app/tmp
       - type: volume
         source: staticfiles
         target: /app/staticfiles
     environment:
       DATABASE_HOST: db
     links:
+      - proxy
       - db
       - storage
-    ports:
-      - "80:8000"
     expose:
       - 8000
+
+  proxy:
+    build:
+      context: ./
+      dockerfile: ./dockerfiles/Dockerfile.proxy
+    image: training_proxy
+    container_name: training_proxy
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - type: volume
+        source: socket
+        target: /app/tmp
+      - type: volume
+        source: staticfiles
+        target: /app/staticfiles
 
   db:
     image: postgres:11.13
