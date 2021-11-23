@@ -1,9 +1,8 @@
 from django.urls import path
-
-# from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.views import TokenRefreshView
 
 from .views.images import ImageCreateAPIView
+from .views.tasks.comments.list_create import CommentListCreateAPIView
 from .views.tasks.list_create import TaskListCreateAPIView
 from .views.tasks.retrieve_update_destroy import TaskRetrieveUpdateDestroyAPIView
 from .views.users.sign_in import TokenObtainPairView
@@ -16,4 +15,5 @@ urlpatterns = [
     path("v1/images", ImageCreateAPIView.as_view(), name="image_create"),
     path("v1/tasks", TaskListCreateAPIView.as_view(), name="tasks_list_create"),
     path("v1/tasks/<int:pk>", TaskRetrieveUpdateDestroyAPIView.as_view(), name="tasks_retrieve_update_delete"),
+    path("v1/tasks/<int:pk>/comments", CommentListCreateAPIView.as_view(), name="tasks_comments_list_create"),
 ]
