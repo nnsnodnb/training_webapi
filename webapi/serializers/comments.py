@@ -4,7 +4,6 @@ from rest_framework import exceptions, serializers
 
 from db.models import Comment, Task
 
-from .tasks import ReadTaskModelSerializer
 from .users import UserSerializer
 
 
