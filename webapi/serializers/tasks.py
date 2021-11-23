@@ -50,6 +50,15 @@ class WriteTaskModelSerializer(serializers.ModelSerializer):
         return request.user
 
 
+class PartialStatusUpdateTaskModelSerializer(serializers.ModelSerializer):
+
+    status = serializers.ChoiceField(choices=Task.StatusChoices.choices)
+
+    class Meta:
+        model = Task
+        fields = ("status",)
+
+
 class PaginationTaskSerializer(serializers.Serializer):
 
     next = serializers.CharField(required=False, allow_null=True)
