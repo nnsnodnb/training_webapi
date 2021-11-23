@@ -1,4 +1,5 @@
 import hashlib
+import imghdr
 import os.path
 import random
 import string
@@ -9,6 +10,7 @@ from pathlib import Path
 import boto3
 from django.utils.functional import cached_property
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 
 class ReadImageSerializer(serializers.Serializer):
@@ -25,6 +27,11 @@ class WriteImageSerializer(serializers.Serializer):
 
     class Meta:
         fields = ("image",)
+
+    def validate_image(self, obj):
+        if imghdr.what(obj) is None:
+            raise ValidationError(detail={"detail": "画像以外をアップロードしないでください"})
+        return obj
 
     @cached_property
     def s3_bucket(self):
