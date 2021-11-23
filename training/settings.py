@@ -49,11 +49,13 @@ INSTALLED_APPS = [
     "rest_framework",
     "db",
     "webapi",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -217,3 +219,9 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_HSTS_PRELOAD = True
+
+# CORS
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^http(|s)://(localhost|127.0.0.1):\d+$",
+]

@@ -119,7 +119,19 @@ http://192.168.100.32:9000/training-store/e0b92214/8b69/4281/bcf6/67a7c4e88c90/8
 
 ### オリジン間リソース共有について
 
-現在、対応していません。
+`^http(|s)://(localhost|127.0.0.1):\d+$` に一致するホストの場合、許可しています。
+
+- `http://localhost:3000`
+- `https://127.0.0.1:3000`
+
+などが該当
+
+```python
+import re
+re.search(r"^http(|s)://(localhost|127.0.0.1):\d+$", "http://localhost:3000")
+```
+
+などで確認できます。
 
 ## License
 
