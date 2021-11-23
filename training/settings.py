@@ -27,11 +27,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "xx2o8la@-#v8n+k$dqrc7^^1u5h+@bny(^v*=xc@sybe5axzu2"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
+# どこにもデプロイしないからこうやってる
 ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
+    "*",
 ]
 
 
@@ -178,6 +178,7 @@ SWAGGER_SETTINGS = {
             "type": "apiKey",
             "name": "Authorization",
             "in": "header",
+            "description": "bearer のあとにトークンをつけてください"
         }
     },
 }
@@ -196,6 +197,7 @@ SIMPLE_JWT = {
     "LEEWAY": 0,
     "AUTH_HEADER_TYPES": [
         "Bearer",
+        "bearer",
     ],
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
     "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
@@ -205,3 +207,13 @@ SIMPLE_JWT = {
     "TOKEN_TYPE_CLAIM": "token_type",
     "JTI_CLAIM": "jti",
 }
+
+# Deploy Secure
+
+SECURE_HSTS_SECONDS = 31536000
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_HSTS_PRELOAD = True
