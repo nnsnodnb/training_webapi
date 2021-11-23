@@ -18,7 +18,7 @@
 1. Docker をインストールしてください
 
 ```shell
-softwareupdate --install-rosetta
+softwareupdate --install-rosetta  # Apple Silicon を搭載した Mac の場合のみ
 brew install --cask docker
 ```
 
