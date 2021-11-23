@@ -41,8 +41,8 @@ class TaskRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
             status.HTTP_404_NOT_FOUND: openapi.Response("not found"),
         },
     )
-    def update(self, request, *args, **kwargs):
-        return super().update(request, *args, **kwargs)
+    def put(self, request, *args, **kwargs):
+        return super().put(request, *args, **kwargs)
 
     @swagger_auto_schema(
         responses={
