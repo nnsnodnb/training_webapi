@@ -11,6 +11,7 @@ drf-yasg = "*"
 drf-rw-serializers = "*"
 psycopg2-binary = "*"
 gunicorn = {extras = ["gevent"], version = "*"}
+argon2-cffi = "*"
 
 [dev-packages]
 bpython = "*"
