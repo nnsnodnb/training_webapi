@@ -24,6 +24,8 @@ services:
         target: /app/staticfiles
     environment:
       DATABASE_HOST: db
+      AWS_PROFILE: default
+      AWS_S3_ENDPOINT_URL: http://storage:9000
     links:
       - proxy
       - db

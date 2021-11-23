@@ -1,7 +1,7 @@
+from drf_rw_serializers.generics import RetrieveUpdateDestroyAPIView
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
-from drf_rw_serializers.generics import RetrieveUpdateDestroyAPIView
 
 from db.models.tasks import Task
 from webapi.serializers.tasks import ReadTaskModelSerializer, WriteTaskModelSerializer
