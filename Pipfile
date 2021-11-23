@@ -23,5 +23,8 @@ isort = "*"
 flake8 = "*"
 awscli = "*"
 
+[scripts]
+check_cors = "python scripts/check_cors.py"
+
 [requires]
 python_version = "3.9"

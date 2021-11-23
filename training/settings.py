@@ -180,7 +180,7 @@ SWAGGER_SETTINGS = {
             "type": "apiKey",
             "name": "Authorization",
             "in": "header",
-            "description": "bearer のあとにトークンをつけてください"
+            "description": "bearer のあとにトークンをつけてください",
         }
     },
 }

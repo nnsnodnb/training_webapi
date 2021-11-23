@@ -124,14 +124,13 @@ http://192.168.100.32:9000/training-store/e0b92214/8b69/4281/bcf6/67a7c4e88c90/8
 - `http://localhost:3000`
 - `https://127.0.0.1:3000`
 
-などが該当
+などが該当します。
 
-```python
-import re
-re.search(r"^http(|s)://(localhost|127.0.0.1):\d+$", "http://localhost:3000")
+```shell
+docker compose exec backend pipenv run check_cors --url http://127.0.0.1:3000
 ```
 
-などで確認できます。
+で確認できます。
 
 ## License
 
