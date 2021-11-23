@@ -1,6 +1,7 @@
 [flake8]
 exclude =
     .git,
+    .venv,
     __pycache__,
     scripts
 max-line-length = 120
