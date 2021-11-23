@@ -3,6 +3,7 @@ from rest_framework_simplejwt.views import TokenRefreshView
 
 from .views.images import ImageCreateAPIView
 from .views.tasks.comments.list_create import CommentListCreateAPIView
+from .views.tasks.comments.update_destroy import CommentUpdateDestroyAPIView
 from .views.tasks.list_create import TaskListCreateAPIView
 from .views.tasks.patch import TaskPartialUpdateAPIView
 from .views.tasks.retrieve_update_destroy import TaskRetrieveUpdateDestroyAPIView
@@ -18,4 +19,9 @@ urlpatterns = [
     path("v1/tasks/<int:pk>", TaskRetrieveUpdateDestroyAPIView.as_view(), name="tasks_retrieve_update_delete"),
     path("v1/tasks/<int:pk>/status", TaskPartialUpdateAPIView.as_view(), name="tasks_status_partial_update"),
     path("v1/tasks/<int:pk>/comments", CommentListCreateAPIView.as_view(), name="tasks_comments_list_create"),
+    path(
+        "v1/tasks/<int:pk>/comments/<int:comment_id>",
+        CommentUpdateDestroyAPIView.as_view(),
+        name="tasks_comment_update_delete",
+    ),
 ]
