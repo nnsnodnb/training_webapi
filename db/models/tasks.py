@@ -14,8 +14,8 @@ class Task(models.Model):
     thumbnail = models.CharField("サムネイルID", max_length=500, null=True, blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     status = models.CharField("ステータス", max_length=12, default=StatusChoices.BACKLOG, choices=StatusChoices.choices)
-    created_at = models.DateTimeField("登録日時", default=timezone.now, blank=True)
-    updated_at = models.DateTimeField("更新日時", default=timezone.now, blank=True)
+    created = models.DateTimeField("登録日時", default=timezone.now, blank=True)
+    updated = models.DateTimeField("更新日時", default=timezone.now, blank=True)
 
     class Meta:
         db_table = "task"

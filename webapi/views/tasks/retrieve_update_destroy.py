@@ -1,7 +1,7 @@
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
-from rest_framework.generics import RetrieveUpdateDestroyAPIView
+from drf_rw_serializers.generics import RetrieveUpdateDestroyAPIView
 
 from db.models.tasks import Task
 from webapi.serializers.tasks import ReadTaskModelSerializer, WriteTaskModelSerializer
@@ -18,7 +18,8 @@ class TaskRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 
     http_method_names = ["get", "put", "delete"]
     queryset = Task.objects.select_related("user")
-    serializer_class = WriteTaskModelSerializer
+    read_serializer_class = ReadTaskModelSerializer
+    write_serializer_class = WriteTaskModelSerializer
 
     def filter_queryset(self, queryset):
         return queryset.filter(user=self.request.user)
@@ -41,7 +42,7 @@ class TaskRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
         },
     )
     def update(self, request, *args, **kwargs):
-        return super().put(request, *args, **kwargs)
+        return super().update(request, *args, **kwargs)
 
     @swagger_auto_schema(
         responses={

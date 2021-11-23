@@ -11,7 +11,7 @@ class TaskAdmin(admin.ModelAdmin):
         "title",
         "status",
         "user",
-        "created_at",
+        "created",
     )
     list_display_links = (
         "id",

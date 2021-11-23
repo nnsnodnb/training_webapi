@@ -155,6 +155,7 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.CursorPagination",
     "PAGE_SIZE": 20,
+    "DATETIME_FORMAT": "%Y-%m-%dT%H:%M:%S%z",
 }
 
 # Swagger
