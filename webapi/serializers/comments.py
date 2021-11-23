@@ -16,13 +16,12 @@ class ReadCommentSerializer(serializers.ModelSerializer):
         child=serializers.CharField(),
         allow_empty=True,
     )
-    task = ReadTaskModelSerializer()
     user = UserSerializer()
     created_at = serializers.DateTimeField(source="created")
 
     class Meta:
         model = Comment
-        fields = ("id", "content", "image_ids", "user", "task", "created_at")
+        fields = ("id", "content", "image_ids", "user", "created_at")
 
 
 class WriteCommentSerializer(serializers.ModelSerializer):
@@ -45,9 +44,9 @@ class WriteCommentSerializer(serializers.ModelSerializer):
         )
 
     def validate_task(self, _):
-        if (pk := self.context.get("request").parser_context.get("kwargs").get("pk")) is None:
+        if (pk := self.context["request"].parser_context.get("kwargs").get("pk")) is None:
             raise exceptions.ValidationError(detail=["タスクを指定してください"])
-        return get_object_or_404(Task.objects.select_related("user"), pk=pk)
+        return get_object_or_404(Task.objects.select_related("user"), pk=pk, user_id=self.context["request"].user.id)
 
     def validate_user(self, _):
         if (request := self.context.get("request")) is None:

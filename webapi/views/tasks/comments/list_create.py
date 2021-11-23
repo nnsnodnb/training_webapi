@@ -1,9 +1,10 @@
+from django.shortcuts import get_object_or_404
 from drf_rw_serializers.generics import ListCreateAPIView
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 
-from db.models.comments import Comment
+from db.models import Comment, Task
 from webapi.serializers.comments import PaginationCommentSerializer, ReadCommentSerializer, WriteCommentSerializer
 
 
@@ -22,6 +23,7 @@ class CommentListCreateAPIView(ListCreateAPIView):
         responses={status.HTTP_200_OK: openapi.Response("response", PaginationCommentSerializer)},
     )
     def get(self, request, *args, **kwargs):
+        _ = get_object_or_404(Task.objects.select_related("user"), pk=kwargs["pk"], user_id=request.user.id)
         return super().get(request, *args, **kwargs)
 
     @swagger_auto_schema(
@@ -32,4 +34,5 @@ class CommentListCreateAPIView(ListCreateAPIView):
         },
     )
     def post(self, request, *args, **kwargs):
+        _ = get_object_or_404(Task.objects.select_related("user"), pk=kwargs["pk"], user_id=request.user.id)
         return super().post(request, *args, **kwargs)
