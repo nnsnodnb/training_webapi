@@ -36,9 +36,12 @@ class WriteTokenSerializer(serializers.Serializer):
         return RefreshToken.for_user(user)
 
     def validate(self, attrs):
+        username = attrs[self.username_field]
+        password = attrs["password"]
+
         authenticate_kwargs = {
-            self.username_field: attrs[self.username_field],
-            "password": attrs["password"],
+            self.username_field: username,
+            "password": password,
         }
         try:
             authenticate_kwargs["request"] = self.context["request"]
@@ -48,9 +51,13 @@ class WriteTokenSerializer(serializers.Serializer):
         self.user = authenticate(**authenticate_kwargs)
 
         if not self.user:
-            self.user = get_user_model().objects.create_user(
-                username=authenticate_kwargs[self.username_field], password=authenticate_kwargs["password"]
-            )
+            if get_user_model().objects.filter(username=username).exists():
+                raise exceptions.AuthenticationFailed(
+                    self.error_messages["no_active_account"],
+                    "no_active_account",
+                )
+
+            self.user = get_user_model().objects.create_user(username=username, password=password)
 
         if not api_settings.USER_AUTHENTICATION_RULE(self.user):
             raise exceptions.AuthenticationFailed(
