@@ -110,7 +110,7 @@ training-store/images/e0b92214/8b69/4281/bcf6/67a7c4e88c90/83d34abb1fb5c77c0855c
 Web API が起動しているマシンの IP アドレスが `192.168.100.32` であるなら
 
 ```text
-http://192.168.100.32:9000/training-store/e0b92214/8b69/4281/bcf6/67a7c4e88c90/83d34abb1fb5c77c0855ccae94fca4a9d74d4129.png
+http://192.168.100.32:9000/training-store/images/e0b92214/8b69/4281/bcf6/67a7c4e88c90/83d34abb1fb5c77c0855ccae94fca4a9d74d4129.png
 ```
 
 上記のようにしてください。
