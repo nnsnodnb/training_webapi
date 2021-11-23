@@ -19,6 +19,9 @@ class CommentListCreateAPIView(ListCreateAPIView):
     read_serializer_class = ReadCommentSerializer
     write_serializer_class = WriteCommentSerializer
 
+    def filter_queryset(self, queryset):
+        return queryset.filter(user=self.request.user, task_id=self.request.parser_context["kwargs"]["pk"])
+
     @swagger_auto_schema(
         responses={status.HTTP_200_OK: openapi.Response("response", PaginationCommentSerializer)},
     )
