@@ -1,0 +1,507 @@
+swagger: '2.0'
+info:
+  title: Training WebAPI
+  contact:
+    email: nnsnodnb@gmail.com
+  license:
+    name: MIT License
+  version: v1
+basePath: /v1
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  jwt_api_key:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: "bearer \u306E\u3042\u3068\u306B\u30C8\u30FC\u30AF\u30F3\u3092\u3064\
+      \u3051\u3066\u304F\u3060\u3055\u3044"
+security:
+  - jwt_api_key: []
+paths:
+  /images:
+    post:
+      operationId: images_create
+      description: "\u753B\u50CF\u30A2\u30C3\u30D7\u30ED\u30FC\u30C9API"
+      parameters:
+        - name: image
+          in: formData
+          required: true
+          type: file
+      responses:
+        '200':
+          description: uploaded
+          schema:
+            $ref: '#/definitions/ReadImage'
+        '400':
+          description: validation error
+      consumes:
+        - multipart/form-data
+      tags:
+        - images
+    parameters: []
+  /tasks:
+    get:
+      operationId: tasks_list
+      description: "\u30BF\u30B9\u30AF\u4E00\u89A7\u306E\u53D6\u5F97"
+      parameters:
+        - name: cursor
+          in: query
+          description: The pagination cursor value.
+          required: false
+          type: string
+      responses:
+        '200':
+          description: response
+          schema:
+            $ref: '#/definitions/PaginationTask'
+      tags:
+        - tasks
+    post:
+      operationId: tasks_create
+      description: "\u30BF\u30B9\u30AF\u306E\u65B0\u898F\u4F5C\u6210"
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/WriteTaskModel'
+      responses:
+        '201':
+          description: created
+          schema:
+            $ref: '#/definitions/ReadTaskModel'
+        '400':
+          description: validation error
+      tags:
+        - tasks
+    parameters: []
+  /tasks/{id}:
+    get:
+      operationId: tasks_read
+      description: "\u6307\u5B9A\u3057\u305F\u30BF\u30B9\u30AF\u306E\u8A73\u7D30\u3092\
+        \u53D6\u5F97"
+      parameters: []
+      responses:
+        '200':
+          description: response
+          schema:
+            $ref: '#/definitions/ReadTaskModel'
+        '404':
+          description: not found
+      tags:
+        - tasks
+    put:
+      operationId: tasks_update
+      description: "\u6307\u5B9A\u3057\u305F\u30BF\u30B9\u30AF\u306E\u60C5\u5831\u66F4\
+        \u65B0"
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/WriteTaskModel'
+      responses:
+        '200':
+          description: updated
+          schema:
+            $ref: '#/definitions/ReadTaskModel'
+        '400':
+          description: validation error
+        '404':
+          description: not found
+      tags:
+        - tasks
+    delete:
+      operationId: tasks_delete
+      description: "\u6307\u5B9A\u3057\u305F\u30BF\u30B9\u30AF\u306E\u524A\u9664"
+      parameters: []
+      responses:
+        '204':
+          description: deleted
+        '404':
+          description: not found
+      tags:
+        - tasks
+    parameters:
+      - name: id
+        in: path
+        description: "A unique integer value identifying this \u30BF\u30B9\u30AF."
+        required: true
+        type: integer
+  /tasks/{id}/comments:
+    get:
+      operationId: tasks_comments_list
+      description: "\u30BF\u30B9\u30AF\u3078\u306E\u30B3\u30E1\u30F3\u30C8\u4E00\u89A7\
+        \u53D6\u5F97"
+      parameters:
+        - name: cursor
+          in: query
+          description: The pagination cursor value.
+          required: false
+          type: string
+      responses:
+        '200':
+          description: response
+          schema:
+            $ref: '#/definitions/PaginationComment'
+      tags:
+        - tasks
+    post:
+      operationId: tasks_comments_create
+      description: "\u30BF\u30B9\u30AF\u3078\u306E\u30B3\u30E1\u30F3\u30C8\u306E\u65B0\
+        \u898F\u4F5C\u6210"
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/WriteComment'
+      responses:
+        '201':
+          description: created
+          schema:
+            $ref: '#/definitions/ReadComment'
+        '400':
+          description: validation error
+      tags:
+        - tasks
+    parameters:
+      - name: id
+        in: path
+        description: "A unique integer value identifying this \u30B3\u30E1\u30F3\u30C8\
+          ."
+        required: true
+        type: integer
+  /tasks/{id}/comments/{comment_id}:
+    put:
+      operationId: tasks_comments_update
+      description: "\u6307\u5B9A\u3057\u305F\u30B3\u30E1\u30F3\u30C8\u306E\u60C5\u5831\
+        \u66F4\u65B0"
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/WriteComment'
+      responses:
+        '200':
+          description: ok
+          schema:
+            $ref: '#/definitions/ReadComment'
+        '400':
+          description: validation error
+        '404':
+          description: not found
+      tags:
+        - tasks
+    delete:
+      operationId: tasks_comments_delete
+      description: "\u6307\u5B9A\u3057\u305F\u30B3\u30E1\u30F3\u30C8\u306E\u524A\u9664"
+      parameters: []
+      responses:
+        '204':
+          description: deleted
+        '404':
+          description: not found
+      tags:
+        - tasks
+    parameters:
+      - name: comment_id
+        in: path
+        required: true
+        type: string
+      - name: id
+        in: path
+        description: "A unique integer value identifying this \u30B3\u30E1\u30F3\u30C8\
+          ."
+        required: true
+        type: integer
+  /tasks/{id}/status:
+    patch:
+      operationId: tasks_status_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/PartialStatusUpdateTaskModel'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ReadTaskModel'
+      tags:
+        - tasks
+    parameters:
+      - name: id
+        in: path
+        description: "A unique integer value identifying this \u30BF\u30B9\u30AF."
+        required: true
+        type: integer
+  /users/refresh:
+    post:
+      operationId: users_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/TokenRefresh'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/TokenRefresh'
+      tags:
+        - users
+    parameters: []
+  /users/sign-in:
+    post:
+      operationId: users_sign-in_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/WriteToken'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ReadToken'
+        '400':
+          description: validation error
+      tags:
+        - users
+    parameters: []
+definitions:
+  ReadImage:
+    required:
+      - image_id
+    type: object
+    properties:
+      image_id:
+        title: Image id
+        type: string
+        minLength: 1
+  User:
+    required:
+      - id
+      - username
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+      username:
+        title: Username
+        type: string
+        minLength: 1
+  ReadTaskModel:
+    required:
+      - id
+      - title
+      - user
+      - status
+      - created_at
+      - updated_at
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+      title:
+        title: Title
+        type: string
+        minLength: 1
+      thumbnail:
+        title: Thumbnail
+        type: string
+        minLength: 1
+        x-nullable: true
+      user:
+        $ref: '#/definitions/User'
+      status:
+        title: Status
+        type: string
+        enum:
+          - backlog
+          - in_progress
+          - in_reviews
+          - finished
+      created_at:
+        title: Created at
+        type: string
+        format: date-time
+      updated_at:
+        title: Updated at
+        type: string
+        format: date-time
+  PaginationTask:
+    required:
+      - results
+    type: object
+    properties:
+      next:
+        title: Next
+        type: string
+        minLength: 1
+        x-nullable: true
+      previous:
+        title: Previous
+        type: string
+        minLength: 1
+        x-nullable: true
+      results:
+        type: array
+        items:
+          $ref: '#/definitions/ReadTaskModel'
+  WriteTaskModel:
+    required:
+      - title
+    type: object
+    properties:
+      title:
+        title: Title
+        type: string
+        maxLength: 300
+        minLength: 1
+      thumbnail:
+        title: Thumbnail
+        type: string
+        maxLength: 500
+        minLength: 1
+        x-nullable: true
+      status:
+        title: Status
+        type: string
+        enum:
+          - backlog
+          - in_progress
+          - in_reviews
+          - finished
+        default: backlog
+  ReadComment:
+    required:
+      - id
+      - content
+      - image_ids
+      - user
+      - created_at
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+      content:
+        title: Content
+        type: string
+        minLength: 1
+      image_ids:
+        type: array
+        items:
+          type: string
+          minLength: 1
+      user:
+        $ref: '#/definitions/User'
+      created_at:
+        title: Created at
+        type: string
+        format: date-time
+  PaginationComment:
+    required:
+      - results
+    type: object
+    properties:
+      next:
+        title: Next
+        type: string
+        minLength: 1
+        x-nullable: true
+      previous:
+        title: Previous
+        type: string
+        minLength: 1
+        x-nullable: true
+      results:
+        type: array
+        items:
+          $ref: '#/definitions/ReadComment'
+  WriteComment:
+    required:
+      - content
+      - image_ids
+    type: object
+    properties:
+      content:
+        title: Content
+        type: string
+        minLength: 1
+      image_ids:
+        type: array
+        items:
+          type: string
+          minLength: 1
+  PartialStatusUpdateTaskModel:
+    required:
+      - status
+    type: object
+    properties:
+      status:
+        title: Status
+        type: string
+        enum:
+          - backlog
+          - in_progress
+          - in_reviews
+          - finished
+  TokenRefresh:
+    required:
+      - refresh
+    type: object
+    properties:
+      refresh:
+        title: Refresh
+        type: string
+        minLength: 1
+      access:
+        title: Access
+        type: string
+        readOnly: true
+        minLength: 1
+  WriteToken:
+    required:
+      - username
+      - password
+    type: object
+    properties:
+      username:
+        title: Username
+        type: string
+        minLength: 1
+      password:
+        title: Password
+        type: string
+        minLength: 1
+  ReadToken:
+    required:
+      - refresh
+      - access
+    type: object
+    properties:
+      refresh:
+        title: Refresh
+        type: string
+        minLength: 1
+      access:
+        title: Access
+        type: string
+        minLength: 1

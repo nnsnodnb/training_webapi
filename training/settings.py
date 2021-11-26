@@ -175,6 +175,7 @@ REST_FRAMEWORK = {
 
 SWAGGER_SETTINGS = {
     "USE_SESSION_AUTH": False,
+    "DEFAULT_INFO": "training.urls.app_info",
     "SECURITY_DEFINITIONS": {
         "jwt_api_key": {
             "type": "apiKey",
