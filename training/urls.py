@@ -21,7 +21,7 @@ from rest_framework import permissions
 
 app_info = openapi.Info(
     title="Training WebAPI",
-    default_version='v1',
+    default_version="v1",
     contact=openapi.Contact(email="nnsnodnb@gmail.com"),
     license=openapi.License(name="MIT License"),
 )
