@@ -19,8 +19,15 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 
+app_info = openapi.Info(
+    title="Training WebAPI",
+    default_version="v1",
+    contact=openapi.Contact(email="nnsnodnb@gmail.com"),
+    license=openapi.License(name="MIT License"),
+)
+
 schema_view = get_schema_view(
-    openapi.Info(title="Training WebAPI", default_version="v1"),
+    app_info,
     public=True,
     permission_classes=(permissions.AllowAny,),
 )
