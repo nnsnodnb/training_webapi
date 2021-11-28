@@ -23,6 +23,7 @@ black = "*"
 isort = "*"
 flake8 = "*"
 awscli = "*"
+mypy = "*"
 
 [scripts]
 check_cors = "python scripts/check_cors.py"
