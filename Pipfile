@@ -14,6 +14,7 @@ gunicorn = {extras = ["gevent"], version = "*"}
 argon2-cffi = "*"
 boto3 = "*"
 django-cors-headers = "*"
+django-maintenance-mode = "*"
 
 [dev-packages]
 bpython = "*"
