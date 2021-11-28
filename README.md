@@ -132,6 +132,26 @@ docker compose exec backend pipenv run check_cors --url http://127.0.0.1:3000
 
 で確認できます。
 
+### メンテナンスモード
+
+下記コマンドでメンテナンスモードを切り替えることができます。
+
+```shell
+make maintenance_on
+make maintenance_off
+```
+
+任意のエンドポイントへのアクセスで以下のレスポンスが返ってきます。
+
+```json
+{
+  "error_detail": {
+    "title": "現在サービスはメンテナンス中です。",
+    "body": "終了は2021年11月28日 2時00分を予定しています。"
+  }
+}
+```
+
 ## License
 
 This software is licensed under the MIT License (See [LICENSE](LICENSE)).
