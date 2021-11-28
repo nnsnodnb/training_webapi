@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "60e2370fbc58b2f8b44366e3cb74b9f28b441d91e4a0da427c9f3472ba61e022"
+            "sha256": "a918ebdf50fcf91044bde4a202f6828d53ac40bf2f54beebb4a2cd4e24497eaf"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -757,6 +757,22 @@
             "index": "pypi",
             "version": "==3.1.5"
         },
+        "django-stubs": {
+            "hashes": [
+                "sha256:59c9f81af64d214b1954eaf90f037778c8d2b9c2de946a3cda177fefcf588fbd",
+                "sha256:664843091636a917faf5256d028476559dc360fdef9050b6df87ab61b21607bf"
+            ],
+            "index": "pypi",
+            "version": "==1.9.0"
+        },
+        "django-stubs-ext": {
+            "hashes": [
+                "sha256:783c198d7e39a41be0b90fd843fa2770243a642922af679be4b19e03b82c8c28",
+                "sha256:a51a3e9e844d4e1cacaaedbb33bf3def78a3956eed5d9575a640bd97ccd99cec"
+            ],
+            "markers": "python_version >= '3.6'",
+            "version": "==0.3.1"
+        },
         "docutils": {
             "hashes": [
                 "sha256:6c4f696463b79f1fb8ba0c594b63840ebd41f059e92b31957c46b74a4599b6d0",
@@ -1103,7 +1119,7 @@
                 "sha256:78f9a9bf4e7be0c5ded4583326e7461e3a3c5aae24073648b4bdfa797d78c9d2",
                 "sha256:9d689e6ca1b3038bc82bf8d23e944b6b6037bc02301a574935b2dd946e0353b9"
             ],
-            "markers": "python_version >= '3.5' and python_version < '4'",
+            "markers": "python_version >= '3.5' and python_version < '4.0'",
             "version": "==4.7.2"
         },
         "s3transfer": {
@@ -1145,6 +1161,20 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==1.2.2"
+        },
+        "types-pytz": {
+            "hashes": [
+                "sha256:d58a0688094b768d8e21c044e45861cbcaecba0494fd5b9c5feb3e1739211606",
+                "sha256:dffd77f3efecd3b1555f187a9bf3a638d55fac296700b829c41bd51ec72a6eb7"
+            ],
+            "version": "==2021.3.1"
+        },
+        "types-pyyaml": {
+            "hashes": [
+                "sha256:2e27b0118ca4248a646101c5c318dc02e4ca2866d6bc42e84045dbb851555a76",
+                "sha256:d5b318269652e809b5c30a5fe666c50159ab80bfd41cd6bafe655bf20b29fcba"
+            ],
+            "version": "==6.0.1"
         },
         "typing-extensions": {
             "hashes": [
