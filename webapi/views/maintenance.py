@@ -11,6 +11,7 @@ class MaintenanceJSONAPIView(APIView):
 
     http_method_names = ["get"]
     permission_classes = ()
+    swagger_schema = None
 
     def get(self, request, *args, **kwargs):
         if get_maintenance_mode():

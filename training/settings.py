@@ -233,3 +233,6 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
 
 MAINTENANCE_MODE_STATE_BACKEND = "maintenance_mode.backends.DefaultStorageBackend"
 MAINTENANCE_MODE_REDIRECT_URL = "/503/"
+MAINTENANCE_MODE_IGNORE_URLS = [
+    r"^/docs/",
+]
