@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "drf_yasg",
     "rest_framework",
+    "maintenance_mode",
     "db",
     "webapi",
     "corsheaders",
@@ -61,6 +62,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "maintenance_mode.middleware.MaintenanceModeMiddleware",
 ]
 
 ROOT_URLCONF = "training.urls"
@@ -226,3 +228,8 @@ SECURE_HSTS_PRELOAD = True
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^http(|s)://(localhost|127.0.0.1):\d+$",
 ]
+
+# Maintenance
+
+MAINTENANCE_MODE_STATE_BACKEND = "maintenance_mode.backends.DefaultStorageBackend"
+MAINTENANCE_MODE_REDIRECT_URL = "/503/"

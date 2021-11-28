@@ -14,3 +14,11 @@ start:
 .PHONY: cleanup
 cleanup:
 	@docker compose down --rmi all -v
+
+.PHONY: maintenance_on
+maintenance_on:
+	@docker compose exec backend pipenv run python manage.py maintenance_mode on
+
+.PHONY: maintenance_off
+maintenance_off:
+	@docker compose exec backend pipenv run python manage.py maintenance_mode off
