@@ -20,6 +20,14 @@ class ReadTokenSerializer(serializers.Serializer):
         )
 
 
+class ReadRefreshTokenSerializer(serializers.Serializer):
+
+    access = serializers.CharField()
+
+    class Meta:
+        fields = ("access",)
+
+
 class WriteTokenSerializer(serializers.Serializer):
     username_field = get_user_model().USERNAME_FIELD
 
