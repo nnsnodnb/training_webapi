@@ -11,6 +11,8 @@
 
 ## 始め方
 
+### Docker
+
 <details>
 
 <summary>開く</summary>
@@ -26,7 +28,7 @@ brew install --cask docker
 すでにこのリポジトリがローカルにクローンもしくはダウンロードされているとします。
 
 ```shell
-make setup
+make docker_setup
 ```
 
 しばらくするとプロンプトが現れるので
@@ -49,6 +51,28 @@ training_backend  | [2021-11-23 14:51:07 +0000] [55] [INFO] Booting worker with 
 
 `http://127.0.0.1` でアクセス可能です。  
 それではがんばりましょう！
+
+</details>
+
+### Multipass
+
+<details>
+
+<summary></summary>
+
+1. multipass をインストールしてください
+
+```shell
+brew install --cask multipass
+```
+
+2. 立ち上げます
+
+すでにこのリポジトリがローカルにクローンもしくはダウンロードされているとします。
+
+```shell
+make multipass_setup
+```
 
 </details>
 
@@ -136,8 +160,9 @@ docker compose exec backend pipenv run check_cors --url http://127.0.0.1:3000
 下記コマンドでメンテナンスモードを切り替えることができます。
 
 ```shell
-make maintenance_on
-make maintenance_off
+# Docker を使っている場合
+make docker_maintenance_on
+make docker_maintenance_off
 ```
 
 任意のエンドポイントへのアクセスで以下のようなレスポンスが返ってきます。
