@@ -28,6 +28,7 @@ multipass_setup:
 	multipass launch -n training -d 10G --cloud-init cloud-init.yml
 	multipass restart training
 	$(MAKE) multipass_install_python
+	$(MAKE) multipass_mount
 
 .PHONY: multipass_cleanup
 multipass_cleanup:
@@ -40,3 +41,7 @@ multipass_install_python:
 	multipass transfer ./multipassfiles/setup_python.sh training:/home/ubuntu/setup_python.sh
 	multipass exec training -- chmod +x ./setup_python.sh
 	multipass exec training -- ./setup_python.sh
+
+.PHONY: multipass_mount
+multipass_mount:
+	multipass mount ./ training:/home/ubuntu

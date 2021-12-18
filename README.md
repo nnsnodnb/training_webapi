@@ -66,7 +66,13 @@ training_backend  | [2021-11-23 14:51:07 +0000] [55] [INFO] Booting worker with 
 brew install --cask multipass
 ```
 
-2. 立ち上げます
+2. ディスクへのアクセス許可
+
+「システム環境設定」アプリから「セキュリティとプライバシー」を開き以下の画像のように設定してください
+
+![multipass_security_privacy](./multipassfiles/_assets/multipass_security_privacy.png)
+
+3. 立ち上げます
 
 すでにこのリポジトリがローカルにクローンもしくはダウンロードされているとします。
 
