@@ -22,7 +22,7 @@ packages:
 write_files:
 - content: |
     upstream webapi_gunicorn {
-      server unix:/app/tmp/gunicorn.sock;
+      server unix:/home/ubuntu/training_webapi/tmp/gunicorn.sock;
     }
 
     server {
@@ -36,7 +36,7 @@ write_files:
       }
 
       location /static {
-        alias /app/staticfiles;
+        alias /home/ubuntu/training_webapi/staticfiles;
       }
 
       location @proxy_to_app {

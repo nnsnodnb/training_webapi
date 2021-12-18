@@ -45,3 +45,7 @@ multipass_install_python:
 .PHONY: multipass_mount
 multipass_mount:
 	multipass mount ./ training:/home/ubuntu/training_webapi
+
+.PHONY: multipass_start_server
+multipass_start_server:
+	multipass exec training -- bash /home/ubuntu/training_webapi/multipassfiles/start_server.sh
