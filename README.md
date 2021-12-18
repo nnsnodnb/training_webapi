@@ -58,7 +58,7 @@ training_backend  | [2021-11-23 14:51:07 +0000] [55] [INFO] Booting worker with 
 
 <details>
 
-<summary></summary>
+<summary>開く</summary>
 
 1. multipass をインストールしてください
 
