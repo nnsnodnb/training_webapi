@@ -25,7 +25,7 @@ maintenance_off:
 
 .PHONY: multipass_setup
 multipass_setup:
-	multipass launch -n training -d 10G --cloud-init cloud-init.yml
+	multipass launch -n training -d 10G --cloud-init multipassfiles/cloud-init.yml
 	multipass restart training
 	$(MAKE) multipass_install_python
 	$(MAKE) multipass_mount
