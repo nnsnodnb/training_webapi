@@ -6,8 +6,8 @@
 
 - macOS Monterey (12.0.1)
   - M1 Max
-- Docker version 20.10.10, build b485636
-  - Docker Compose version v2.1.1
+- Docker version 20.10.11, build dea9396
+  - Docker Compose version v2.2.1
 
 ## 始め方
 
@@ -18,7 +18,6 @@
 1. Docker をインストールしてください
 
 ```shell
-softwareupdate --install-rosetta  # Apple Silicon を搭載した Mac の場合のみ
 brew install --cask docker
 ```
 
