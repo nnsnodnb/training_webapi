@@ -44,4 +44,4 @@ multipass_install_python:
 
 .PHONY: multipass_mount
 multipass_mount:
-	multipass mount ./ training:/home/ubuntu
+	multipass mount ./ training:/home/ubuntu/training_webapi
