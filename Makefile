@@ -57,8 +57,8 @@ multipass_start_server:
 
 .PHONY: multipass_maintenance_on
 multipass_maintenance_on:
-	multipass exec training -- /srv/maintenance_on.sh
+	multipass exec training -- /srv/maintenance.sh on
 
 .PHONY: multipass_maintenance_off
 multipass_maintenance_off:
-	multipass exec training -- /srv/maintenance_off.sh
+	multipass exec training -- /srv/maintenance.sh off

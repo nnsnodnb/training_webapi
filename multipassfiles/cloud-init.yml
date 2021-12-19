@@ -133,28 +133,19 @@ write_files:
   owner: root:root
   path: /etc/systemd/system/gunicorn.service
   permissions: '0644'
-- content: deb http://apt.postgresql.org/pub/repos/apt focal-pgdg main
-  owner: root:root
-  path: /etc/apt/sources.list.d/pgdg.list
-  permissions: '0644'
 - content: |
     cd /home/ubuntu/training_webapi
-    /home/ubuntu/.pyenv/shims/pipenv run python manage.py maintenance_mode on
+    /home/ubuntu/.pyenv/shims/pipenv run python manage.py maintenance_mode $@
   owner: root:root
-  path: /srv/maintenance_on.sh
-  permissions: '0755'
-- content: |
-    cd /home/ubuntu/training_webapi
-    /home/ubuntu/.pyenv/shims/pipenv run python manage.py maintenance_mode off
-  owner: root:root
-  path: /srv/maintenance_off.sh
+  path: /srv/maintenance.sh
   permissions: '0755'
 
 runcmd:
   # PostgreSQL
   - wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+  - echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)"-pgdg main | sudo tee /etc/apt/sources.list.d/pgdg.list
   - apt update
-  - apt install -y postgresql postgresql-contrib
+  - apt install -y postgresql-11 postgresql-contrib
   - sudo -u postgres psql -c "CREATE ROLE training LOGIN CREATEDB CREATEROLE PASSWORD 'training_very_secret_password';"
   - sudo -u training createdb -E UTF-8 -l C training -T template0
   # Minio
