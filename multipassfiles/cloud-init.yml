@@ -157,10 +157,10 @@ runcmd:
   - wget https://dl.min.io/client/mc/release/linux-arm64/mc
   - chmod +x mc
   - mv ./mc /usr/local/bin/
-  - mc mb /home/ubuntu/minio_data/training-store --region ap-northeast-1
-  - mc alias set training-store/ http://127.0.0.1:9000 admin password
-  - mc admin user add training-store access_key secret_key
-  - mc admin policy set training-store diagnostics,readwrite user=access_key
+  - sudo -u ubuntu mc mb /home/ubuntu/minio_data/training-store --region ap-northeast-1
+  - sudo -u ubuntu mc alias set training-store/ http://127.0.0.1:9000 admin password
+  - sudo -u ubuntu mc admin user add training-store access_key secret_key
+  - sudo -u ubuntu mc admin policy set training-store diagnostics,readwrite user=access_key
   # Nginx
   - systemctl start nginx.service
   - systemctl enable nginx.service
