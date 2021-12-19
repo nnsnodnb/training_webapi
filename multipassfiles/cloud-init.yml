@@ -19,6 +19,19 @@ packages:
   - build-essential
   - git
 
+users:
+  - default
+  - name: ubuntu
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users
+  - name: training
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users
+    lock_passwd: false
+    passwd: $6$rounds=4096$m2OZ2XjXIMbepOAM$34a8wJfiITwiRbL6JUmZqtu1jo41tsz6wRUXpzT9bb2zr3JU.ihp9cMZpNbZ7rs4M1HItuCZMfSsIrV9gtpNk.
+
 write_files:
 - content: |
     upstream webapi_gunicorn {
@@ -125,28 +138,15 @@ write_files:
 - content: |
     cd /home/ubuntu/training_webapi
     /home/ubuntu/.pyenv/shims/pipenv run python manage.py maintenance_mode on
-  owner: ubuntu:ubuntu
+  owner: root:root
   path: /srv/maintenance_on.sh
   permissions: '0755'
 - content: |
     cd /home/ubuntu/training_webapi
     /home/ubuntu/.pyenv/shims/pipenv run python manage.py maintenance_mode off
-  owner: ubuntu:ubuntu
+  owner: root:root
   path: /srv/maintenance_off.sh
   permissions: '0755'
-
-users:
-  - default
-  - name: ubuntu
-    shell: /bin/bash
-    sudo: ALL=(ALL) NOPASSWD:ALL
-    groups: users
-  - name: training
-    shell: /bin/bash
-    sudo: ALL=(ALL) NOPASSWD:ALL
-    groups: users
-    lock_passwd: false
-    passwd: $6$rounds=4096$m2OZ2XjXIMbepOAM$34a8wJfiITwiRbL6JUmZqtu1jo41tsz6wRUXpzT9bb2zr3JU.ihp9cMZpNbZ7rs4M1HItuCZMfSsIrV9gtpNk.
 
 runcmd:
   # PostgreSQL
