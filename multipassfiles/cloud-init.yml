@@ -1,0 +1,166 @@
+#cloud-config
+locale: ja_JP.UTF8
+timezone: Asia/Tokyo
+
+package_update: true
+package_upgrade: true
+packages:
+  - nginx
+  - wget
+  - libffi-dev
+  - libssl-dev
+  - zlib1g-dev
+  - liblzma-dev
+  - tk-dev
+  - libbz2-dev
+  - libreadline-dev
+  - libsqlite3-dev
+  - libopencv-dev
+  - build-essential
+  - git
+
+users:
+  - default
+  - name: ubuntu
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users
+  - name: training
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users
+    lock_passwd: false
+    passwd: $6$rounds=4096$m2OZ2XjXIMbepOAM$34a8wJfiITwiRbL6JUmZqtu1jo41tsz6wRUXpzT9bb2zr3JU.ihp9cMZpNbZ7rs4M1HItuCZMfSsIrV9gtpNk.
+
+write_files:
+- content: |
+    upstream webapi_gunicorn {
+      server unix:/tmp/gunicorn.sock;
+    }
+
+    server {
+      listen 80 default_server;
+
+      keepalive_timeout 5;
+      client_max_body_size 15M;
+
+      location / {
+        try_files $uri @proxy_to_app;
+      }
+
+      location /static {
+        alias /home/ubuntu/training_webapi/staticfiles;
+      }
+
+      location @proxy_to_app {
+        proxy_redirect off;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Server $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
+        proxy_pass http://webapi_gunicorn;
+      }
+
+      error_page   500 502 503 504  /50x.html;
+      location = /50x.html {
+        root /usr/share/nginx/html;
+      }
+    }
+  owner: root:root
+  path: /etc/nginx/sites-available/default
+  permissions: '0644'
+- content: |
+    [Unit]
+    Description=MinIO
+    Documentation=https://docs.min.io
+    Wants=network-online.target
+    After=network-online.target
+    AssertFileIsExecutable=/usr/local/bin/minio
+
+    [Service]
+    WorkingDirectory=/usr/local
+
+    User=ubuntu
+    Group=ubuntu
+
+    EnvironmentFile=-/etc/default/minio
+    Environment=MINIO_ROOT_USER=admin
+    Environment=MINIO_ROOT_PASSWORD=password
+    ExecStart=/usr/local/bin/minio server /home/ubuntu/minio_data --console-address ":9001"
+
+    # Let systemd restart this service always
+    Restart=always
+
+    # Specifies the maximum file descriptor number that can be opened by this process
+    LimitNOFILE=65536
+
+    # Specifies the maximum number of threads this process can create
+    TasksMax=infinity
+
+    # Disable timeout logic and wait until process is stopped
+    TimeoutStopSec=infinity
+    SendSIGKILL=no
+
+    [Install]
+    WantedBy=multi-user.target
+  owner: root:root
+  path: /etc/systemd/system/minio.service
+  permissions: '0644'
+- content: |
+    [Unit]
+    Description=gunicorn daemon
+    After=network.target
+
+    [Service]
+    Type=forking
+    WorkingDirectory=/home/ubuntu/training_webapi
+    Environment=AWS_PROFILE=default
+    Environment=AWS_S3_ENDPOINT_URL=http://127.0.0.1:9000
+    ExecStart=/home/ubuntu/.pyenv/shims/pipenv run gunicorn training.wsgi:application -k gevent -w 3 -b unix:/tmp/gunicorn.sock -p /tmp/gunicorn.pid --reload -D
+    ExecStop=/bin/pkill gunicorn
+    PIDFile=/tmp/gunicorn.pid
+    Restart=always
+    User=ubuntu
+    Group=ubuntu
+
+    [Install]
+    WantedBy=multi-user.target
+  owner: root:root
+  path: /etc/systemd/system/gunicorn.service
+  permissions: '0644'
+- content: |
+    cd /home/ubuntu/training_webapi
+    /home/ubuntu/.pyenv/shims/pipenv run python manage.py maintenance_mode $@
+  owner: root:root
+  path: /srv/maintenance.sh
+  permissions: '0755'
+
+runcmd:
+  # PostgreSQL
+  - wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+  - echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)"-pgdg main | sudo tee /etc/apt/sources.list.d/pgdg.list
+  - apt update
+  - apt install -y postgresql-11 postgresql-contrib
+  - sudo -u postgres psql -c "CREATE ROLE training LOGIN CREATEDB CREATEROLE PASSWORD 'training_very_secret_password';"
+  - sudo -u training createdb -E UTF-8 -l C training -T template0
+  # Minio
+  - wget https://dl.min.io/server/minio/release/linux-arm64/minio
+  - chmod +x ./minio
+  - mv ./minio /usr/local/bin/
+  - systemctl start minio.service
+  - systemctl enable minio.service
+  - wget https://dl.min.io/client/mc/release/linux-arm64/mc
+  - chmod +x mc
+  - mv ./mc /usr/local/bin/
+  - sudo -u ubuntu mc mb /home/ubuntu/minio_data/training-store --region ap-northeast-1
+  - sudo -u ubuntu mc alias set training-store/ http://127.0.0.1:9000 admin password
+  - sudo -u ubuntu mc admin user add training-store access_key secret_key
+  - sudo -u ubuntu mc admin policy set training-store diagnostics,readwrite user=access_key
+  # Nginx
+  - systemctl start nginx.service
+  - systemctl enable nginx.service

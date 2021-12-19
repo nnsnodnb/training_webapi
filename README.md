@@ -8,8 +8,13 @@
   - M1 Max
 - Docker version 20.10.11, build dea9396
   - Docker Compose version v2.2.1
+- Multipass
+  - multipass   1.8.1+mac
+  - multipassd  1.8.1+mac
 
 ## 始め方
+
+### Docker
 
 <details>
 
@@ -26,7 +31,7 @@ brew install --cask docker
 すでにこのリポジトリがローカルにクローンもしくはダウンロードされているとします。
 
 ```shell
-make setup
+make docker_setup
 ```
 
 しばらくするとプロンプトが現れるので
@@ -52,6 +57,55 @@ training_backend  | [2021-11-23 14:51:07 +0000] [55] [INFO] Booting worker with 
 
 </details>
 
+### Multipass
+
+<details>
+
+<summary>開く</summary>
+
+1. multipass をインストールしてください
+
+```shell
+brew install --cask multipass
+```
+
+2. ディスクへのアクセス許可
+
+「システム環境設定」アプリから「セキュリティとプライバシー」を開き以下の画像のように設定してください。
+
+![multipass_security_privacy](./multipassfiles/_assets/multipass_security_privacy.png)
+
+3. 立ち上げます
+
+すでにこのリポジトリがローカルにクローンもしくはダウンロードされているとします。
+
+```shell
+make multipass_setup
+```
+
+```text
+184 static files copied to '/home/ubuntu/training_webapi/staticfiles'.
+Created symlink /etc/systemd/system/multi-user.target.wants/gunicorn.service → /etc/systemd/system/gunicorn.service.
+multipass info training
+Name:           training
+State:          Running
+IPv4:           192.168.64.3
+Release:        Ubuntu 20.04.3 LTS
+Image hash:     f83575f6791e (Ubuntu 20.04 LTS)
+Load:           2.64 1.53 0.63
+Disk usage:     3.5G out of 9.5G
+Memory usage:   331.3M out of 974.8M
+Mounts:         /path/to/training_webapi => /home/ubuntu/training_webapi
+                    UID map: 501:default
+                    GID map: 20:default
+```
+
+上記のような表示が出るまで待ってください。  
+最後に表示された `IPv4` のアドレスでアクセスが可能です。(上の例では: `http://192.168.64.3` )  
+それではがんばりましょう！
+
+</details>
+
 ## API 仕様
 
 ### ドキュメント
@@ -59,11 +113,11 @@ training_backend  | [2021-11-23 14:51:07 +0000] [55] [INFO] Booting worker with 
 ユーザがタスクを作って、それぞれのタスクに対してコメントをすることが可能です。  
 またユーザが作ったリソースについては作ったユーザのみがアクセス可能です。
 
-詳細なドキュメントについては、上記セクションでサーバを起動して `http://127.0.0.1/docs/swagger` にアクセスして確認してください。
+詳細なドキュメントについては、上記セクションでサーバを起動して `http://{{ WebAPI の IPv4 アドレス }}/docs/swagger` にアクセスして確認してください。
 
 ### 認可
 
-JWT を使用した認可を行います。  
+JWT を使用した認可を行います。
 
 `POST /v1/users/sign-in` に対してユーザ名とパスワードを投げるとリフレッシュトークン(`refresh`) とアクセストークン(`access`) が取得できます。
 
@@ -106,10 +160,24 @@ Web API から以下のように返ってきたら
 training-store/images/e0b92214/8b69/4281/bcf6/67a7c4e88c90/83d34abb1fb5c77c0855ccae94fca4a9d74d4129.png
 ```
 
+1. Docker
+
 Web API が起動しているマシンの IP アドレスが `192.168.100.32` であるなら
 
 ```text
 http://192.168.100.32:9000/training-store/images/e0b92214/8b69/4281/bcf6/67a7c4e88c90/83d34abb1fb5c77c0855ccae94fca4a9d74d4129.png
+```
+
+2. Multipass
+
+```shell
+multipass info training
+```
+
+で表示される `IPv4` アドレスが `192.168.64.3` であるなら
+
+```text
+http://192.168.64.3:9000/training-store/images/e0b92214/8b69/4281/bcf6/67a7c4e88c90/83d34abb1fb5c77c0855ccae94fca4a9d74d4129.png
 ```
 
 上記のようにしてください。
@@ -126,7 +194,7 @@ http://192.168.100.32:9000/training-store/images/e0b92214/8b69/4281/bcf6/67a7c4e
 などが該当します。
 
 ```shell
-docker compose exec backend pipenv run check_cors --url http://127.0.0.1:3000
+python scripts/check_cors.py --url http://127.0.0.1:3000
 ```
 
 で確認できます。
@@ -135,9 +203,18 @@ docker compose exec backend pipenv run check_cors --url http://127.0.0.1:3000
 
 下記コマンドでメンテナンスモードを切り替えることができます。
 
+1. Docker
+
 ```shell
-make maintenance_on
-make maintenance_off
+make docker_maintenance_on
+make docker_maintenance_off
+```
+
+2. Multipass
+
+```shell
+make multipass_maintenance_on
+make multipass_maintenance_off
 ```
 
 任意のエンドポイントへのアクセスで以下のようなレスポンスが返ってきます。
