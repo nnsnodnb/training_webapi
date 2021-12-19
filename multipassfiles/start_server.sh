@@ -3,8 +3,8 @@
 cd /home/ubuntu/training_webapi
 
 # Install dependencies
-pip install pipenv
-pipenv install --dev
+/home/ubuntu/.pyenv/shims/pip install pipenv
+/home/ubuntu/.pyenv/shims/pipenv install --dev
 
 # Configure AWS profile
 mkdir -p /home/ubuntu/.aws
@@ -28,16 +28,17 @@ EOF
 fi
 
 # Update S3 Bucket Policy
-pipenv run aws s3api put-bucket-policy \
-        --bucket training-store \
-        --policy file://dockerfiles/files/s3_policy.json \
-        --endpoint-url http://127.0.0.1:9000
+/home/ubuntu/.pyenv/shims/pipenv run aws s3api put-bucket-policy \
+  --bucket training-store \
+  --policy file://dockerfiles/files/s3_policy.json \
+  --endpoint-url http://127.0.0.1:9000
 
 # Migration
-pipenv run python manage.py migrate
+/home/ubuntu/.pyenv/shims/pipenv run python manage.py migrate
 
 # Collectstatic
-pipenv run python manage.py collectstatic --no-input
+/home/ubuntu/.pyenv/shims/pipenv run python manage.py collectstatic --no-input
 
 # Run server
-pipenv run gunicorn training.wsgi:application -k gevent -w 3 -b unix:/tmp/gunicorn.sock -D
+sudo systemctl start gunicorn.service
+sudo systemctl enable gunicorn.service

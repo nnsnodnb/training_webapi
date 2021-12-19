@@ -22,7 +22,7 @@ packages:
 write_files:
 - content: |
     upstream webapi_gunicorn {
-      server unix:/home/ubuntu/training_webapi/tmp/gunicorn.sock;
+      server unix:/tmp/gunicorn.sock;
     }
 
     server {
@@ -95,13 +95,45 @@ write_files:
 
     [Install]
     WantedBy=multi-user.target
-  owner: root;root
+  owner: root:root
   path: /etc/systemd/system/minio.service
   permissions: '0644'
-- content: deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main
+- content: |
+    [Unit]
+    Description=gunicorn daemon
+    After=network.target
+
+    [Service]
+    Type=forking
+    WorkingDirectory=/home/ubuntu/training_webapi
+    ExecStart=/home/ubuntu/.pyenv/shims/pipenv run gunicorn training.wsgi:application -k gevent -w 3 -b unix:/tmp/gunicorn.sock -p /tmp/gunicorn.pid --reload -D
+    ExecStop=/bin/pkill gunicorn
+    PIDFile=/tmp/gunicorn.pid
+    Restart=always
+    User=ubuntu
+    Group=ubuntu
+
+    [Install]
+    WantedBy=multi-user.target
+  owner: root:root
+  path: /etc/systemd/system/gunicorn.service
+  permissions: '0644'
+- content: deb http://apt.postgresql.org/pub/repos/apt focal-pgdg main
   owner: root:root
   path: /etc/apt/sources.list.d/pgdg.list
   permissions: '0644'
+- content: |
+    cd /home/ubuntu/training_webapi
+    /home/ubuntu/.pyenv/shims/pipenv run python manage.py maintenance_mode on
+  owner: ubuntu:ubuntu
+  path: /srv/maintenance_on.sh
+  permissions: '0755'
+- content: |
+    cd /home/ubuntu/training_webapi
+    /home/ubuntu/.pyenv/shims/pipenv run python manage.py maintenance_mode off
+  owner: ubuntu:ubuntu
+  path: /srv/maintenance_off.sh
+  permissions: '0755'
 
 users:
   - default

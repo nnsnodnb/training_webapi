@@ -29,6 +29,8 @@ multipass_setup:
 	multipass restart training
 	$(MAKE) multipass_install_python
 	$(MAKE) multipass_mount
+	$(MAKE) multipass_start_server
+	multipass info training
 
 .PHONY: multipass_cleanup
 multipass_cleanup:
@@ -41,6 +43,7 @@ multipass_install_python:
 	multipass transfer ./multipassfiles/setup_python.sh training:/home/ubuntu/setup_python.sh
 	multipass exec training -- chmod +x ./setup_python.sh
 	multipass exec training -- ./setup_python.sh
+	multipass exec training -- rm ./setup_python.sh
 
 .PHONY: multipass_mount
 multipass_mount:
@@ -48,4 +51,14 @@ multipass_mount:
 
 .PHONY: multipass_start_server
 multipass_start_server:
-	multipass exec training -- bash /home/ubuntu/training_webapi/multipassfiles/start_server.sh
+	multipass transfer ./multipassfiles/start_server.sh training:/home/ubuntu/start_server.sh
+	multipass exec training -- chmod +x ./start_server.sh
+	multipass exec training -- ./start_server.sh
+
+.PHONY: multipass_maintenance_on
+multipass_maintenance_on:
+	multipass exec training -- /srv/maintenance_on.sh
+
+.PHONY: multipass_maintenance_off
+multipass_maintenance_off:
+	multipass exec training -- /srv/maintenance_off.sh
