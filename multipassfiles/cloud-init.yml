@@ -18,6 +18,10 @@ packages:
   - libopencv-dev
   - build-essential
   - git
+  - ca-certificates
+  - curl
+  - gnupg
+  - lsb-release
 
 users:
   - default
@@ -141,25 +145,32 @@ write_files:
   permissions: '0755'
 - content: |
     #!/bin/bash
-    # PostgreSQL
-    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-    echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)"-pgdg main | sudo tee /etc/apt/sources.list.d/pgdg.list
-    sudo apt update
-    apt install -y postgresql-11 postgresql-contrib
-    sudo -u postgres psql -c "CREATE ROLE training LOGIN CREATEDB CREATEROLE PASSWORD 'training_very_secret_password';"
-    sudo -u training createdb -E UTF-8 -l C training -T template0
+    arch=$(dpkg --print-architecture)
+    # PostgreSQL in Docker
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    echo "deb [arch=${arch} signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    apt update
+    apt install -y docker-ce docker-ce-cli containerd.io
+    systemctl start docker.service
+    systemctl enable docker.service
+    docker run -d \
+      --restart always \
+      -p 5432:5432 \
+      -v /home/ubuntu/postgres_data:/var/lib/postgres \
+      -e POSTGRES_INITDB_ARGS="--encoding=UTF-8 --locale=C" \
+      -e POSTGRES_PASSWORD="training_very_secret_password" \
+      -e POSTGRES_NAME="training" \
+      -e POSTGRES_USER="training" \
+      -e PGDATA="/var/lib/postgres/data" \
+      -e TZ="Asia/Tokyo" \
+      public.ecr.aws/docker/library/postgres:11.14
     # Minio
-    if [[ "$(uname -m)" == 'aarch64' ]]; then
-      minio_arch="linux-arm64"
-    else
-      minio_arch="linux-amd64"
-    fi
-    wget https://dl.min.io/server/minio/release/${minio_arch}/minio
+    wget https://dl.min.io/server/minio/release/linux-${arch}/minio
     chmod +x ./minio
     mv ./minio /usr/local/bin/
     systemctl start minio.service
     systemctl enable minio.service
-    wget https://dl.min.io/client/mc/release/${minio_arch}/mc
+    wget https://dl.min.io/client/mc/release/linux-${arch}/mc
     chmod +x mc
     mv ./mc /usr/local/bin/
     sudo -u ubuntu mc mb /home/ubuntu/minio_data/training-store --region ap-northeast-1

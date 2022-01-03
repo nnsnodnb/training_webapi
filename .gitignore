@@ -220,3 +220,7 @@ cython_debug/
 staticfiles
 tmp
 maintenance_mode_state.txt
+multipassfiles/minio_data
+!multipassfiles/minio_data/.gitkeep
+multipassfiles/postgres_data
+!multipassfiles/postgres_data/.gitkeep
