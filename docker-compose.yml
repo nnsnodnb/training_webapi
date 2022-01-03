@@ -51,7 +51,10 @@ services:
         target: /app/staticfiles
 
   db:
-    image: postgres:11.13
+    build:
+      context: ./
+      dockerfile: ./dockerfiles/Dockerfile.db
+    image: training_db
     container_name: training_db
     restart: always
     volumes:
