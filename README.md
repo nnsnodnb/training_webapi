@@ -4,7 +4,7 @@
 
 ## 動作確認及び開発環境
 
-- macOS Monterey (12.0.1)
+- macOS Monterey (12.1)
   - M1 Max
 - Docker version 20.10.11, build dea9396
   - Docker Compose version v2.2.1
