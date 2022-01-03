@@ -27,8 +27,8 @@ docker_maintenance_off:
 multipass_setup:
 	multipass launch -n training -d 10G --cloud-init multipassfiles/cloud-init.yml
 	multipass restart training
-	multipass exec training -- sudo /srv/setup.sh
 	$(MAKE) multipass_mount
+	multipass exec training -- sudo /srv/setup.sh
 	$(MAKE) multipass_install_python
 	$(MAKE) multipass_start_server
 	multipass info training
@@ -46,8 +46,7 @@ multipass_install_python:
 .PHONY: multipass_mount
 multipass_mount:
 	multipass mount ./ training:/home/ubuntu/training_webapi
-	multipass mount ./multipassfiles/postgres_data training:/var/lib/postgresql
-	multipass exec training -- sudo chown -R postgres:postgres /var/lib/postgresql
+	multipass mount ./multipassfiles/postgres_data training:/home/ubuntu/postgres_data
 	multipass mount ./multipassfiles/minio_data training:/home/ubuntu/minio_data
 
 .PHONY: multipass_start_server
