@@ -148,12 +148,17 @@ write_files:
     sudo -u postgres psql -c "CREATE ROLE training LOGIN CREATEDB CREATEROLE PASSWORD 'training_very_secret_password';"
     sudo -u training createdb -E UTF-8 -l C training -T template0
     # Minio
-    wget https://dl.min.io/server/minio/release/linux-arm64/minio
+    if [[ "$(uname -m)" == 'aarch64' ]]; then
+      minio_arch="linux-arm64"
+    else
+      minio_arch="linux-amd64"
+    fi
+    wget https://dl.min.io/server/minio/release/${minio_arch}/minio
     chmod +x ./minio
     mv ./minio /usr/local/bin/
     systemctl start minio.service
     systemctl enable minio.service
-    wget https://dl.min.io/client/mc/release/linux-arm64/mc
+    wget https://dl.min.io/client/mc/release/${minio_arch}/mc
     chmod +x mc
     mv ./mc /usr/local/bin/
     sudo -u ubuntu mc mb /home/ubuntu/minio_data/training-store --region ap-northeast-1
