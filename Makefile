@@ -49,9 +49,7 @@ multipass_mount:
 
 .PHONY: multipass_start_server
 multipass_start_server:
-	multipass transfer ./multipassfiles/start_server.sh training:/home/ubuntu/start_server.sh
-	multipass exec training -- chmod +x ./start_server.sh
-	multipass exec training -- ./start_server.sh
+	multipass exec training -- /srv/start_server.sh
 
 .PHONY: multipass_maintenance_on
 multipass_maintenance_on:
