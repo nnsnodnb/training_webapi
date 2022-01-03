@@ -48,4 +48,4 @@ pipenv run python manage.py collectstatic --no-input
 
 # Run server
 mkdir -p tmp
-pipenv run gunicorn training.wsgi:application -k gevent -c gunicorn_conf.py
+pipenv run gunicorn training.wsgi:application -k eventlet -c gunicorn_conf.py
