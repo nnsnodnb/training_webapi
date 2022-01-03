@@ -229,6 +229,21 @@ make multipass_maintenance_off
 }
 ```
 
+## その他
+
+### `Multipass` で仮想マシンが動いている状態で母艦を再起動した場合、正常に仮想マシンが起動しない
+
+データをマウントする仕組みを取り入れているので一度インスタンスを削除してからもう一度母艦を再起動し再度インスタンスを立ち上げてください。
+
+```shell
+make multipass_cleanup
+sudo reboot
+# 以下、再起動後
+make multipass_setup
+```
+
+2022/01/03現在
+
 ## License
 
 This software is licensed under the MIT License (See [LICENSE](LICENSE)).
