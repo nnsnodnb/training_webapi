@@ -187,6 +187,7 @@ write_files:
   permissions: '0755'
 - content: |
     #!/bin/bash -e
+    source /home/ubuntu/.bashrc
     cd /home/ubuntu/training_webapi
 
     # Install dependencies
