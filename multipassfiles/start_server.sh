@@ -36,6 +36,9 @@ fi
 # Migration
 /home/ubuntu/.pyenv/shims/pipenv run python manage.py migrate
 
+# Create superuser when out exists user
+/home/ubuntu/.pyenv/shims/pipenv run python manage.py shell -c 'from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username="admin").exists() or User.objects.create_superuser(username="admin", email="admin@example.com", password="adminpassword")'
+
 # Collectstatic
 /home/ubuntu/.pyenv/shims/pipenv run python manage.py collectstatic --no-input
 
