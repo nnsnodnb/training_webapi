@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b2ca6e7d114f7d2d15402cf9fab7c98d99e1f98d4e43a93f1bc383f166e2de7f"
+            "sha256": "e421815ecaa8acf154f88d5a80854e274a89546f9d4744e9eefb5016db9a6794"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -295,12 +295,8 @@
             "extras": [
                 "eventlet"
             ],
-            "hashes": [
-                "sha256:9dcc4547dbb1cb284accfb15ab5667a0e5d1881cc443e0677b4882a4067a807e",
-                "sha256:e0a968b5ba15f8a328fdfd7ab1fcb5af4470c28aaf7e55df02a99bc13138e6e8"
-            ],
-            "index": "pypi",
-            "version": "==20.1.0"
+            "git": "https://github.com/benoitc/gunicorn.git",
+            "ref": "76f8da24cbb992d168e01bda811452bcf3b8f5b3"
         },
         "idna": {
             "hashes": [
@@ -1037,7 +1033,7 @@
                 "sha256:78f9a9bf4e7be0c5ded4583326e7461e3a3c5aae24073648b4bdfa797d78c9d2",
                 "sha256:9d689e6ca1b3038bc82bf8d23e944b6b6037bc02301a574935b2dd946e0353b9"
             ],
-            "markers": "python_version >= '3.5' and python_version < '4.0'",
+            "markers": "python_version >= '3.5' and python_version < '4'",
             "version": "==4.7.2"
         },
         "s3transfer": {
