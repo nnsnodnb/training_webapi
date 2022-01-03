@@ -27,6 +27,7 @@ docker_maintenance_off:
 multipass_setup:
 	multipass launch -n training -d 10G --cloud-init multipassfiles/cloud-init.yml
 	multipass restart training
+	multipass mount ./multipassfiles/minio_data training:/home/ubuntu/minio_data
 	multipass exec training -- sudo /srv/setup.sh
 	$(MAKE) multipass_install_python
 	$(MAKE) multipass_mount
