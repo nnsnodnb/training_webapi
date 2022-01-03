@@ -27,6 +27,7 @@ docker_maintenance_off:
 multipass_setup:
 	multipass launch -n training -d 10G --cloud-init multipassfiles/cloud-init.yml
 	multipass restart training
+	multipass exec training -- sudo /srv/setup.sh
 	$(MAKE) multipass_install_python
 	$(MAKE) multipass_mount
 	$(MAKE) multipass_start_server
@@ -40,10 +41,7 @@ multipass_cleanup:
 
 .PHONY: multipass_install_python
 multipass_install_python:
-	multipass transfer ./multipassfiles/setup_python.sh training:/home/ubuntu/setup_python.sh
-	multipass exec training -- chmod +x ./setup_python.sh
-	multipass exec training -- ./setup_python.sh
-	multipass exec training -- rm ./setup_python.sh
+	multipass exec training -- /srv/install_python.sh
 
 .PHONY: multipass_mount
 multipass_mount:
