@@ -139,28 +139,100 @@ write_files:
   owner: root:root
   path: /srv/maintenance.sh
   permissions: '0755'
+- content: |
+    #!/bin/bash
+    # PostgreSQL
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+    echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)"-pgdg main | sudo tee /etc/apt/sources.list.d/pgdg.list
+    sudo apt update
+    apt install -y postgresql-11 postgresql-contrib
+    sudo -u postgres psql -c "CREATE ROLE training LOGIN CREATEDB CREATEROLE PASSWORD 'training_very_secret_password';"
+    sudo -u training createdb -E UTF-8 -l C training -T template0
+    # Minio
+    if [[ "$(uname -m)" == 'aarch64' ]]; then
+      minio_arch="linux-arm64"
+    else
+      minio_arch="linux-amd64"
+    fi
+    wget https://dl.min.io/server/minio/release/${minio_arch}/minio
+    chmod +x ./minio
+    mv ./minio /usr/local/bin/
+    systemctl start minio.service
+    systemctl enable minio.service
+    wget https://dl.min.io/client/mc/release/${minio_arch}/mc
+    chmod +x mc
+    mv ./mc /usr/local/bin/
+    sudo -u ubuntu mc mb /home/ubuntu/minio_data/training-store --region ap-northeast-1
+    sudo -u ubuntu mc alias set training-store/ http://127.0.0.1:9000 admin password
+    sudo -u ubuntu mc admin user add training-store access_key secret_key
+    sudo -u ubuntu mc admin policy set training-store diagnostics,readwrite user=access_key
+    # Nginx
+    systemctl start nginx.service
+    systemctl enable nginx.service
+  owner: root:root
+  path: /srv/setup.sh
+  permissions: '0755'
+- content: |
+    #!/bin/bash
+    git clone https://github.com/pyenv/pyenv ~/.pyenv
+    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> /home/ubuntu/.bashrc
+    echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /home/ubuntu/.bashrc
+    echo 'eval "$(pyenv init --path)"' >> /home/ubuntu/.bashrc
+    source /home/ubuntu/.bashrc
+    /home/ubuntu/.pyenv/bin/pyenv install 3.10.1
+    /home/ubuntu/.pyenv/bin/pyenv global 3.10.1
+    /home/ubuntu/.pyenv/shims/pip install -U pip
+  owner: root:root
+  path: /srv/install_python.sh
+  permissions: '0755'
+- content: |
+    #!/bin/bash -e
+    source /home/ubuntu/.bashrc
+    cd /home/ubuntu/training_webapi
 
-runcmd:
-  # PostgreSQL
-  - wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-  - echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)"-pgdg main | sudo tee /etc/apt/sources.list.d/pgdg.list
-  - apt update
-  - apt install -y postgresql-11 postgresql-contrib
-  - sudo -u postgres psql -c "CREATE ROLE training LOGIN CREATEDB CREATEROLE PASSWORD 'training_very_secret_password';"
-  - sudo -u training createdb -E UTF-8 -l C training -T template0
-  # Minio
-  - wget https://dl.min.io/server/minio/release/linux-arm64/minio
-  - chmod +x ./minio
-  - mv ./minio /usr/local/bin/
-  - systemctl start minio.service
-  - systemctl enable minio.service
-  - wget https://dl.min.io/client/mc/release/linux-arm64/mc
-  - chmod +x mc
-  - mv ./mc /usr/local/bin/
-  - sudo -u ubuntu mc mb /home/ubuntu/minio_data/training-store --region ap-northeast-1
-  - sudo -u ubuntu mc alias set training-store/ http://127.0.0.1:9000 admin password
-  - sudo -u ubuntu mc admin user add training-store access_key secret_key
-  - sudo -u ubuntu mc admin policy set training-store diagnostics,readwrite user=access_key
-  # Nginx
-  - systemctl start nginx.service
-  - systemctl enable nginx.service
+    # Install dependencies
+    /home/ubuntu/.pyenv/shims/pip install pipenv
+    /home/ubuntu/.pyenv/shims/pipenv install --dev
+
+    # Configure AWS profile
+    mkdir -p /home/ubuntu/.aws
+
+    if [[ ! -e /home/ubuntu/.aws/config ]]; then
+    cat > /home/ubuntu/.aws/config << EOF
+    [profile default]
+    region = ap-northeast-1
+    output = json
+    s3 =
+      endpoint_url = http://127.0.0.1:9000
+    EOF
+    fi
+
+    if [[ ! -e /home/ubuntu/.aws/credentials ]]; then
+    cat > /home/ubuntu/.aws/credentials << EOF
+    [default]
+    aws_access_key_id = access_key
+    aws_secret_access_key = secret_key
+    EOF
+    fi
+
+    # Update S3 Bucket Policy
+    /home/ubuntu/.pyenv/shims/pipenv run aws s3api put-bucket-policy \
+      --bucket training-store \
+      --policy file://dockerfiles/files/s3_policy.json \
+      --endpoint-url http://127.0.0.1:9000
+
+    # Migration
+    /home/ubuntu/.pyenv/shims/pipenv run python manage.py migrate
+
+    # Create superuser when out exists user
+    /home/ubuntu/.pyenv/shims/pipenv run python manage.py shell -c 'from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username="admin").exists() or User.objects.create_superuser(username="admin", email="admin@example.com", password="adminpassword")'
+
+    # Collectstatic
+    /home/ubuntu/.pyenv/shims/pipenv run python manage.py collectstatic --no-input
+
+    # Run server
+    sudo systemctl start gunicorn.service
+    sudo systemctl enable gunicorn.service
+  owner: root:root
+  path: /srv/start_server.sh
+  permissions: '0755'
