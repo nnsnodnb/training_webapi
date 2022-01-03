@@ -71,7 +71,8 @@ brew install --cask multipass
 
 2. ディスクへのアクセス許可
 
-「システム環境設定」アプリから「セキュリティとプライバシー」を開き以下の画像のように設定してください。
+「システム環境設定」アプリから「セキュリティとプライバシー」を開き以下の画像のように設定してください。  
+`multipassd` の項目が見つからない場合はプラスボタンを押して `/Library/Application Support/com.canonical.multipass/bin/multipassd` を追加してください。
 
 ![multipass_security_privacy](./multipassfiles/_assets/multipass_security_privacy.png)
 
