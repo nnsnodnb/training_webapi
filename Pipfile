@@ -10,7 +10,7 @@ djangorestframework-simplejwt = "*"
 drf-yasg = "*"
 drf-rw-serializers = "*"
 psycopg2-binary = "*"
-gunicorn = {extras = ["gevent"], version = "*"}
+gunicorn = {extras = ["eventlet"], version = "*"}
 argon2-cffi = "*"
 boto3 = "*"
 django-cors-headers = "*"
