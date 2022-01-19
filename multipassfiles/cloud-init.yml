@@ -203,7 +203,7 @@ write_files:
 
     # Install dependencies
     /home/ubuntu/.pyenv/shims/pip install pipenv
-    /home/ubuntu/.pyenv/shims/pipenv install --dev
+    /home/ubuntu/.pyenv/shims/pipenv sync --dev
 
     # Configure AWS profile
     mkdir -p /home/ubuntu/.aws

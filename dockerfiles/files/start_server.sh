@@ -6,7 +6,7 @@ dockerize -wait tcp://proxy:80 -wait tcp://db:5432 -wait tcp://storage:9000 -tim
 # Install dependencies
 pip install -U pip
 pip install pipenv
-pipenv install --dev
+pipenv sync --dev
 
 # Configure AWS profile
 mkdir -p /root/.aws
