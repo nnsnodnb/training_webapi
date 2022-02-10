@@ -627,11 +627,11 @@
         },
         "awscli": {
             "hashes": [
-                "sha256:05cfa29a9aa8ae3b005b8ed1bce54d10399f06e37f7775f78d86374d6ff8736b",
-                "sha256:17e6af079f6c8abe29086e3380ad23b0bdae4cdf4773d0f91ef7430a9e7d7ef1"
+                "sha256:c3bcac386948c45e60f2c1d89557c86c5a98f1f97805cf6d261391732adbf29d",
+                "sha256:fc6ae56525e5179cdc0ccfa795bdca8d9e4d757bdfb1303ff2736b1d7a9ab9ef"
             ],
             "index": "pypi",
-            "version": "==1.22.46"
+            "version": "==1.22.49"
         },
         "black": {
             "hashes": [
@@ -1054,7 +1054,7 @@
                 "sha256:78f9a9bf4e7be0c5ded4583326e7461e3a3c5aae24073648b4bdfa797d78c9d2",
                 "sha256:9d689e6ca1b3038bc82bf8d23e944b6b6037bc02301a574935b2dd946e0353b9"
             ],
-            "markers": "python_version >= '3.5' and python_version < '4.0'",
+            "markers": "python_version >= '3.5' and python_version < '4'",
             "version": "==4.7.2"
         },
         "s3transfer": {
