@@ -163,7 +163,7 @@ write_files:
       -e POSTGRES_USER="training" \
       -e PGDATA="/var/lib/postgres/data" \
       -e TZ="Asia/Tokyo" \
-      public.ecr.aws/docker/library/postgres:11.14
+      public.ecr.aws/docker/library/postgres:11.15
     # Minio
     wget https://dl.min.io/server/minio/release/linux-${arch}/minio
     chmod +x ./minio
