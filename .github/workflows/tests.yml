@@ -1,0 +1,36 @@
+name: Test
+
+on:
+  push: {}
+
+jobs:
+  deps_install:
+    runs-on: ubuntu-20.04
+
+    name: Check installable dependencies
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Python 3.10
+      uses: actions/setup-python@v2
+      with:
+        python-version: "3.10"
+
+    - name: Bootstrap pipenv
+      run: |
+        python -m ensurepip
+        python -m pip install --upgrade pip
+        python -m pip install pipenv
+
+    - name: Cache pipenv dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.local/share/virtualenvs
+        key: ${{ runner.os }}-pipenv-${{ hashFiles('Pipfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-pipenv-
+
+    - name: Install dependencies
+      run: |
+        pipenv sync --dev
