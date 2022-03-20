@@ -445,7 +445,6 @@ description = "WSGI HTTP Server for UNIX"
 category = "main"
 optional = false
 python-versions = ">=3.5"
-develop = false
 
 [package.dependencies]
 eventlet = {version = ">=0.24.1", optional = true, markers = "extra == \"eventlet\""}
@@ -455,12 +454,6 @@ eventlet = ["eventlet (>=0.24.1)"]
 gevent = ["gevent (>=1.4.0)"]
 setproctitle = ["setproctitle"]
 tornado = ["tornado (>=0.2)"]
-
-[package.source]
-type = "git"
-url = "https://github.com/benoitc/gunicorn.git"
-reference = "76f8da24cbb992d168e01bda811452bcf3b8f5b3"
-resolved_reference = "76f8da24cbb992d168e01bda811452bcf3b8f5b3"
 
 [[package]]
 name = "idna"
@@ -849,7 +842,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "35fa2c9b0a5f3e83ffde67baa93d78ea6726c389f691de1387649524a18b49e3"
+content-hash = "620476cf597d92444320aab6db316dd7bdb7cdb496897e984b29f9f5ba1723cf"
 
 [metadata.files]
 argon2-cffi = [
@@ -1153,7 +1146,10 @@ greenlet = [
     {file = "greenlet-1.1.2-cp39-cp39-win_amd64.whl", hash = "sha256:013d61294b6cd8fe3242932c1c5e36e5d1db2c8afb58606c5a67efce62c1f5fd"},
     {file = "greenlet-1.1.2.tar.gz", hash = "sha256:e30f5ea4ae2346e62cedde8794a56858a67b878dd79f7df76a0767e356b1744a"},
 ]
-gunicorn = []
+gunicorn = [
+    {file = "gunicorn-20.1.0-py3-none-any.whl", hash = "sha256:9dcc4547dbb1cb284accfb15ab5667a0e5d1881cc443e0677b4882a4067a807e"},
+    {file = "gunicorn-20.1.0.tar.gz", hash = "sha256:e0a968b5ba15f8a328fdfd7ab1fcb5af4470c28aaf7e55df02a99bc13138e6e8"},
+]
 idna = [
     {file = "idna-3.3-py3-none-any.whl", hash = "sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff"},
     {file = "idna-3.3.tar.gz", hash = "sha256:9d643ff0a55b762d5cdb124b8eaa99c66322e2157b69160bc32796e824360e6d"},
