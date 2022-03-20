@@ -125,7 +125,7 @@ write_files:
     WorkingDirectory=/home/ubuntu/training_webapi
     Environment=AWS_PROFILE=default
     Environment=AWS_S3_ENDPOINT_URL=http://127.0.0.1:9000
-    ExecStart=/home/ubuntu/.pyenv/shims/pipenv run gunicorn training.wsgi:application -k eventlet -w 3 -b unix:/tmp/gunicorn.sock -p /tmp/gunicorn.pid --reload -D
+    ExecStart=/home/ubuntu/.pyenv/shims/poetry run gunicorn training.wsgi:application -k eventlet -w 3 -b unix:/tmp/gunicorn.sock -p /tmp/gunicorn.pid --reload -D
     ExecStop=/bin/pkill gunicorn
     PIDFile=/tmp/gunicorn.pid
     Restart=always
@@ -139,7 +139,7 @@ write_files:
   permissions: '0644'
 - content: |
     cd /home/ubuntu/training_webapi
-    /home/ubuntu/.pyenv/shims/pipenv run python manage.py maintenance_mode $@
+    /home/ubuntu/.pyenv/shims/poetry run python manage.py maintenance_mode $@
   owner: root:root
   path: /srv/maintenance.sh
   permissions: '0755'
@@ -202,8 +202,8 @@ write_files:
     cd /home/ubuntu/training_webapi
 
     # Install dependencies
-    /home/ubuntu/.pyenv/shims/pip install pipenv
-    /home/ubuntu/.pyenv/shims/pipenv sync --dev
+    /home/ubuntu/.pyenv/shims/pip install poetry
+    /home/ubuntu/.pyenv/shims/poetry install --no-root
 
     # Configure AWS profile
     mkdir -p /home/ubuntu/.aws
@@ -227,19 +227,19 @@ write_files:
     fi
 
     # Update S3 Bucket Policy
-    /home/ubuntu/.pyenv/shims/pipenv run aws s3api put-bucket-policy \
+    /home/ubuntu/.pyenv/shims/poetry run aws s3api put-bucket-policy \
       --bucket training-store \
       --policy file://dockerfiles/files/s3_policy.json \
       --endpoint-url http://127.0.0.1:9000
 
     # Migration
-    /home/ubuntu/.pyenv/shims/pipenv run python manage.py migrate
+    /home/ubuntu/.pyenv/shims/poetry run python manage.py migrate
 
     # Create superuser when out exists user
-    /home/ubuntu/.pyenv/shims/pipenv run python manage.py shell -c 'from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username="admin").exists() or User.objects.create_superuser(username="admin", email="admin@example.com", password="adminpassword")'
+    /home/ubuntu/.pyenv/shims/poetry run python manage.py shell -c 'from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username="admin").exists() or User.objects.create_superuser(username="admin", email="admin@example.com", password="adminpassword")'
 
     # Collectstatic
-    /home/ubuntu/.pyenv/shims/pipenv run python manage.py collectstatic --no-input
+    /home/ubuntu/.pyenv/shims/poetry run python manage.py collectstatic --no-input
 
     # Run server
     sudo systemctl start gunicorn.service
