@@ -17,11 +17,11 @@ docker_cleanup:
 
 .PHONY: docker_maintenance_on
 docker_maintenance_on:
-	docker compose exec backend pipenv run python manage.py maintenance_mode on
+	docker compose exec backend poetry run python manage.py maintenance_mode on
 
 .PHONY: docker_maintenance_off
 docker_maintenance_off:
-	docker compose exec backend pipenv run python manage.py maintenance_mode off
+	docker compose exec backend poetry run python manage.py maintenance_mode off
 
 .PHONY: multipass_setup
 multipass_setup:

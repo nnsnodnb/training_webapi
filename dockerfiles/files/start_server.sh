@@ -5,8 +5,8 @@ dockerize -wait tcp://proxy:80 -wait tcp://db:5432 -wait tcp://storage:9000 -tim
 
 # Install dependencies
 pip install -U pip
-pip install pipenv
-pipenv sync --dev
+pip install poetry
+poetry install --no-root
 
 # Configure AWS profile
 mkdir -p /root/.aws
@@ -30,25 +30,25 @@ EOF
 fi
 
 # Create S3 Bucket
-if pipenv run aws s3 ls s3://training-store --endpoint-url http://storage:9000 2>&1 | grep -q 'NoSuchBucket'; then
-    pipenv run aws s3api create-bucket \
+if poetry run aws s3 ls s3://training-store --endpoint-url http://storage:9000 2>&1 | grep -q 'NoSuchBucket'; then
+    poetry run aws s3api create-bucket \
         --bucket training-store \
         --endpoint-url http://storage:9000
-    pipenv run aws s3api put-bucket-policy \
+    poetry run aws s3api put-bucket-policy \
         --bucket training-store \
         --policy file://dockerfiles/files/s3_policy.json \
         --endpoint-url http://storage:9000
 fi
 
 # Migration
-pipenv run python manage.py migrate
+poetry run python manage.py migrate
 
 # Create superuser when out exists user
-pipenv run python manage.py shell -c 'from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username="admin").exists() or User.objects.create_superuser(username="admin", email="admin@example.com", password="adminpassword")'
+poetry run python manage.py shell -c 'from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username="admin").exists() or User.objects.create_superuser(username="admin", email="admin@example.com", password="adminpassword")'
 
 # Collectstatic
-pipenv run python manage.py collectstatic --no-input
+poetry run python manage.py collectstatic --no-input
 
 # Run server
 mkdir -p tmp
-pipenv run gunicorn training.wsgi:application -k eventlet -c gunicorn_conf.py
+poetry run gunicorn training.wsgi:application -k eventlet -c gunicorn_conf.py

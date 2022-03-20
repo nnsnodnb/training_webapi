@@ -15,22 +15,23 @@ jobs:
     - name: Setup Python 3.10
       uses: actions/setup-python@v2
       with:
-        python-version: "3.10"
+        python-version: "3.10.2"
 
-    - name: Bootstrap pipenv
+    - name: Bootstrap poetry
       run: |
         python -m ensurepip
         python -m pip install --upgrade pip
-        python -m pip install pipenv
+        python -m pip install poetry
+        python -m poetry config virtualenvs.in-project true
 
-    - name: Cache pipenv dependencies
+    - name: Cache poetry dependencies
       uses: actions/cache@v2
       with:
-        path: ~/.local/share/virtualenvs
-        key: ${{ runner.os }}-pipenv-${{ hashFiles('Pipfile.lock') }}
+        path: .venv
+        key: venv-${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
         restore-keys: |
-          ${{ runner.os }}-pipenv-
+          ${{ runner.os }}-poetry-
 
     - name: Install dependencies
       run: |
-        pipenv sync --dev
+        python -m poetry install --no-root
