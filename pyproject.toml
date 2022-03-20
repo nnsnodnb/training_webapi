@@ -50,7 +50,7 @@ argon2-cffi = "^21.3.0"
 boto3 = "^1.21.22"
 django-cors-headers = "^3.11.0"
 django-maintenance-mode = "^0.16.2"
-gunicorn = {git = "https://github.com/benoitc/gunicorn.git", rev = "76f8da24cbb992d168e01bda811452bcf3b8f5b3", extras = ["eventlet"]}
+gunicorn = {version = "^20.1.0", extras = ["gevent"]}
 
 [tool.poetry.dev-dependencies]
 bpython = "^0.22.1"

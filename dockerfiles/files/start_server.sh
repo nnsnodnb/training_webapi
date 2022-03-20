@@ -51,4 +51,4 @@ poetry run python manage.py collectstatic --no-input
 
 # Run server
 mkdir -p tmp
-poetry run gunicorn training.wsgi:application -k eventlet -c gunicorn_conf.py
+poetry run gunicorn training.wsgi:application -k gevent -c gunicorn_conf.py

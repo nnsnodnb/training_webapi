@@ -125,7 +125,7 @@ write_files:
     WorkingDirectory=/home/ubuntu/training_webapi
     Environment=AWS_PROFILE=default
     Environment=AWS_S3_ENDPOINT_URL=http://127.0.0.1:9000
-    ExecStart=/home/ubuntu/.pyenv/shims/poetry run gunicorn training.wsgi:application -k eventlet -w 3 -b unix:/tmp/gunicorn.sock -p /tmp/gunicorn.pid --reload -D
+    ExecStart=/home/ubuntu/.pyenv/shims/poetry run gunicorn training.wsgi:application -k gevent -w 3 -b unix:/tmp/gunicorn.sock -p /tmp/gunicorn.pid --reload -D
     ExecStop=/bin/pkill gunicorn
     PIDFile=/tmp/gunicorn.pid
     Restart=always
