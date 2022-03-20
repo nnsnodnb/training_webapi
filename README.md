@@ -46,7 +46,7 @@ docker compose logs -f backend
 training_backend  | 184 static files copied to '/app/staticfiles'.
 training_backend  | [2021-11-23 14:51:07 +0000] [52] [INFO] Starting gunicorn 20.1.0
 training_backend  | [2021-11-23 14:51:07 +0000] [52] [INFO] Listening at: unix:tmp/gunicorn.sock (52)
-training_backend  | [2021-11-23 14:51:07 +0000] [52] [INFO] Using worker: eventlet
+training_backend  | [2021-11-23 14:51:07 +0000] [52] [INFO] Using worker: gevent
 training_backend  | [2021-11-23 14:51:07 +0000] [55] [INFO] Booting worker with pid: 55
 ```
 
