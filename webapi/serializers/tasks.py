@@ -33,7 +33,7 @@ class ReadTaskModelSerializer(serializers.ModelSerializer):
 class WriteTaskModelSerializer(serializers.ModelSerializer):
 
     title = serializers.CharField(required=True, max_length=300)
-    thumbnail = serializers.CharField(required=False, max_length=500, allow_null=True)
+    image_id = serializers.CharField(required=False, max_length=500, allow_null=True, source="thumbnail")
     user = serializers.HiddenField(default=get_user_model().objects.none())
     status = serializers.ChoiceField(
         required=False, choices=Task.StatusChoices.choices, default=Task.StatusChoices.BACKLOG
@@ -42,7 +42,7 @@ class WriteTaskModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Task
-        fields = ("title", "title", "thumbnail", "user", "status", "updated_at")
+        fields = ("title", "title", "image_id", "user", "status", "updated_at")
 
     def validate_user(self, _):
         if (request := self.context.get("request")) is None:
