@@ -48,7 +48,7 @@ drf-rw-serializers = "^1.0.4"
 psycopg2-binary = "^2.9.3"
 argon2-cffi = "^21.3.0"
 boto3 = "^1.21.22"
-django-cors-headers = "^3.11.0"
+django-cors-headers = "^3.13.0"
 django-maintenance-mode = "^0.16.3"
 gunicorn = {version = "^20.1.0", extras = ["gevent"]}
 
