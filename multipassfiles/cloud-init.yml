@@ -163,7 +163,7 @@ write_files:
       -e POSTGRES_USER="training" \
       -e PGDATA="/var/lib/postgres/data" \
       -e TZ="Asia/Tokyo" \
-      public.ecr.aws/docker/library/postgres:11.15
+      postgres:12.11
     # Minio
     wget https://dl.min.io/server/minio/release/linux-${arch}/minio
     chmod +x ./minio
@@ -190,8 +190,8 @@ write_files:
     echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /home/ubuntu/.bashrc
     echo 'eval "$(pyenv init --path)"' >> /home/ubuntu/.bashrc
     source /home/ubuntu/.bashrc
-    /home/ubuntu/.pyenv/bin/pyenv install 3.10.1
-    /home/ubuntu/.pyenv/bin/pyenv global 3.10.1
+    /home/ubuntu/.pyenv/bin/pyenv install 3.10.2
+    /home/ubuntu/.pyenv/bin/pyenv global 3.10.2
     /home/ubuntu/.pyenv/shims/pip install -U pip
   owner: root:root
   path: /srv/install_python.sh
