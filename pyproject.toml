@@ -58,7 +58,7 @@ django-extensions = "^3.1.5"
 black = "^22.3.0"
 isort = "^5.10.1"
 flake8 = "^4.0.1"
-awscli = "^1.22.77"
+awscli = "^1.22.101"
 mypy = "^0.942"
 django-stubs = "^1.12.0"
 

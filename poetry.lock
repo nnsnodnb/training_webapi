@@ -42,14 +42,14 @@ tests = ["pytest", "pytest-asyncio", "mypy (>=0.800)"]
 
 [[package]]
 name = "awscli"
-version = "1.22.77"
+version = "1.22.101"
 description = "Universal Command Line Environment for AWS."
 category = "dev"
 optional = false
 python-versions = ">= 3.6"
 
 [package.dependencies]
-botocore = "1.24.22"
+botocore = "1.24.46"
 colorama = ">=0.2.5,<0.4.4"
 docutils = ">=0.10,<0.16"
 PyYAML = ">=3.10,<5.5"
@@ -106,7 +106,7 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "botocore"
-version = "1.24.22"
+version = "1.24.46"
 description = "Low-level, data-driven core of boto 3."
 category = "main"
 optional = false
@@ -118,7 +118,7 @@ python-dateutil = ">=2.1,<3.0.0"
 urllib3 = ">=1.25.4,<1.27"
 
 [package.extras]
-crt = ["awscrt (==0.13.5)"]
+crt = ["awscrt (==0.13.8)"]
 
 [[package]]
 name = "bpython"
@@ -865,7 +865,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "127863072cfc7ad06ab27f276be3838e88f1d3dad6346c0259ad983d83ec4f4f"
+content-hash = "e6e5df2219b1e0713ab6ddcc489a456df8c1b79e466e29cb74e444af70b60e11"
 
 [metadata.files]
 argon2-cffi = [
@@ -900,8 +900,8 @@ asgiref = [
     {file = "asgiref-3.5.0.tar.gz", hash = "sha256:2f8abc20f7248433085eda803936d98992f1343ddb022065779f37c5da0181d0"},
 ]
 awscli = [
-    {file = "awscli-1.22.77-py3-none-any.whl", hash = "sha256:d113bec3b8f87a919a0a3038c06a5d17a754a67a191f0152ed16edde87f7ae17"},
-    {file = "awscli-1.22.77.tar.gz", hash = "sha256:4b72250170d24ec85d8f35df5dec7776c8791e56a91577fb1f4ffc8bf7d8cedb"},
+    {file = "awscli-1.22.101-py3-none-any.whl", hash = "sha256:3a7d9260ecb44e677f04640fd9959fb4310189e39ef0a42fbb652888843890a3"},
+    {file = "awscli-1.22.101.tar.gz", hash = "sha256:54772140fa9fe72c36f1214cd8f2a210af420940983d8f663f5cdf4b103b7e58"},
 ]
 black = [
     {file = "black-22.3.0-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:2497f9c2386572e28921fa8bec7be3e51de6801f7459dffd6e62492531c47e09"},
@@ -938,8 +938,8 @@ boto3 = [
     {file = "boto3-1.21.22.tar.gz", hash = "sha256:334f14ffbd89ddd15090e90b32e4fcea73d83b60b19ca2737a9264fd44096f35"},
 ]
 botocore = [
-    {file = "botocore-1.24.22-py3-none-any.whl", hash = "sha256:e812604653c635c78431b3dd168d3fc04e8c3514839226814c999336d5e59ea0"},
-    {file = "botocore-1.24.22.tar.gz", hash = "sha256:92ba8afeda48f5d2467811d87df401d703a25191f82882994d8d09a7d8b5b965"},
+    {file = "botocore-1.24.46-py3-none-any.whl", hash = "sha256:663d8f02b98641846eb959c54c840cc33264d5f2dee5b8fc09ee8adbef0f8dcf"},
+    {file = "botocore-1.24.46.tar.gz", hash = "sha256:89a203bba3c8f2299287e48a9e112e2dbe478cf67eaac26716f0e7f176446146"},
 ]
 bpython = [
     {file = "bpython-0.22.1-py3-none-any.whl", hash = "sha256:27ab07d64b9f0268990612aa5c1ab7be8705aa819b14b72c9e4b3b0418458937"},
