@@ -289,7 +289,7 @@ python-fsutil = ">=0.6.0"
 
 [[package]]
 name = "django-stubs"
-version = "1.10.1"
+version = "1.12.0"
 description = "Mypy stubs for Django"
 category = "dev"
 optional = false
@@ -298,11 +298,14 @@ python-versions = ">=3.7"
 [package.dependencies]
 django = "*"
 django-stubs-ext = ">=0.4.0"
-mypy = ">=0.930,<0.950"
+mypy = ">=0.930"
 tomli = "*"
 types-pytz = "*"
 types-PyYAML = "*"
 typing-extensions = "*"
+
+[package.extras]
+compatible-mypy = ["mypy (>=0.930,<0.970)"]
 
 [[package]]
 name = "django-stubs-ext"
@@ -862,7 +865,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "173a7bcc290beb3249443cf89a4f5a55003e138038bd6e9b099374e8ac004558"
+content-hash = "127863072cfc7ad06ab27f276be3838e88f1d3dad6346c0259ad983d83ec4f4f"
 
 [metadata.files]
 argon2-cffi = [
@@ -1069,8 +1072,8 @@ django-maintenance-mode = [
     {file = "django_maintenance_mode-0.16.3-py3-none-any.whl", hash = "sha256:adacbfdce4b467390ca98bc975fe5957b1f9984317c7da434b9c07c8ff086f99"},
 ]
 django-stubs = [
-    {file = "django-stubs-1.10.1.tar.gz", hash = "sha256:2ec21fc14dba392156e0ec8438e1863c86ddb295f1c8d88eecd7e0e04977c843"},
-    {file = "django_stubs-1.10.1-py3-none-any.whl", hash = "sha256:dfffa933e3c7f5cae92c860fbd6cf4ae58c4f78eed93843612f863207c9e0e1a"},
+    {file = "django-stubs-1.12.0.tar.gz", hash = "sha256:ea8b35d0da49f7b2ee99a79125f1943e033431dd114726d6643cc35de619230e"},
+    {file = "django_stubs-1.12.0-py3-none-any.whl", hash = "sha256:0dff8ec0ba3abe046450b3d8a29ce9e72629893d2c1ef679189cc2bfdb6d2f64"},
 ]
 django-stubs-ext = [
     {file = "django-stubs-ext-0.4.0.tar.gz", hash = "sha256:3104c4748c34bd741c310a3e6af90dffba46e41bccbe243896e38a708262876b"},
