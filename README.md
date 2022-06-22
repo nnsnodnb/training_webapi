@@ -4,13 +4,13 @@
 
 ## 動作確認及び開発環境
 
-- macOS Monterey (12.1)
+- macOS Monterey (12.4)
   - M1 Max
-- Docker version 20.10.11, build dea9396
-  - Docker Compose version v2.2.1
+- Docker version 20.10.16, build aa7e414
+  - Docker Compose version v2.6.0
 - Multipass
-  - multipass   1.8.1+mac
-  - multipassd  1.8.1+mac
+  - multipass   1.9.1+mac
+  - multipassd  1.9.1+mac
 
 ## 始め方
 
