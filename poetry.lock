@@ -90,14 +90,14 @@ six = "*"
 
 [[package]]
 name = "boto3"
-version = "1.21.22"
+version = "1.21.46"
 description = "The AWS SDK for Python"
 category = "main"
 optional = false
 python-versions = ">= 3.6"
 
 [package.dependencies]
-botocore = ">=1.24.22,<1.25.0"
+botocore = ">=1.24.46,<1.25.0"
 jmespath = ">=0.7.1,<2.0.0"
 s3transfer = ">=0.5.0,<0.6.0"
 
@@ -865,7 +865,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "fe138fc37c0202ba1fa4a44e73b0eca9430f67a18186e07dd1c73833a5e9cc7f"
+content-hash = "2b877fead97e54c6c6e183e36cdbd9c99346956c2593ade0f7f427028b700ee9"
 
 [metadata.files]
 argon2-cffi = [
@@ -934,8 +934,8 @@ blessings = [
     {file = "blessings-1.7.tar.gz", hash = "sha256:98e5854d805f50a5b58ac2333411b0482516a8210f23f43308baeb58d77c157d"},
 ]
 boto3 = [
-    {file = "boto3-1.21.22-py3-none-any.whl", hash = "sha256:a56e34d8dc3390006a6d7ae5373f357917932045e874c82de2736f3b42c02b10"},
-    {file = "boto3-1.21.22.tar.gz", hash = "sha256:334f14ffbd89ddd15090e90b32e4fcea73d83b60b19ca2737a9264fd44096f35"},
+    {file = "boto3-1.21.46-py3-none-any.whl", hash = "sha256:3b13d727854aba9dea900b6c7fa134c52396869d842460d14fab8b85b69645f7"},
+    {file = "boto3-1.21.46.tar.gz", hash = "sha256:9ac902076eac82112f4536cc2606a1f597a387dbc56b250575ac2d2c64c75e20"},
 ]
 botocore = [
     {file = "botocore-1.24.46-py3-none-any.whl", hash = "sha256:663d8f02b98641846eb959c54c840cc33264d5f2dee5b8fc09ee8adbef0f8dcf"},
