@@ -55,7 +55,7 @@ gunicorn = {version = "^20.1.0", extras = ["gevent"]}
 [tool.poetry.dev-dependencies]
 bpython = "^0.22.1"
 django-extensions = "^3.1.5"
-black = "^22.3.0"
+black = "^22.6.0"
 isort = "^5.10.1"
 flake8 = "^4.0.1"
 awscli = "^1.22.101"
