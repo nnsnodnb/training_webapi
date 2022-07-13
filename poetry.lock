@@ -267,14 +267,14 @@ Django = ">=3.2"
 
 [[package]]
 name = "django-extensions"
-version = "3.1.5"
+version = "3.2.0"
 description = "Extensions for Django"
 category = "dev"
 optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
-Django = ">=2.2"
+Django = ">=3.2"
 
 [[package]]
 name = "django-maintenance-mode"
@@ -865,7 +865,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "30d91f8648a7ee1b4da990b8ae6bb40eb4e457501b8bd1fea1b9dd66f6c1eab3"
+content-hash = "89f66ae8cf7de14775c4aec6db6b327a75d13cee298169f3f084d7150266c0bc"
 
 [metadata.files]
 argon2-cffi = [
@@ -1064,8 +1064,8 @@ django-cors-headers = [
     {file = "django_cors_headers-3.13.0-py3-none-any.whl", hash = "sha256:37e42883b5f1f2295df6b4bba96eb2417a14a03270cb24b2a07f021cd4487cf4"},
 ]
 django-extensions = [
-    {file = "django-extensions-3.1.5.tar.gz", hash = "sha256:28e1e1bf49f0e00307ba574d645b0af3564c981a6dfc87209d48cb98f77d0b1a"},
-    {file = "django_extensions-3.1.5-py3-none-any.whl", hash = "sha256:9238b9e016bb0009d621e05cf56ea8ce5cce9b32e91ad2026996a7377ca28069"},
+    {file = "django-extensions-3.2.0.tar.gz", hash = "sha256:7dc7cd1da50d83b76447a58f5d7e5c8e6cd83f21e9b7e5f97e6b644f4d4e21a6"},
+    {file = "django_extensions-3.2.0-py3-none-any.whl", hash = "sha256:4c234a7236e9e41c17d9036f6dae7a3a9b212527105b8a0d24b2459b267825f0"},
 ]
 django-maintenance-mode = [
     {file = "django-maintenance-mode-0.16.3.tar.gz", hash = "sha256:f9a702e333aa48bf9366af7b412ad15790ecf1e6c3892fd991b7c02b6bcedaa4"},
