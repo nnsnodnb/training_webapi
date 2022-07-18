@@ -372,7 +372,7 @@ Django = ">=1.11,<4"
 
 [[package]]
 name = "drf-yasg"
-version = "1.20.0"
+version = "1.21.0"
 description = "Automated generation of real Swagger/OpenAPI 2.0 schemas from Django Rest Framework code."
 category = "main"
 optional = false
@@ -381,11 +381,12 @@ python-versions = ">=3.6"
 [package.dependencies]
 coreapi = ">=2.3.3"
 coreschema = ">=0.0.4"
-Django = ">=2.2.16"
+django = ">=2.2.16"
 djangorestframework = ">=3.10.3"
 inflection = ">=0.3.1"
-packaging = "*"
-"ruamel.yaml" = ">=0.15.34"
+packaging = ">=21.0"
+pytz = ">=2021.1"
+"ruamel.yaml" = ">=0.16.13"
 uritemplate = ">=3.0.0"
 
 [package.extras]
@@ -865,7 +866,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "89f66ae8cf7de14775c4aec6db6b327a75d13cee298169f3f084d7150266c0bc"
+content-hash = "8aeb67833a8d6281113facb7544d0da02ae9f193bee1af06c29fa77f9ee75231"
 
 [metadata.files]
 argon2-cffi = [
@@ -1097,8 +1098,8 @@ drf-rw-serializers = [
     {file = "drf_rw_serializers-1.0.4-py2.py3-none-any.whl", hash = "sha256:75961b572f7edf15148e99e28dac4524f68315e510cd703400c87cd1db47483a"},
 ]
 drf-yasg = [
-    {file = "drf-yasg-1.20.0.tar.gz", hash = "sha256:d50f197c7f02545d0b736df88c6d5cf874f8fea2507ad85ad7de6ae5bf2d9e5a"},
-    {file = "drf_yasg-1.20.0-py2.py3-none-any.whl", hash = "sha256:8b72e5b1875931a8d11af407be3a9a5ba8776541492947a0df5bafda6b7f8267"},
+    {file = "drf-yasg-1.21.0.tar.gz", hash = "sha256:2f2877a65ba4127d7eeedfa9a77a096db2e3743bd121d745002997b417c0d86a"},
+    {file = "drf_yasg-1.21.0-py2.py3-none-any.whl", hash = "sha256:b90ec04c4e395dfdfab02a8b9eea2c1bdcdd694c5b1eb6eba641b772ad0f4a56"},
 ]
 flake8 = [
     {file = "flake8-4.0.1-py2.py3-none-any.whl", hash = "sha256:479b1304f72536a55948cb40a32dce8bb0ffe3501e26eaf292c7e60eb5e0428d"},
