@@ -53,7 +53,7 @@ django-maintenance-mode = "^0.16.3"
 gunicorn = {version = "^20.1.0", extras = ["gevent"]}
 
 [tool.poetry.dev-dependencies]
-bpython = "^0.22.1"
+bpython = "^0.23"
 django-extensions = "^3.2.0"
 black = "^22.8.0"
 isort = "^5.10.1"
