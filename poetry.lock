@@ -370,14 +370,14 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [[package]]
 name = "drf-rw-serializers"
-version = "1.0.4"
+version = "1.0.5"
 description = "Generic views, viewsets and mixins that extend the Django REST Framework ones adding separated serializers for read and write operations"
 category = "main"
 optional = false
 python-versions = "*"
 
 [package.dependencies]
-Django = ">=1.11,<4"
+Django = ">=1.11,<5"
 
 [[package]]
 name = "drf-yasg"
@@ -915,7 +915,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "57c39a4f57d713a928e18ceb766c38a4c6fc036f6a6dfb73198ff5caccd18641"
+content-hash = "446233cfb8df4a666defa8237836de91cc7f1a584fc5f7aa20e870f3ccc7b25f"
 
 [metadata.files]
 ansicon = [
@@ -1146,8 +1146,8 @@ docutils = [
     {file = "docutils-0.15.2.tar.gz", hash = "sha256:a2aeea129088da402665e92e0b25b04b073c04b2dce4ab65caaa38b7ce2e1a99"},
 ]
 drf-rw-serializers = [
-    {file = "drf-rw-serializers-1.0.4.tar.gz", hash = "sha256:8055c2d86e1717e3a4bf0337498638e60c910cfc6b57b170737326622ca75034"},
-    {file = "drf_rw_serializers-1.0.4-py2.py3-none-any.whl", hash = "sha256:75961b572f7edf15148e99e28dac4524f68315e510cd703400c87cd1db47483a"},
+    {file = "drf-rw-serializers-1.0.5.tar.gz", hash = "sha256:6ced5cd508dcc55fd3fa9d60a0663ce6d1f96845c200ee9ac5731e3e646ec616"},
+    {file = "drf_rw_serializers-1.0.5-py2.py3-none-any.whl", hash = "sha256:12c0821f6f3d41d1eab3900bdae4825be5e5be6b1b8fa02d046678435f0279d5"},
 ]
 drf-yasg = [
     {file = "drf-yasg-1.21.3.tar.gz", hash = "sha256:b2eebb438fa641503a08dac791be24183ea26dbcfe371a9824ea91f6e3a988aa"},
