@@ -381,7 +381,7 @@ Django = ">=1.11,<5"
 
 [[package]]
 name = "drf-yasg"
-version = "1.21.3"
+version = "1.21.4"
 description = "Automated generation of real Swagger/OpenAPI 2.0 schemas from Django Rest Framework code."
 category = "main"
 optional = false
@@ -915,7 +915,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "446233cfb8df4a666defa8237836de91cc7f1a584fc5f7aa20e870f3ccc7b25f"
+content-hash = "c9922d6b5a817ec739f7d94475f491c1e58be5499d9b01fe71d1a35843501bc1"
 
 [metadata.files]
 ansicon = [
@@ -1150,8 +1150,8 @@ drf-rw-serializers = [
     {file = "drf_rw_serializers-1.0.5-py2.py3-none-any.whl", hash = "sha256:12c0821f6f3d41d1eab3900bdae4825be5e5be6b1b8fa02d046678435f0279d5"},
 ]
 drf-yasg = [
-    {file = "drf-yasg-1.21.3.tar.gz", hash = "sha256:b2eebb438fa641503a08dac791be24183ea26dbcfe371a9824ea91f6e3a988aa"},
-    {file = "drf_yasg-1.21.3-py3-none-any.whl", hash = "sha256:85899b8b173cac7d39af3fea205bdc1a599aed8de3389a3bcccc29b37b9b983e"},
+    {file = "drf-yasg-1.21.4.tar.gz", hash = "sha256:887c9f79e64f46aa48974234e61029b1bea6b12ea628a8fc8a3697589add1d3e"},
+    {file = "drf_yasg-1.21.4-py3-none-any.whl", hash = "sha256:4a156d195fdccc51b40a227955588d982ca43c2e327927c7713bf967f5589913"},
 ]
 flake8 = [
     {file = "flake8-5.0.4-py2.py3-none-any.whl", hash = "sha256:7a1cf6b73744f5806ab95e526f6f0d8c01c66d7bbe349562d22dfca20610b248"},
