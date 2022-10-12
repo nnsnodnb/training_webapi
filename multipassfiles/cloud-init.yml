@@ -4,24 +4,12 @@ timezone: Asia/Tokyo
 
 package_update: true
 package_upgrade: true
+
 packages:
   - nginx
   - wget
-  - libffi-dev
-  - libssl-dev
-  - zlib1g-dev
-  - liblzma-dev
-  - tk-dev
-  - libbz2-dev
-  - libreadline-dev
-  - libsqlite3-dev
-  - libopencv-dev
-  - build-essential
   - git
-  - ca-certificates
   - curl
-  - gnupg
-  - lsb-release
 
 users:
   - default
@@ -145,6 +133,9 @@ write_files:
   permissions: '0755'
 - content: |
     #!/bin/bash
+    # Install packages
+    apt update
+    apt install -y libffi-dev libssl-dev zlib1g-dev liblzma-dev tk-dev libbz2-dev libreadline-dev libsqlite3-dev libopencv-dev build-essential ca-certificates gnupg lsb-release
     arch=$(dpkg --print-architecture)
     # PostgreSQL in Docker
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
