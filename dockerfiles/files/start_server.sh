@@ -1,8 +1,5 @@
 #!/bin/bash -e
 
-# dockerize
-dockerize -wait tcp://proxy:80 -wait tcp://db:5432 -wait tcp://storage:9000 -timeout 30s
-
 # Install dependencies
 pip install -U pip
 pip install poetry

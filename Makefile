@@ -29,7 +29,6 @@ multipass_setup:
 	multipass restart training
 	$(MAKE) multipass_mount
 	multipass exec training -- sudo /srv/setup.sh
-	$(MAKE) multipass_install_python
 	$(MAKE) multipass_start_server
 	multipass info training
 
@@ -38,10 +37,6 @@ multipass_cleanup:
 	multipass stop training
 	multipass delete training
 	multipass purge
-
-.PHONY: multipass_install_python
-multipass_install_python:
-	multipass exec training -- /srv/install_python.sh
 
 .PHONY: multipass_mount
 multipass_mount:
