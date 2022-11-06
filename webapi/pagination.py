@@ -6,7 +6,7 @@ from rest_framework.pagination import CursorPagination as BaseCursorPagination
 
 class CursorPagination(BaseCursorPagination):
 
-    ordering = "created"
+    ordering = "-created"
 
     def encode_cursor(self, cursor):
         tokens = {}
