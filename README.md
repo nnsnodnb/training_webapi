@@ -75,7 +75,7 @@ finch vm init
 すでにこのリポジトリがローカルにクローンもしくはダウンロードされているとします。
 
 ```shell
-make docker_setup
+make finch_setup
 ```
 
 しばらくするとプロンプトが現れるので
