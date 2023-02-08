@@ -480,18 +480,18 @@ Django = ">=3.2"
 
 [[package]]
 name = "django-maintenance-mode"
-version = "0.16.3"
+version = "0.18.0"
 description = "django-maintenance-mode shows a 503 error page when maintenance-mode is on."
 category = "main"
 optional = false
 python-versions = "*"
 files = [
-    {file = "django-maintenance-mode-0.16.3.tar.gz", hash = "sha256:f9a702e333aa48bf9366af7b412ad15790ecf1e6c3892fd991b7c02b6bcedaa4"},
-    {file = "django_maintenance_mode-0.16.3-py3-none-any.whl", hash = "sha256:adacbfdce4b467390ca98bc975fe5957b1f9984317c7da434b9c07c8ff086f99"},
+    {file = "django-maintenance-mode-0.18.0.tar.gz", hash = "sha256:9fcc4db6c38f7170f5b8ea3d915406075fa7c6da86be58a117067057f706083d"},
+    {file = "django_maintenance_mode-0.18.0-py3-none-any.whl", hash = "sha256:c4dd2098279154c6a1221a3631ddf070cad1633320074cc457376498fd78f476"},
 ]
 
 [package.dependencies]
-python-fsutil = ">=0.6.0"
+python-fsutil = ">=0.7.0"
 
 [[package]]
 name = "django-stubs"
@@ -1275,14 +1275,14 @@ six = ">=1.5"
 
 [[package]]
 name = "python-fsutil"
-version = "0.6.0"
-description = "file-system utilities for lazy devs."
+version = "0.10.0"
+description = "high-level file-system operations for lazy devs."
 category = "main"
 optional = false
 python-versions = "*"
 files = [
-    {file = "python-fsutil-0.6.0.tar.gz", hash = "sha256:e684aa34ecd7f28adf35036e60f3baa8409ce1944d81c027832b1ed6cf1c742f"},
-    {file = "python_fsutil-0.6.0-py3-none-any.whl", hash = "sha256:6ddafa5d26005ac4a92fdb12a4d61269810554f9c5538d3e8e618da42a65a8ba"},
+    {file = "python-fsutil-0.10.0.tar.gz", hash = "sha256:5f02ed7764cac27633b4aaaa9cf56af2245a64a6cc048866b6f02792a8c5bf86"},
+    {file = "python_fsutil-0.10.0-py3-none-any.whl", hash = "sha256:e0421440b5763d08129dcc469364105f3b434fc9736c3bc6ed181b1c623148ee"},
 ]
 
 [[package]]
@@ -1687,4 +1687,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "2e26fa7a2ccb89ef0cac6f112569cbdb4f1f846fa873776024d0d287b26b84f7"
+content-hash = "9ceb51df0b000420f9762ab7ed56fbfa6b34d4f1b1f7380b07eea0f0ef074e08"
