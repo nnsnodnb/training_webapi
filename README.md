@@ -204,7 +204,10 @@ make docker_maintenance_off
 
 2. Finch
 
-まだ対応していません。
+```shell
+make +finch_maintenance_on
+make finch_maintenance_off
+```
 
 ## License
 

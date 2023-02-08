@@ -41,10 +41,10 @@ docker_maintenance_on:
 docker_maintenance_off:
 	docker compose exec backend poetry run python manage.py maintenance_mode off
 
-# .PHONY: finch_maintenance_on
-# finch_maintenance_on:
-# 	finch compose run backend poetry run python manage.py maintenance_mode on
+.PHONY: finch_maintenance_on
+finch_maintenance_on:
+	finch compose exec backend poetry run python manage.py maintenance_mode on
 
-# .PHONY: finch_maintenance_off
-# finch_maintenance_off:
-# 	finch compose run backend poetry run python manage.py maintenance_mode off
+.PHONY: finch_maintenance_off
+finch_maintenance_off:
+	finch compose exec backend poetry run python manage.py maintenance_mode off
