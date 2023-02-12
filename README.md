@@ -205,7 +205,7 @@ make docker_maintenance_off
 2. Finch
 
 ```shell
-make +finch_maintenance_on
+make finch_maintenance_on
 make finch_maintenance_off
 ```
 
