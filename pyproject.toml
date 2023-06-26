@@ -40,7 +40,7 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-Django = "^4.2.1"
+Django = "^4.2.2"
 djangorestframework = "^3.14.0"
 djangorestframework-simplejwt = "5.2.2"
 drf-yasg = "^1.21.5"
