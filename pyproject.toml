@@ -51,6 +51,7 @@ boto3 = "^1.21.46"
 django-cors-headers = "^3.14.0"
 django-maintenance-mode = "^0.18.0"
 gunicorn = {version = "^20.1.0", extras = ["gevent"]}
+drf-spectacular = "^0.26.3"
 
 [tool.poetry.dev-dependencies]
 bpython = "^0.24"

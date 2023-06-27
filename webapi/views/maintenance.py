@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 
 
 class MaintenanceJSONAPIView(APIView):
-
+    authentication_classes = ()
     http_method_names = ["get"]
     permission_classes = ()
     swagger_schema = None
