@@ -19,7 +19,6 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 from webapi.views.maintenance import MaintenanceJSONAPIView
 
-
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("webapi.urls", namespace="webapi")),
