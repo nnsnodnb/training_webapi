@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 from django.utils import timezone
+from drf_spectacular.utils import extend_schema
 from maintenance_mode.core import get_maintenance_mode
 from rest_framework import exceptions, status
 from rest_framework.response import Response
@@ -11,8 +12,8 @@ class MaintenanceJSONAPIView(APIView):
     authentication_classes = ()
     http_method_names = ["get"]
     permission_classes = ()
-    swagger_schema = None
 
+    @extend_schema(exclude=True)
     def get(self, request, *args, **kwargs):
         if get_maintenance_mode():
             date = (timezone.now() + timedelta(hours=2 + 9)).strftime("%Y年%m月%d日 %H時00分")

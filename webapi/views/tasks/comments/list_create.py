@@ -1,20 +1,13 @@
 from django.shortcuts import get_object_or_404
 from drf_rw_serializers.generics import ListCreateAPIView
-from drf_yasg import openapi
-from drf_yasg.utils import swagger_auto_schema
-from rest_framework import status
+from drf_spectacular.utils import extend_schema, inline_serializer, OpenApiParameter, OpenApiResponse
+from rest_framework import serializers, status
 
 from db.models import Comment, Task
-from webapi.serializers.comments import PaginationCommentSerializer, ReadCommentSerializer, WriteCommentSerializer
+from webapi.serializers.comments import ReadCommentSerializer, WriteCommentSerializer
 
 
 class CommentListCreateAPIView(ListCreateAPIView):
-    """
-    get: タスクへのコメント一覧取得
-
-    post: タスクへのコメントの新規作成
-    """
-
     queryset = Comment.objects.select_related("user", "task")
     read_serializer_class = ReadCommentSerializer
     write_serializer_class = WriteCommentSerializer
@@ -22,19 +15,38 @@ class CommentListCreateAPIView(ListCreateAPIView):
     def filter_queryset(self, queryset):
         return queryset.filter(user=self.request.user, task_id=self.request.parser_context["kwargs"]["pk"])
 
-    @swagger_auto_schema(
-        responses={status.HTTP_200_OK: openapi.Response("response", PaginationCommentSerializer)},
+    @extend_schema(
+        operation_id="get_task_comments",
+        parameters=[
+            OpenApiParameter(
+                name="cursor",
+                description="The pagination cursor value.",
+            ),
+        ],
+        responses={
+            status.HTTP_200_OK: ReadCommentSerializer,
+        },
+        description="タスクへのコメント一覧取得",
     )
     def get(self, request, *args, **kwargs):
         _ = get_object_or_404(Task.objects.select_related("user"), pk=kwargs["pk"], user_id=request.user.id)
         return super().get(request, *args, **kwargs)
 
-    @swagger_auto_schema(
-        request_body=WriteCommentSerializer,
+    @extend_schema(
+        operation_id="create_task_comments",
+        request=WriteCommentSerializer,
         responses={
-            status.HTTP_201_CREATED: openapi.Response("created", ReadCommentSerializer),
-            status.HTTP_400_BAD_REQUEST: openapi.Response("validation error"),
+            status.HTTP_201_CREATED: ReadCommentSerializer,
+            status.HTTP_400_BAD_REQUEST: OpenApiResponse(
+                response=inline_serializer(
+                    name="CreateTaskCommentsBadRequestResponse",
+                    fields={
+                        "error_detail": serializers.CharField(required=True),
+                    },
+                ),
+            ),
         },
+        description="タスクへのコメントの新規作成",
     )
     def post(self, request, *args, **kwargs):
         _ = get_object_or_404(Task.objects.select_related("user"), pk=kwargs["pk"], user_id=request.user.id)

@@ -209,7 +209,6 @@ SIMPLE_JWT = {
     "JWT_URL": None,
     "LEEWAY": 0,
     "AUTH_HEADER_TYPES": [
-        "Bearer",
         "bearer",
     ],
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",

@@ -1,6 +1,5 @@
 from drf_rw_serializers.generics import UpdateAPIView
-from drf_yasg import openapi
-from drf_yasg.utils import swagger_auto_schema
+from drf_spectacular.utils import extend_schema
 from rest_framework import status
 
 from db.models import Task
@@ -8,7 +7,6 @@ from webapi.serializers.tasks import PartialStatusUpdateTaskModelSerializer, Rea
 
 
 class TaskPartialUpdateAPIView(UpdateAPIView):
-
     http_method_names = ["patch"]
     queryset = Task.objects.select_related("user")
     read_serializer_class = ReadTaskModelSerializer
@@ -17,9 +15,12 @@ class TaskPartialUpdateAPIView(UpdateAPIView):
     def filter_queryset(self, queryset):
         return queryset.filter(user=self.request.user)
 
-    @swagger_auto_schema(
-        request_body=PartialStatusUpdateTaskModelSerializer,
-        responses={status.HTTP_200_OK: openapi.Response("OK", ReadTaskModelSerializer)},
+    @extend_schema(
+        operation_id="update_task_status",
+        responses={
+            status.HTTP_200_OK: ReadTaskModelSerializer,
+        },
+        description="指定したタスクのステータスを変更",
     )
     def patch(self, request, *args, **kwargs):
         return super().patch(request, *args, **kwargs)

@@ -1,20 +1,13 @@
 from drf_rw_serializers.generics import GenericAPIView
 from drf_rw_serializers.mixins import UpdateModelMixin
-from drf_yasg import openapi
-from drf_yasg.utils import swagger_auto_schema
-from rest_framework import mixins, status
+from drf_spectacular.utils import extend_schema, inline_serializer, OpenApiResponse, OpenApiTypes
+from rest_framework import mixins, serializers, status
 
 from db.models import Comment
 from webapi.serializers.comments import ReadCommentSerializer, WriteCommentSerializer
 
 
 class CommentUpdateDestroyAPIView(UpdateModelMixin, mixins.DestroyModelMixin, GenericAPIView):
-    """
-    put: 指定したコメントの情報更新
-
-    delete: 指定したコメントの削除
-    """
-
     http_method_names = ["put", "delete"]
     queryset = Comment.objects.select_related("user", "task")
     read_serializer_class = ReadCommentSerializer
@@ -24,22 +17,47 @@ class CommentUpdateDestroyAPIView(UpdateModelMixin, mixins.DestroyModelMixin, Ge
     def filter_queryset(self, queryset):
         return queryset.filter(user=self.request.user, task_id=self.request.parser_context["kwargs"]["pk"])
 
-    @swagger_auto_schema(
-        request_body=WriteCommentSerializer,
+    @extend_schema(
+        operation_id="update_task_comment",
+        request=WriteCommentSerializer,
         responses={
-            status.HTTP_200_OK: openapi.Response("ok", ReadCommentSerializer),
-            status.HTTP_400_BAD_REQUEST: openapi.Response("validation error"),
-            status.HTTP_404_NOT_FOUND: openapi.Response("not found"),
+            status.HTTP_200_OK: ReadCommentSerializer,
+            status.HTTP_400_BAD_REQUEST: OpenApiResponse(
+                response=inline_serializer(
+                    name="UpdateTaskCommentBadRequestResponse",
+                    fields={
+                        "error_detail": serializers.CharField(required=True),
+                    },
+                ),
+            ),
+            status.HTTP_404_NOT_FOUND: OpenApiResponse(
+                response=inline_serializer(
+                    name="UpdateTaskCommentNotFoundResponse",
+                    fields={
+                        "error_detail": serializers.CharField(required=True),
+                    },
+                ),
+            ),
         },
+        description="指定したコメントの情報更新",
     )
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
 
-    @swagger_auto_schema(
+    @extend_schema(
+        operation_id="delete_task_comment",
         responses={
-            status.HTTP_204_NO_CONTENT: openapi.Response("deleted"),
-            status.HTTP_404_NOT_FOUND: openapi.Response("not found"),
+            status.HTTP_204_NO_CONTENT: OpenApiTypes.NONE,
+            status.HTTP_404_NOT_FOUND: OpenApiResponse(
+                response=inline_serializer(
+                    name="DeleteTaskCommentNotFoundResponse",
+                    fields={
+                        "error_detail": serializers.CharField(required=True),
+                    },
+                ),
+            ),
         },
+        description="指定したコメントの削除",
     )
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
