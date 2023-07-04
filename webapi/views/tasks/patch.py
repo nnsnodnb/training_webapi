@@ -1,5 +1,5 @@
 from drf_rw_serializers.generics import UpdateAPIView
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import OpenApiParameter, OpenApiTypes, extend_schema
 from rest_framework import status
 
 from db.models import Task
@@ -20,6 +20,14 @@ class TaskPartialUpdateAPIView(UpdateAPIView):
 
     @extend_schema(
         operation_id="updateTaskStatus",
+        parameters=[
+            OpenApiParameter(
+                name="authorization",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.HEADER,
+                required=True,
+            ),
+        ],
         request=PartialStatusUpdateTaskModelSerializer,
         responses={
             status.HTTP_200_OK: ReadTaskModelSerializer,

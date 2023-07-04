@@ -19,6 +19,12 @@ class CommentListCreateAPIView(ListCreateAPIView):
         operation_id="fetchTaskComments",
         parameters=[
             OpenApiParameter(
+                name="authorization",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.HEADER,
+                required=True,
+            ),
+            OpenApiParameter(
                 name="cursor",
                 description="The pagination cursor value.",
             ),
@@ -35,6 +41,14 @@ class CommentListCreateAPIView(ListCreateAPIView):
 
     @extend_schema(
         operation_id="createTaskComments",
+        parameters=[
+            OpenApiParameter(
+                name="authorization",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.HEADER,
+                required=True,
+            ),
+        ],
         request=WriteCommentSerializer,
         responses={
             status.HTTP_201_CREATED: ReadCommentSerializer,

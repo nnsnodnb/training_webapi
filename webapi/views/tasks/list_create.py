@@ -18,6 +18,12 @@ class TaskListCreateAPIView(ListCreateAPIView):
         operation_id="fetchTasks",
         parameters=[
             OpenApiParameter(
+                name="authorization",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.HEADER,
+                required=True,
+            ),
+            OpenApiParameter(
                 name="cursor",
                 description="The pagination cursor value.",
             ),
@@ -33,6 +39,14 @@ class TaskListCreateAPIView(ListCreateAPIView):
 
     @extend_schema(
         operation_id="createTask",
+        parameters=[
+            OpenApiParameter(
+                name="authorization",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.HEADER,
+                required=True,
+            ),
+        ],
         request=WriteTaskModelSerializer,
         responses={
             status.HTTP_201_CREATED: ReadTaskModelSerializer,
