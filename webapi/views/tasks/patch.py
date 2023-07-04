@@ -24,6 +24,7 @@ class TaskPartialUpdateAPIView(UpdateAPIView):
         responses={
             status.HTTP_200_OK: ReadTaskModelSerializer,
         },
+        tags=["task"],
         description="指定したタスクのステータスを変更",
     )
     def patch(self, request, *args, **kwargs):

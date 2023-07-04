@@ -45,6 +45,7 @@ class MaintenanceJSONAPIView(GenericAPIView):
                 ],
             ),
         },
+        tags=["maintenance"],
         description="メンテナンス情報を取得",
     )
     def get(self, request, *args, **kwargs):

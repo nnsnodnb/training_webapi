@@ -26,6 +26,7 @@ class CommentListCreateAPIView(ListCreateAPIView):
         responses={
             status.HTTP_200_OK: ReadCommentSerializer,
         },
+        tags=["task_comment"],
         description="タスクへのコメント一覧取得",
     )
     def get(self, request, *args, **kwargs):
@@ -39,6 +40,7 @@ class CommentListCreateAPIView(ListCreateAPIView):
             status.HTTP_201_CREATED: ReadCommentSerializer,
             status.HTTP_400_BAD_REQUEST: OpenApiTypes.NONE,
         },
+        tags=["task_comment"],
         description="タスクへのコメントの新規作成",
     )
     def post(self, request, *args, **kwargs):

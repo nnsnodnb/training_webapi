@@ -26,6 +26,7 @@ class CommentUpdateDestroyAPIView(UpdateModelMixin, mixins.DestroyModelMixin, Ge
             status.HTTP_400_BAD_REQUEST: OpenApiTypes.NONE,
             status.HTTP_404_NOT_FOUND: NotFoundSerializer,
         },
+        tags=["task_comment"],
         description="指定したコメントの情報更新",
     )
     def put(self, request, *args, **kwargs):
@@ -37,6 +38,7 @@ class CommentUpdateDestroyAPIView(UpdateModelMixin, mixins.DestroyModelMixin, Ge
             status.HTTP_204_NO_CONTENT: OpenApiTypes.NONE,
             status.HTTP_404_NOT_FOUND: NotFoundSerializer,
         },
+        tags=["task_comment"],
         description="指定したコメントの削除",
     )
     def delete(self, request, *args, **kwargs):

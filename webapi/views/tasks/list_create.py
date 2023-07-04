@@ -25,6 +25,7 @@ class TaskListCreateAPIView(ListCreateAPIView):
         responses={
             status.HTTP_200_OK: ReadTaskModelSerializer,
         },
+        tags=["task"],
         description="タスク一覧の取得",
     )
     def get(self, request, *args, **kwargs):
@@ -37,6 +38,7 @@ class TaskListCreateAPIView(ListCreateAPIView):
             status.HTTP_201_CREATED: ReadTaskModelSerializer,
             status.HTTP_400_BAD_REQUEST: OpenApiTypes.NONE,
         },
+        tags=["task"],
         description="タスクの新規作成",
     )
     def post(self, request, *args, **kwargs):

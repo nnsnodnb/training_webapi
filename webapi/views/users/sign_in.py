@@ -36,6 +36,7 @@ class TokenObtainPairView(BaseTokenObtainPairView):
                 ),
             ),
         },
+        tags=["user"],
     )
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)

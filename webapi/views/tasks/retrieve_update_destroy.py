@@ -22,6 +22,7 @@ class TaskRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
             status.HTTP_200_OK: ReadTaskModelSerializer,
             status.HTTP_404_NOT_FOUND: NotFoundSerializer,
         },
+        tags=["task"],
         description="指定したタスクの詳細を取得",
     )
     def get(self, request, *args, **kwargs):
@@ -35,6 +36,7 @@ class TaskRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
             status.HTTP_400_BAD_REQUEST: OpenApiTypes.NONE,
             status.HTTP_404_NOT_FOUND: NotFoundSerializer,
         },
+        tags=["task"],
         description="指定したタスクの情報更新",
     )
     def put(self, request, *args, **kwargs):
@@ -46,6 +48,7 @@ class TaskRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
             status.HTTP_204_NO_CONTENT: OpenApiTypes.NONE,
             status.HTTP_404_NOT_FOUND: NotFoundSerializer,
         },
+        tags=["task"],
         description="指定したタスクの削除",
     )
     def delete(self, request, *args, **kwargs):

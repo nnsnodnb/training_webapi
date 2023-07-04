@@ -39,6 +39,7 @@ class ImageCreateAPIView(CreateAPIView):
                 ),
             ),
         },
+        tags=["image"],
         description="画像アップロード",
     )
     def post(self, request, *args, **kwargs):
