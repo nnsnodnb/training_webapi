@@ -3,7 +3,6 @@ from rest_framework import serializers
 
 
 class UserSerializer(serializers.ModelSerializer):
-
     id = serializers.IntegerField()
     username = serializers.CharField()
 

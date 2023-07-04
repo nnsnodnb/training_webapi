@@ -8,7 +8,6 @@ from .users import UserSerializer
 
 
 class ReadCommentSerializer(serializers.ModelSerializer):
-
     id = serializers.IntegerField()
     content = serializers.CharField()
     image_ids = serializers.ListSerializer(
@@ -24,7 +23,6 @@ class ReadCommentSerializer(serializers.ModelSerializer):
 
 
 class WriteCommentSerializer(serializers.ModelSerializer):
-
     content = serializers.CharField()
     image_ids = serializers.ListSerializer(
         child=serializers.CharField(),
@@ -51,10 +49,3 @@ class WriteCommentSerializer(serializers.ModelSerializer):
         if (request := self.context.get("request")) is None:
             raise exceptions.NotFound()
         return request.user
-
-
-class PaginationCommentSerializer(serializers.Serializer):
-
-    next = serializers.CharField(required=False, allow_null=True)
-    previous = serializers.CharField(required=False, allow_null=True)
-    results = ReadCommentSerializer(many=True)

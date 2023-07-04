@@ -1,5 +1,5 @@
 from drf_rw_serializers.generics import RetrieveUpdateDestroyAPIView
-from drf_spectacular.utils import extend_schema, inline_serializer, OpenApiResponse, OpenApiTypes
+from drf_spectacular.utils import OpenApiResponse, OpenApiTypes, extend_schema, inline_serializer
 from rest_framework import serializers, status
 
 from db.models.tasks import Task

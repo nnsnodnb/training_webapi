@@ -1,5 +1,5 @@
 from drf_rw_serializers.generics import CreateAPIView
-from drf_spectacular.utils import inline_serializer, OpenApiResponse, extend_schema
+from drf_spectacular.utils import OpenApiResponse, extend_schema, inline_serializer
 from rest_framework import serializers, status
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response

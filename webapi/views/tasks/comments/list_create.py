@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from drf_rw_serializers.generics import ListCreateAPIView
-from drf_spectacular.utils import extend_schema, inline_serializer, OpenApiParameter, OpenApiResponse
+from drf_spectacular.utils import OpenApiParameter, OpenApiResponse, extend_schema, inline_serializer
 from rest_framework import serializers, status
 
 from db.models import Comment, Task
@@ -16,7 +16,7 @@ class CommentListCreateAPIView(ListCreateAPIView):
         return queryset.filter(user=self.request.user, task_id=self.request.parser_context["kwargs"]["pk"])
 
     @extend_schema(
-        operation_id="get_task_comments",
+        operation_id="fetch_task_comments",
         parameters=[
             OpenApiParameter(
                 name="cursor",

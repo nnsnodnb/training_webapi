@@ -8,7 +8,6 @@ from .users import UserSerializer
 
 
 class ReadTaskModelSerializer(serializers.ModelSerializer):
-
     id = serializers.IntegerField()
     title = serializers.CharField()
     thumbnail = serializers.CharField(required=False, allow_null=True)
@@ -31,7 +30,6 @@ class ReadTaskModelSerializer(serializers.ModelSerializer):
 
 
 class WriteTaskModelSerializer(serializers.ModelSerializer):
-
     title = serializers.CharField(required=True, max_length=300)
     image_id = serializers.CharField(required=False, max_length=500, allow_null=True, source="thumbnail")
     user = serializers.HiddenField(default=get_user_model().objects.none())
@@ -51,16 +49,8 @@ class WriteTaskModelSerializer(serializers.ModelSerializer):
 
 
 class PartialStatusUpdateTaskModelSerializer(serializers.ModelSerializer):
-
     status = serializers.ChoiceField(choices=Task.StatusChoices.choices)
 
     class Meta:
         model = Task
         fields = ("status",)
-
-
-class PaginationTaskSerializer(serializers.Serializer):
-
-    next = serializers.CharField(required=False, allow_null=True)
-    previous = serializers.CharField(required=False, allow_null=True)
-    results = ReadTaskModelSerializer(many=True)

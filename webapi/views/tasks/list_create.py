@@ -1,5 +1,5 @@
 from drf_rw_serializers.generics import ListCreateAPIView
-from drf_spectacular.utils import inline_serializer, OpenApiParameter, OpenApiResponse, extend_schema
+from drf_spectacular.utils import OpenApiParameter, OpenApiResponse, extend_schema, inline_serializer
 from rest_framework import serializers, status
 
 from db.models.tasks import Task
@@ -15,7 +15,7 @@ class TaskListCreateAPIView(ListCreateAPIView):
         return queryset.filter(user=self.request.user)
 
     @extend_schema(
-        operation_id="get_tasks",
+        operation_id="fetch_tasks",
         parameters=[
             OpenApiParameter(
                 name="cursor",

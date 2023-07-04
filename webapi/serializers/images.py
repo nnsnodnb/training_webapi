@@ -14,7 +14,6 @@ from rest_framework.exceptions import ValidationError
 
 
 class ReadImageSerializer(serializers.Serializer):
-
     image_id = serializers.CharField()
 
     class Meta:
@@ -22,7 +21,6 @@ class ReadImageSerializer(serializers.Serializer):
 
 
 class WriteImageSerializer(serializers.Serializer):
-
     image = serializers.FileField()
 
     class Meta:

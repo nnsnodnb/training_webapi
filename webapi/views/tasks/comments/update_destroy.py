@@ -1,6 +1,6 @@
 from drf_rw_serializers.generics import GenericAPIView
 from drf_rw_serializers.mixins import UpdateModelMixin
-from drf_spectacular.utils import extend_schema, inline_serializer, OpenApiResponse, OpenApiTypes
+from drf_spectacular.utils import OpenApiResponse, OpenApiTypes, extend_schema, inline_serializer
 from rest_framework import mixins, serializers, status
 
 from db.models import Comment

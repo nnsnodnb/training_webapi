@@ -9,7 +9,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class ReadTokenSerializer(serializers.Serializer):
-
     refresh = serializers.CharField()
     access = serializers.CharField()
 
@@ -21,7 +20,6 @@ class ReadTokenSerializer(serializers.Serializer):
 
 
 class ReadRefreshTokenSerializer(serializers.Serializer):
-
     access = serializers.CharField()
 
     class Meta:

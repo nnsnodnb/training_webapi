@@ -12,6 +12,9 @@ class TaskPartialUpdateAPIView(UpdateAPIView):
     read_serializer_class = ReadTaskModelSerializer
     write_serializer_class = PartialStatusUpdateTaskModelSerializer
 
+    def get_serializer_class(self):
+        return self.read_serializer_class
+
     def filter_queryset(self, queryset):
         return queryset.filter(user=self.request.user)
 

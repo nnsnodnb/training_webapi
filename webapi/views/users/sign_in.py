@@ -1,4 +1,4 @@
-from drf_spectacular.utils import extend_schema, inline_serializer, OpenApiResponse
+from drf_spectacular.utils import OpenApiResponse, extend_schema, inline_serializer
 from rest_framework import serializers, status
 from rest_framework_simplejwt.views import TokenObtainPairView as BaseTokenObtainPairView
 
@@ -6,7 +6,6 @@ from webapi.serializers.tokens import ReadTokenSerializer, WriteTokenSerializer
 
 
 class TokenObtainPairView(BaseTokenObtainPairView):
-
     serializer_class = WriteTokenSerializer
 
     @extend_schema(
@@ -19,8 +18,7 @@ class TokenObtainPairView(BaseTokenObtainPairView):
                     name="SignInBadRequestResponse",
                     fields={
                         "username": serializers.ListSerializer(
-                            child=serializers.CharField(required=True),
-                            required=False
+                            child=serializers.CharField(required=True), required=False
                         ),
                         "password": serializers.ListSerializer(
                             child=serializers.CharField(required=True),
