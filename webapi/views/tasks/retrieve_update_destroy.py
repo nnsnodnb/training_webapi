@@ -1,5 +1,5 @@
 from drf_rw_serializers.generics import RetrieveUpdateDestroyAPIView
-from drf_spectacular.utils import OpenApiParameter, OpenApiTypes, extend_schema
+from drf_spectacular.utils import OpenApiTypes, extend_schema
 from rest_framework import status
 
 from db.models.tasks import Task
@@ -18,14 +18,6 @@ class TaskRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 
     @extend_schema(
         operation_id="getTask",
-        parameters=[
-            OpenApiParameter(
-                name="authorization",
-                type=OpenApiTypes.STR,
-                location=OpenApiParameter.HEADER,
-                required=True,
-            ),
-        ],
         responses={
             status.HTTP_200_OK: ReadTaskModelSerializer,
             status.HTTP_404_NOT_FOUND: NotFoundSerializer,
@@ -38,14 +30,6 @@ class TaskRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 
     @extend_schema(
         operation_id="updateTask",
-        parameters=[
-            OpenApiParameter(
-                name="authorization",
-                type=OpenApiTypes.STR,
-                location=OpenApiParameter.HEADER,
-                required=True,
-            ),
-        ],
         request=WriteTaskModelSerializer,
         responses={
             status.HTTP_200_OK: ReadTaskModelSerializer,
@@ -60,14 +44,6 @@ class TaskRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 
     @extend_schema(
         operation_id="deleteTask",
-        parameters=[
-            OpenApiParameter(
-                name="authorization",
-                type=OpenApiTypes.STR,
-                location=OpenApiParameter.HEADER,
-                required=True,
-            ),
-        ],
         responses={
             status.HTTP_204_NO_CONTENT: OpenApiTypes.NONE,
             status.HTTP_404_NOT_FOUND: NotFoundSerializer,
