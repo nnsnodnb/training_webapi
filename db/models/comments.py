@@ -5,7 +5,6 @@ from django.utils import timezone
 
 
 class Comment(models.Model):
-
     content = models.CharField("コンテンツ", max_length=500)
     image_ids = fields.ArrayField(
         base_field=models.CharField(max_length=500),

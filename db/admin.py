@@ -5,7 +5,6 @@ from .models import Comment, Task
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-
     list_display = (
         "id",
         "content",
@@ -30,7 +29,6 @@ class CommentAdmin(admin.ModelAdmin):
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-
     list_display = (
         "id",
         "title",

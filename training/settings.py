@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
-    "drf_yasg",
+    "drf_spectacular",
     "rest_framework",
     "maintenance_mode",
     "db",
@@ -171,21 +171,29 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "webapi.pagination.CursorPagination",
     "PAGE_SIZE": 20,
     "DATETIME_FORMAT": "%Y-%m-%dT%H:%M:%S%z",
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
-# Swagger
+# Spectacular
 
-SWAGGER_SETTINGS = {
-    "USE_SESSION_AUTH": False,
-    "DEFAULT_INFO": "training.urls.app_info",
-    "SECURITY_DEFINITIONS": {
-        "jwt_api_key": {
-            "type": "apiKey",
-            "name": "Authorization",
-            "in": "header",
-            "description": "bearer のあとにトークンをつけてください",
-        }
-    },
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Training API",
+    "CONTACT": "nnsnodnb@gmail.com",
+    "LICENSE": "MIT License",
+    "VERSION": "1.0.0",
+    "SERVERS": [
+        {
+            "url": "http://127.0.0.1",
+            "description": "docker",
+        },
+        {
+            "url": "http://127.0.0.1:8000",
+            "description": "django",
+        },
+    ],
+    "EXTERNAL_DOCS": [
+        "https://github.com/nnsnodnb/training_webapi",
+    ],
 }
 
 # Simple jwt
@@ -201,7 +209,6 @@ SIMPLE_JWT = {
     "JWT_URL": None,
     "LEEWAY": 0,
     "AUTH_HEADER_TYPES": [
-        "Bearer",
         "bearer",
     ],
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
@@ -226,7 +233,7 @@ SECURE_HSTS_PRELOAD = True
 # CORS
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
-    r"^http(|s)://(localhost|127.0.0.1):\d+$",
+    r"^http(s)?://(localhost|127.0.0.1):\d+$",
 ]
 
 # Maintenance
