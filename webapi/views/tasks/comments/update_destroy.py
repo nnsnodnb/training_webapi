@@ -19,7 +19,7 @@ class CommentUpdateDestroyAPIView(UpdateModelMixin, mixins.DestroyModelMixin, Ge
         return queryset.filter(user=self.request.user, task_id=self.request.parser_context["kwargs"]["pk"])
 
     @extend_schema(
-        operation_id="update_task_comment",
+        operation_id="updateTaskComment",
         request=WriteCommentSerializer,
         responses={
             status.HTTP_200_OK: ReadCommentSerializer,
@@ -32,7 +32,7 @@ class CommentUpdateDestroyAPIView(UpdateModelMixin, mixins.DestroyModelMixin, Ge
         return self.update(request, *args, **kwargs)
 
     @extend_schema(
-        operation_id="delete_task_comment",
+        operation_id="deleteTaskComment",
         responses={
             status.HTTP_204_NO_CONTENT: OpenApiTypes.NONE,
             status.HTTP_404_NOT_FOUND: NotFoundSerializer,

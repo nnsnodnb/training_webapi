@@ -194,6 +194,11 @@ SPECTACULAR_SETTINGS = {
     "EXTERNAL_DOCS": [
         "https://github.com/nnsnodnb/training_webapi",
     ],
+    "SERVE_INCLUDE_SCHEMA": False,
+    "SWAGGER_UI_SETTINGS": {
+        "persistAuthorization": True,
+        "displayOperationId": True,
+    },
 }
 
 # Simple jwt

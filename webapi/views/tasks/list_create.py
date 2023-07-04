@@ -15,7 +15,7 @@ class TaskListCreateAPIView(ListCreateAPIView):
         return queryset.filter(user=self.request.user)
 
     @extend_schema(
-        operation_id="fetch_tasks",
+        operation_id="fetchTasks",
         parameters=[
             OpenApiParameter(
                 name="cursor",
@@ -31,7 +31,7 @@ class TaskListCreateAPIView(ListCreateAPIView):
         return super().get(request, *args, **kwargs)
 
     @extend_schema(
-        operation_id="create_task",
+        operation_id="createTask",
         request=WriteTaskModelSerializer,
         responses={
             status.HTTP_201_CREATED: ReadTaskModelSerializer,

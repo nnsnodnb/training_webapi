@@ -19,7 +19,7 @@ class TaskPartialUpdateAPIView(UpdateAPIView):
         return queryset.filter(user=self.request.user)
 
     @extend_schema(
-        operation_id="update_task_status",
+        operation_id="updateTaskStatus",
         request=PartialStatusUpdateTaskModelSerializer,
         responses={
             status.HTTP_200_OK: ReadTaskModelSerializer,

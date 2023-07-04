@@ -8,7 +8,7 @@ from webapi.serializers.tokens import ReadRefreshTokenSerializer
 
 class TokenRefreshView(BaseTokenRefreshView):
     @extend_schema(
-        operation_id="refresh_token",
+        operation_id="refreshToken",
         request=TokenRefreshSerializer,
         responses={
             status.HTTP_200_OK: ReadRefreshTokenSerializer,

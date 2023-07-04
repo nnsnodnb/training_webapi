@@ -17,7 +17,7 @@ class TaskRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
         return queryset.filter(user=self.request.user)
 
     @extend_schema(
-        operation_id="get_task",
+        operation_id="getTask",
         responses={
             status.HTTP_200_OK: ReadTaskModelSerializer,
             status.HTTP_404_NOT_FOUND: NotFoundSerializer,
@@ -28,7 +28,7 @@ class TaskRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
         return super().get(request, *args, **kwargs)
 
     @extend_schema(
-        operation_id="update_task",
+        operation_id="updateTask",
         request=WriteTaskModelSerializer,
         responses={
             status.HTTP_200_OK: ReadTaskModelSerializer,
@@ -41,7 +41,7 @@ class TaskRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
         return super().put(request, *args, **kwargs)
 
     @extend_schema(
-        operation_id="delete_task",
+        operation_id="deleteTask",
         responses={
             status.HTTP_204_NO_CONTENT: OpenApiTypes.NONE,
             status.HTTP_404_NOT_FOUND: NotFoundSerializer,

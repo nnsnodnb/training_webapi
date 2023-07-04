@@ -13,7 +13,7 @@ class ImageCreateAPIView(CreateAPIView):
     write_serializer_class = WriteImageSerializer
 
     @extend_schema(
-        operation_id="upload_image",
+        operation_id="uploadImage",
         request={
             "multipart/form-data": {
                 "type": "object",
