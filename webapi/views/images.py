@@ -1,5 +1,5 @@
 from drf_rw_serializers.generics import CreateAPIView
-from drf_spectacular.utils import OpenApiResponse, extend_schema, inline_serializer
+from drf_spectacular.utils import OpenApiParameter, OpenApiResponse, OpenApiTypes, extend_schema, inline_serializer
 from rest_framework import serializers, status
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
@@ -13,7 +13,15 @@ class ImageCreateAPIView(CreateAPIView):
     write_serializer_class = WriteImageSerializer
 
     @extend_schema(
-        operation_id="upload_image",
+        operation_id="uploadImage",
+        parameters=[
+            OpenApiParameter(
+                name="authorization",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.HEADER,
+                required=True,
+            ),
+        ],
         request={
             "multipart/form-data": {
                 "type": "object",
@@ -39,6 +47,7 @@ class ImageCreateAPIView(CreateAPIView):
                 ),
             ),
         },
+        tags=["image"],
         description="画像アップロード",
     )
     def post(self, request, *args, **kwargs):

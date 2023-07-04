@@ -1,4 +1,4 @@
-from drf_spectacular.utils import OpenApiResponse, extend_schema, inline_serializer
+from drf_spectacular.utils import OpenApiParameter, OpenApiResponse, OpenApiTypes, extend_schema, inline_serializer
 from rest_framework import serializers, status
 from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 from rest_framework_simplejwt.views import TokenRefreshView as BaseTokenRefreshView
@@ -8,7 +8,15 @@ from webapi.serializers.tokens import ReadRefreshTokenSerializer
 
 class TokenRefreshView(BaseTokenRefreshView):
     @extend_schema(
-        operation_id="refresh_token",
+        operation_id="refreshToken",
+        parameters=[
+            OpenApiParameter(
+                name="authorization",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.HEADER,
+                required=True,
+            ),
+        ],
         request=TokenRefreshSerializer,
         responses={
             status.HTTP_200_OK: ReadRefreshTokenSerializer,
@@ -22,6 +30,7 @@ class TokenRefreshView(BaseTokenRefreshView):
                 ),
             ),
         },
+        tags=["user"],
     )
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)

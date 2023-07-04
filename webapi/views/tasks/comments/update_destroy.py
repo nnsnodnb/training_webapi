@@ -1,6 +1,6 @@
 from drf_rw_serializers.generics import GenericAPIView
 from drf_rw_serializers.mixins import UpdateModelMixin
-from drf_spectacular.utils import OpenApiTypes, extend_schema
+from drf_spectacular.utils import OpenApiParameter, OpenApiTypes, extend_schema
 from rest_framework import mixins, status
 
 from db.models import Comment
@@ -19,24 +19,42 @@ class CommentUpdateDestroyAPIView(UpdateModelMixin, mixins.DestroyModelMixin, Ge
         return queryset.filter(user=self.request.user, task_id=self.request.parser_context["kwargs"]["pk"])
 
     @extend_schema(
-        operation_id="update_task_comment",
+        operation_id="updateTaskComment",
+        parameters=[
+            OpenApiParameter(
+                name="authorization",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.HEADER,
+                required=True,
+            ),
+        ],
         request=WriteCommentSerializer,
         responses={
             status.HTTP_200_OK: ReadCommentSerializer,
             status.HTTP_400_BAD_REQUEST: OpenApiTypes.NONE,
             status.HTTP_404_NOT_FOUND: NotFoundSerializer,
         },
+        tags=["task_comment"],
         description="指定したコメントの情報更新",
     )
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
 
     @extend_schema(
-        operation_id="delete_task_comment",
+        operation_id="deleteTaskComment",
+        parameters=[
+            OpenApiParameter(
+                name="authorization",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.HEADER,
+                required=True,
+            ),
+        ],
         responses={
             status.HTTP_204_NO_CONTENT: OpenApiTypes.NONE,
             status.HTTP_404_NOT_FOUND: NotFoundSerializer,
         },
+        tags=["task_comment"],
         description="指定したコメントの削除",
     )
     def delete(self, request, *args, **kwargs):

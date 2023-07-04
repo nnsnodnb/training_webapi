@@ -2,7 +2,14 @@ from datetime import timedelta
 
 from django.utils import timezone
 from drf_rw_serializers.generics import GenericAPIView
-from drf_spectacular.utils import OpenApiExample, OpenApiResponse, extend_schema, inline_serializer
+from drf_spectacular.utils import (
+    OpenApiExample,
+    OpenApiParameter,
+    OpenApiResponse,
+    OpenApiTypes,
+    extend_schema,
+    inline_serializer,
+)
 from maintenance_mode.core import get_maintenance_mode
 from rest_framework import exceptions, serializers, status
 from rest_framework.response import Response
@@ -17,6 +24,14 @@ class MaintenanceJSONAPIView(GenericAPIView):
 
     @extend_schema(
         operation_id="maintenance",
+        parameters=[
+            OpenApiParameter(
+                name="authorization",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.HEADER,
+                required=True,
+            ),
+        ],
         responses={
             status.HTTP_404_NOT_FOUND: NotFoundSerializer,
             status.HTTP_503_SERVICE_UNAVAILABLE: OpenApiResponse(
@@ -45,6 +60,7 @@ class MaintenanceJSONAPIView(GenericAPIView):
                 ],
             ),
         },
+        tags=["maintenance"],
         description="メンテナンス情報を取得",
     )
     def get(self, request, *args, **kwargs):

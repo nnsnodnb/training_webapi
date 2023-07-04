@@ -1,5 +1,5 @@
 from drf_rw_serializers.generics import UpdateAPIView
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import OpenApiParameter, OpenApiTypes, extend_schema
 from rest_framework import status
 
 from db.models import Task
@@ -19,11 +19,20 @@ class TaskPartialUpdateAPIView(UpdateAPIView):
         return queryset.filter(user=self.request.user)
 
     @extend_schema(
-        operation_id="update_task_status",
+        operation_id="updateTaskStatus",
+        parameters=[
+            OpenApiParameter(
+                name="authorization",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.HEADER,
+                required=True,
+            ),
+        ],
         request=PartialStatusUpdateTaskModelSerializer,
         responses={
             status.HTTP_200_OK: ReadTaskModelSerializer,
         },
+        tags=["task"],
         description="指定したタスクのステータスを変更",
     )
     def patch(self, request, *args, **kwargs):

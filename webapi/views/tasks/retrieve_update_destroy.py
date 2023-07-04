@@ -1,5 +1,5 @@
 from drf_rw_serializers.generics import RetrieveUpdateDestroyAPIView
-from drf_spectacular.utils import OpenApiTypes, extend_schema
+from drf_spectacular.utils import OpenApiParameter, OpenApiTypes, extend_schema
 from rest_framework import status
 
 from db.models.tasks import Task
@@ -17,35 +17,62 @@ class TaskRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
         return queryset.filter(user=self.request.user)
 
     @extend_schema(
-        operation_id="get_task",
+        operation_id="getTask",
+        parameters=[
+            OpenApiParameter(
+                name="authorization",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.HEADER,
+                required=True,
+            ),
+        ],
         responses={
             status.HTTP_200_OK: ReadTaskModelSerializer,
             status.HTTP_404_NOT_FOUND: NotFoundSerializer,
         },
+        tags=["task"],
         description="指定したタスクの詳細を取得",
     )
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
 
     @extend_schema(
-        operation_id="update_task",
+        operation_id="updateTask",
+        parameters=[
+            OpenApiParameter(
+                name="authorization",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.HEADER,
+                required=True,
+            ),
+        ],
         request=WriteTaskModelSerializer,
         responses={
             status.HTTP_200_OK: ReadTaskModelSerializer,
             status.HTTP_400_BAD_REQUEST: OpenApiTypes.NONE,
             status.HTTP_404_NOT_FOUND: NotFoundSerializer,
         },
+        tags=["task"],
         description="指定したタスクの情報更新",
     )
     def put(self, request, *args, **kwargs):
         return super().put(request, *args, **kwargs)
 
     @extend_schema(
-        operation_id="delete_task",
+        operation_id="deleteTask",
+        parameters=[
+            OpenApiParameter(
+                name="authorization",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.HEADER,
+                required=True,
+            ),
+        ],
         responses={
             status.HTTP_204_NO_CONTENT: OpenApiTypes.NONE,
             status.HTTP_404_NOT_FOUND: NotFoundSerializer,
         },
+        tags=["task"],
         description="指定したタスクの削除",
     )
     def delete(self, request, *args, **kwargs):

@@ -16,8 +16,14 @@ class CommentListCreateAPIView(ListCreateAPIView):
         return queryset.filter(user=self.request.user, task_id=self.request.parser_context["kwargs"]["pk"])
 
     @extend_schema(
-        operation_id="fetch_task_comments",
+        operation_id="fetchTaskComments",
         parameters=[
+            OpenApiParameter(
+                name="authorization",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.HEADER,
+                required=True,
+            ),
             OpenApiParameter(
                 name="cursor",
                 description="The pagination cursor value.",
@@ -26,6 +32,7 @@ class CommentListCreateAPIView(ListCreateAPIView):
         responses={
             status.HTTP_200_OK: ReadCommentSerializer,
         },
+        tags=["task_comment"],
         description="タスクへのコメント一覧取得",
     )
     def get(self, request, *args, **kwargs):
@@ -33,12 +40,21 @@ class CommentListCreateAPIView(ListCreateAPIView):
         return super().get(request, *args, **kwargs)
 
     @extend_schema(
-        operation_id="create_task_comments",
+        operation_id="createTaskComments",
+        parameters=[
+            OpenApiParameter(
+                name="authorization",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.HEADER,
+                required=True,
+            ),
+        ],
         request=WriteCommentSerializer,
         responses={
             status.HTTP_201_CREATED: ReadCommentSerializer,
             status.HTTP_400_BAD_REQUEST: OpenApiTypes.NONE,
         },
+        tags=["task_comment"],
         description="タスクへのコメントの新規作成",
     )
     def post(self, request, *args, **kwargs):

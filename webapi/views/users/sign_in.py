@@ -9,7 +9,7 @@ class TokenObtainPairView(BaseTokenObtainPairView):
     serializer_class = WriteTokenSerializer
 
     @extend_schema(
-        operation_id="sign_in",
+        operation_id="signIn",
         request=WriteTokenSerializer,
         responses={
             status.HTTP_200_OK: ReadTokenSerializer,
@@ -36,6 +36,7 @@ class TokenObtainPairView(BaseTokenObtainPairView):
                 ),
             ),
         },
+        tags=["user"],
     )
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
