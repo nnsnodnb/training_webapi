@@ -1,8 +1,9 @@
 from drf_rw_serializers.generics import RetrieveUpdateDestroyAPIView
-from drf_spectacular.utils import OpenApiResponse, OpenApiTypes, extend_schema, inline_serializer
-from rest_framework import serializers, status
+from drf_spectacular.utils import OpenApiTypes, extend_schema
+from rest_framework import status
 
 from db.models.tasks import Task
+from webapi.serializers.errors import NotFoundSerializer
 from webapi.serializers.tasks import ReadTaskModelSerializer, WriteTaskModelSerializer
 
 
@@ -19,14 +20,7 @@ class TaskRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
         operation_id="get_task",
         responses={
             status.HTTP_200_OK: ReadTaskModelSerializer,
-            status.HTTP_404_NOT_FOUND: OpenApiResponse(
-                response=inline_serializer(
-                    name="GetTaskNotFoundResponse",
-                    fields={
-                        "error_detail": serializers.CharField(required=True),
-                    },
-                ),
-            ),
+            status.HTTP_404_NOT_FOUND: NotFoundSerializer,
         },
         description="指定したタスクの詳細を取得",
     )
@@ -38,22 +32,8 @@ class TaskRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
         request=WriteTaskModelSerializer,
         responses={
             status.HTTP_200_OK: ReadTaskModelSerializer,
-            status.HTTP_400_BAD_REQUEST: OpenApiResponse(
-                response=inline_serializer(
-                    name="UpdateTaskBadRequestResponse",
-                    fields={
-                        "error_detail": serializers.CharField(required=True),
-                    },
-                ),
-            ),
-            status.HTTP_404_NOT_FOUND: OpenApiResponse(
-                response=inline_serializer(
-                    name="UpdateTaskNotFoundResponse",
-                    fields={
-                        "error_detail": serializers.CharField(required=True),
-                    },
-                ),
-            ),
+            status.HTTP_400_BAD_REQUEST: OpenApiTypes.NONE,
+            status.HTTP_404_NOT_FOUND: NotFoundSerializer,
         },
         description="指定したタスクの情報更新",
     )
@@ -64,14 +44,7 @@ class TaskRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
         operation_id="delete_task",
         responses={
             status.HTTP_204_NO_CONTENT: OpenApiTypes.NONE,
-            status.HTTP_404_NOT_FOUND: OpenApiResponse(
-                response=inline_serializer(
-                    name="DeleteTaskNotFoundResponse",
-                    fields={
-                        "error_detail": serializers.CharField(required=True),
-                    },
-                ),
-            ),
+            status.HTTP_404_NOT_FOUND: NotFoundSerializer,
         },
         description="指定したタスクの削除",
     )

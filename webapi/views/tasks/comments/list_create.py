@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from drf_rw_serializers.generics import ListCreateAPIView
-from drf_spectacular.utils import OpenApiParameter, OpenApiResponse, extend_schema, inline_serializer
-from rest_framework import serializers, status
+from drf_spectacular.utils import OpenApiParameter, OpenApiTypes, extend_schema
+from rest_framework import status
 
 from db.models import Comment, Task
 from webapi.serializers.comments import ReadCommentSerializer, WriteCommentSerializer
@@ -37,14 +37,7 @@ class CommentListCreateAPIView(ListCreateAPIView):
         request=WriteCommentSerializer,
         responses={
             status.HTTP_201_CREATED: ReadCommentSerializer,
-            status.HTTP_400_BAD_REQUEST: OpenApiResponse(
-                response=inline_serializer(
-                    name="CreateTaskCommentsBadRequestResponse",
-                    fields={
-                        "error_detail": serializers.CharField(required=True),
-                    },
-                ),
-            ),
+            status.HTTP_400_BAD_REQUEST: OpenApiTypes.NONE,
         },
         description="タスクへのコメントの新規作成",
     )

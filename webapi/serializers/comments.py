@@ -8,14 +8,15 @@ from .users import UserSerializer
 
 
 class ReadCommentSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField()
-    content = serializers.CharField()
+    id = serializers.IntegerField(help_text="ID")
+    content = serializers.CharField(help_text="コンテンツ")
     image_ids = serializers.ListSerializer(
         child=serializers.CharField(),
         allow_empty=True,
+        help_text="画像IDのリスト",
     )
     user = UserSerializer()
-    created_at = serializers.DateTimeField(source="created")
+    created_at = serializers.DateTimeField(source="created", help_text="作成日")
 
     class Meta:
         model = Comment
@@ -23,10 +24,11 @@ class ReadCommentSerializer(serializers.ModelSerializer):
 
 
 class WriteCommentSerializer(serializers.ModelSerializer):
-    content = serializers.CharField()
+    content = serializers.CharField(help_text="コンテンツ")
     image_ids = serializers.ListSerializer(
         child=serializers.CharField(),
         allow_empty=True,
+        help_text="画像IDのリスト",
     )
     task = serializers.HiddenField(default=Task.objects.none())
     user = serializers.HiddenField(default=get_user_model().objects.none())

@@ -7,6 +7,8 @@ from maintenance_mode.core import get_maintenance_mode
 from rest_framework import exceptions, serializers, status
 from rest_framework.response import Response
 
+from ..serializers.errors import NotFoundSerializer
+
 
 class MaintenanceJSONAPIView(GenericAPIView):
     authentication_classes = ()
@@ -16,14 +18,7 @@ class MaintenanceJSONAPIView(GenericAPIView):
     @extend_schema(
         operation_id="maintenance",
         responses={
-            status.HTTP_404_NOT_FOUND: OpenApiResponse(
-                response=inline_serializer(
-                    name="MaintenanceNotFoundResponse",
-                    fields={
-                        "detail": serializers.CharField(required=True),
-                    },
-                ),
-            ),
+            status.HTTP_404_NOT_FOUND: NotFoundSerializer,
             status.HTTP_503_SERVICE_UNAVAILABLE: OpenApiResponse(
                 response=inline_serializer(
                     name="MaintenanceServiceUnavailableResponse",

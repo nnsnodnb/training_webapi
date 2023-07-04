@@ -8,13 +8,13 @@ from .users import UserSerializer
 
 
 class ReadTaskModelSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField()
-    title = serializers.CharField()
-    thumbnail = serializers.CharField(required=False, allow_null=True)
+    id = serializers.IntegerField(help_text="ID")
+    title = serializers.CharField(help_text="タイトル")
+    thumbnail = serializers.CharField(required=False, allow_null=True, help_text="画像ID")
     user = UserSerializer()
-    status = serializers.ChoiceField(choices=Task.StatusChoices.choices)
-    created_at = serializers.DateTimeField(source="created")
-    updated_at = serializers.DateTimeField(source="updated")
+    status = serializers.ChoiceField(choices=Task.StatusChoices.choices, help_text="ステータス")
+    created_at = serializers.DateTimeField(source="created", help_text="作成日")
+    updated_at = serializers.DateTimeField(source="updated", help_text="更新日")
 
     class Meta:
         model = Task
@@ -30,13 +30,15 @@ class ReadTaskModelSerializer(serializers.ModelSerializer):
 
 
 class WriteTaskModelSerializer(serializers.ModelSerializer):
-    title = serializers.CharField(required=True, max_length=300)
-    image_id = serializers.CharField(required=False, max_length=500, allow_null=True, source="thumbnail")
+    title = serializers.CharField(required=True, max_length=300, help_text="タイトル")
+    image_id = serializers.CharField(
+        required=False, max_length=500, allow_null=True, source="thumbnail", help_text="画像ID"
+    )
     user = serializers.HiddenField(default=get_user_model().objects.none())
     status = serializers.ChoiceField(
-        required=False, choices=Task.StatusChoices.choices, default=Task.StatusChoices.BACKLOG
+        required=False, choices=Task.StatusChoices.choices, default=Task.StatusChoices.BACKLOG, help_text="ステータス"
     )
-    updated_at = serializers.HiddenField(default=timezone.now, source="updated")
+    updated_at = serializers.HiddenField(default=timezone.now, source="updated", help_text="更新日")
 
     class Meta:
         model = Task
@@ -49,7 +51,7 @@ class WriteTaskModelSerializer(serializers.ModelSerializer):
 
 
 class PartialStatusUpdateTaskModelSerializer(serializers.ModelSerializer):
-    status = serializers.ChoiceField(choices=Task.StatusChoices.choices)
+    status = serializers.ChoiceField(choices=Task.StatusChoices.choices, help_text="ステータス")
 
     class Meta:
         model = Task

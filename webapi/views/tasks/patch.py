@@ -20,6 +20,7 @@ class TaskPartialUpdateAPIView(UpdateAPIView):
 
     @extend_schema(
         operation_id="update_task_status",
+        request=PartialStatusUpdateTaskModelSerializer,
         responses={
             status.HTTP_200_OK: ReadTaskModelSerializer,
         },

@@ -1,10 +1,11 @@
 from drf_rw_serializers.generics import GenericAPIView
 from drf_rw_serializers.mixins import UpdateModelMixin
-from drf_spectacular.utils import OpenApiResponse, OpenApiTypes, extend_schema, inline_serializer
-from rest_framework import mixins, serializers, status
+from drf_spectacular.utils import OpenApiTypes, extend_schema
+from rest_framework import mixins, status
 
 from db.models import Comment
 from webapi.serializers.comments import ReadCommentSerializer, WriteCommentSerializer
+from webapi.serializers.errors import NotFoundSerializer
 
 
 class CommentUpdateDestroyAPIView(UpdateModelMixin, mixins.DestroyModelMixin, GenericAPIView):
@@ -22,22 +23,8 @@ class CommentUpdateDestroyAPIView(UpdateModelMixin, mixins.DestroyModelMixin, Ge
         request=WriteCommentSerializer,
         responses={
             status.HTTP_200_OK: ReadCommentSerializer,
-            status.HTTP_400_BAD_REQUEST: OpenApiResponse(
-                response=inline_serializer(
-                    name="UpdateTaskCommentBadRequestResponse",
-                    fields={
-                        "error_detail": serializers.CharField(required=True),
-                    },
-                ),
-            ),
-            status.HTTP_404_NOT_FOUND: OpenApiResponse(
-                response=inline_serializer(
-                    name="UpdateTaskCommentNotFoundResponse",
-                    fields={
-                        "error_detail": serializers.CharField(required=True),
-                    },
-                ),
-            ),
+            status.HTTP_400_BAD_REQUEST: OpenApiTypes.NONE,
+            status.HTTP_404_NOT_FOUND: NotFoundSerializer,
         },
         description="指定したコメントの情報更新",
     )
@@ -48,14 +35,7 @@ class CommentUpdateDestroyAPIView(UpdateModelMixin, mixins.DestroyModelMixin, Ge
         operation_id="delete_task_comment",
         responses={
             status.HTTP_204_NO_CONTENT: OpenApiTypes.NONE,
-            status.HTTP_404_NOT_FOUND: OpenApiResponse(
-                response=inline_serializer(
-                    name="DeleteTaskCommentNotFoundResponse",
-                    fields={
-                        "error_detail": serializers.CharField(required=True),
-                    },
-                ),
-            ),
+            status.HTTP_404_NOT_FOUND: NotFoundSerializer,
         },
         description="指定したコメントの削除",
     )

@@ -14,14 +14,14 @@ from rest_framework.exceptions import ValidationError
 
 
 class ReadImageSerializer(serializers.Serializer):
-    image_id = serializers.CharField()
+    image_id = serializers.CharField(help_text="画像ID")
 
     class Meta:
         fields = ("image_id",)
 
 
 class WriteImageSerializer(serializers.Serializer):
-    image = serializers.FileField()
+    image = serializers.FileField(help_text="画像ファイル")
 
     class Meta:
         fields = ("image",)

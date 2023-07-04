@@ -3,8 +3,8 @@ from rest_framework import serializers
 
 
 class UserSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField()
-    username = serializers.CharField()
+    id = serializers.IntegerField(help_text="ID")
+    username = serializers.CharField(help_text="ユーザネーム")
 
     class Meta:
         model = get_user_model()
