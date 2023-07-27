@@ -34,4 +34,5 @@ jobs:
 
     - name: Install dependencies
       run: |
+        python -m poetry run pip install -U pip
         python -m poetry install --no-root
