@@ -51,6 +51,7 @@ django-cors-headers = "^3.14.0"
 django-maintenance-mode = "^0.18.0"
 gunicorn = {version = "^20.1.0", extras = ["gevent"]}
 drf-spectacular = "^0.26.3"
+pyyaml = "^6.0.1"
 
 [tool.poetry.dev-dependencies]
 bpython = "^0.24"
