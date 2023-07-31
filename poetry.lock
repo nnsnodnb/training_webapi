@@ -101,17 +101,17 @@ tests-no-zope = ["cloudpickle", "hypothesis", "mypy (>=1.1.1)", "pympler", "pyte
 
 [[package]]
 name = "awscli"
-version = "1.29.14"
+version = "1.29.15"
 description = "Universal Command Line Environment for AWS."
 optional = false
 python-versions = ">= 3.7"
 files = [
-    {file = "awscli-1.29.14-py3-none-any.whl", hash = "sha256:90563cceabf7938c9ae4d1f6d4cf3f8a954c7ffd7738d23e46f95ff4175df43c"},
-    {file = "awscli-1.29.14.tar.gz", hash = "sha256:8d2de00fa362658b78877c8edc147d8a8558376ced3394e1f8bdfd6d3931d50b"},
+    {file = "awscli-1.29.15-py3-none-any.whl", hash = "sha256:87747ef7af86d3c929510fcc5e22559662b77b81891af9efc4a5d5ff4b0fd9f3"},
+    {file = "awscli-1.29.15.tar.gz", hash = "sha256:d2ce17d09886340aedcde9cbbf58f23a237b255adb62f89d7dae68a09f7a238e"},
 ]
 
 [package.dependencies]
-botocore = "1.31.14"
+botocore = "1.31.15"
 colorama = ">=0.2.5,<0.4.5"
 docutils = ">=0.10,<0.17"
 PyYAML = ">=3.10,<6.1"
@@ -200,13 +200,13 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "botocore"
-version = "1.31.14"
+version = "1.31.15"
 description = "Low-level, data-driven core of boto 3."
 optional = false
 python-versions = ">= 3.7"
 files = [
-    {file = "botocore-1.31.14-py3-none-any.whl", hash = "sha256:47818998c1b4528cc98cf61658a28cf2244d06efc898016e390b8e83a06de792"},
-    {file = "botocore-1.31.14.tar.gz", hash = "sha256:63d7f27c93cea570a534d245221000731c2279ac2ca9b1e63694d3080b0761b9"},
+    {file = "botocore-1.31.15-py3-none-any.whl", hash = "sha256:b3a0f787f275711875476cbe12a0123b2e6570b2f505e2fa509dcec3c5410b57"},
+    {file = "botocore-1.31.15.tar.gz", hash = "sha256:b46d1ce4e0cf42d28fdf61ce0c999904645d38b51cb809817a361c0cec16d487"},
 ]
 
 [package.dependencies]
@@ -1519,4 +1519,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "67dc84352b7996504c9975ac98bb01c1687baa6c18e6aff862961868ad6ee2bc"
+content-hash = "54463c46bd5b29c1bc2bfb7044855f48f53acec02af5b986c6ba364effc46586"
