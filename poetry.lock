@@ -101,17 +101,17 @@ tests-no-zope = ["cloudpickle", "hypothesis", "mypy (>=1.1.1)", "pympler", "pyte
 
 [[package]]
 name = "awscli"
-version = "1.29.15"
+version = "1.29.20"
 description = "Universal Command Line Environment for AWS."
 optional = false
 python-versions = ">= 3.7"
 files = [
-    {file = "awscli-1.29.15-py3-none-any.whl", hash = "sha256:87747ef7af86d3c929510fcc5e22559662b77b81891af9efc4a5d5ff4b0fd9f3"},
-    {file = "awscli-1.29.15.tar.gz", hash = "sha256:d2ce17d09886340aedcde9cbbf58f23a237b255adb62f89d7dae68a09f7a238e"},
+    {file = "awscli-1.29.20-py3-none-any.whl", hash = "sha256:b16051677855917c8f023ac65e5671b2e874da8a3d1f3408f17364477ebf1225"},
+    {file = "awscli-1.29.20.tar.gz", hash = "sha256:7ad3b6a90267443bad65ede7effe825fd5a5aad937229931db30141c6081f549"},
 ]
 
 [package.dependencies]
-botocore = "1.31.15"
+botocore = "1.31.20"
 colorama = ">=0.2.5,<0.4.5"
 docutils = ">=0.10,<0.17"
 PyYAML = ">=3.10,<6.1"
@@ -200,13 +200,13 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "botocore"
-version = "1.31.15"
+version = "1.31.20"
 description = "Low-level, data-driven core of boto 3."
 optional = false
 python-versions = ">= 3.7"
 files = [
-    {file = "botocore-1.31.15-py3-none-any.whl", hash = "sha256:b3a0f787f275711875476cbe12a0123b2e6570b2f505e2fa509dcec3c5410b57"},
-    {file = "botocore-1.31.15.tar.gz", hash = "sha256:b46d1ce4e0cf42d28fdf61ce0c999904645d38b51cb809817a361c0cec16d487"},
+    {file = "botocore-1.31.20-py3-none-any.whl", hash = "sha256:be51c5352162700e7beb0aa27af394adbbf86f8e7a2ca0c437d448d0a7b2bdfb"},
+    {file = "botocore-1.31.20.tar.gz", hash = "sha256:485ef175cd011ebc965f4577d8cc02a226c46bd608dd2bb75ce6938328cff0fd"},
 ]
 
 [package.dependencies]
@@ -1519,4 +1519,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "54463c46bd5b29c1bc2bfb7044855f48f53acec02af5b986c6ba364effc46586"
+content-hash = "933b1d15893b9e8749aade4e0481909c2b5a27d3c2af9be6a50a82668ff5971a"
