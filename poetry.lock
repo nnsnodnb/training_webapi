@@ -181,17 +181,17 @@ wcwidth = ">=0.1.4"
 
 [[package]]
 name = "boto3"
-version = "1.28.14"
+version = "1.28.15"
 description = "The AWS SDK for Python"
 optional = false
 python-versions = ">= 3.7"
 files = [
-    {file = "boto3-1.28.14-py3-none-any.whl", hash = "sha256:d06b8f8c962f320fc462503e476c5f5cffd6c9da5e090ca6cc7e9f0e931b2945"},
-    {file = "boto3-1.28.14.tar.gz", hash = "sha256:9523d46698a8dc242707ade5de98bd1d2ba10ee618a7f5a36459bf4704cc7857"},
+    {file = "boto3-1.28.15-py3-none-any.whl", hash = "sha256:84b7952858e9319968b0348d9894a91a6bb5f31e81a45c68044d040a12362abe"},
+    {file = "boto3-1.28.15.tar.gz", hash = "sha256:a6e711e0b6960c3a5b789bd30c5a18eea7263f2a59fc07f85efa5e04804e49d2"},
 ]
 
 [package.dependencies]
-botocore = ">=1.31.14,<1.32.0"
+botocore = ">=1.31.15,<1.32.0"
 jmespath = ">=0.7.1,<2.0.0"
 s3transfer = ">=0.6.0,<0.7.0"
 
@@ -1519,4 +1519,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "54463c46bd5b29c1bc2bfb7044855f48f53acec02af5b986c6ba364effc46586"
+content-hash = "0022383d19d4aa33a1373f768b0b961bc0548915842225e9dc4aa69af4a5b1e7"
