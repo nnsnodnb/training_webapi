@@ -14,7 +14,7 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
-import psycopg2.extensions
+from django.db.backends.postgresql.psycopg_any import IsolationLevel
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -91,12 +91,12 @@ WSGI_APPLICATION = "training.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "ENGINE": "django.db.backends.postgresql",
         "NAME": "training",
         "USER": "training",
         "PASSWORD": "training_very_secret_password",
         "HOST": os.environ.get("DATABASE_HOST", "127.0.0.1"),
-        "OPTIONS": {"isolation_level": psycopg2.extensions.ISOLATION_LEVEL_SERIALIZABLE},
+        "OPTIONS": {"isolation_level": IsolationLevel.SERIALIZABLE},
     }
 }
 
