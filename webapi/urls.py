@@ -6,12 +6,14 @@ from .views.tasks.comments.update_destroy import CommentUpdateDestroyAPIView
 from .views.tasks.list_create import TaskListCreateAPIView
 from .views.tasks.patch import TaskPartialUpdateAPIView
 from .views.tasks.retrieve_update_destroy import TaskRetrieveUpdateDestroyAPIView
+from .views.users.destroy import UserDestroyAPIView
 from .views.users.refresh import TokenRefreshView
 from .views.users.sign_in import TokenObtainPairView
 
 app_name = "webapi"
 
 urlpatterns = [
+    path("v1/users", UserDestroyAPIView.as_view(), name="user_delete"),
     path("v1/users/sign-in", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("v1/users/refresh", TokenRefreshView.as_view(), name="token_refresh"),
     path("v1/images", ImageCreateAPIView.as_view(), name="image_create"),
