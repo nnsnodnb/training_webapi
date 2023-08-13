@@ -101,17 +101,17 @@ tests-no-zope = ["cloudpickle", "hypothesis", "mypy (>=1.1.1)", "pympler", "pyte
 
 [[package]]
 name = "awscli"
-version = "1.29.20"
+version = "1.29.25"
 description = "Universal Command Line Environment for AWS."
 optional = false
 python-versions = ">= 3.7"
 files = [
-    {file = "awscli-1.29.20-py3-none-any.whl", hash = "sha256:b16051677855917c8f023ac65e5671b2e874da8a3d1f3408f17364477ebf1225"},
-    {file = "awscli-1.29.20.tar.gz", hash = "sha256:7ad3b6a90267443bad65ede7effe825fd5a5aad937229931db30141c6081f549"},
+    {file = "awscli-1.29.25-py3-none-any.whl", hash = "sha256:ecbafb64edad62203f53635986a5aa96bde536ba05586cd2c370c856f4fcd5b1"},
+    {file = "awscli-1.29.25.tar.gz", hash = "sha256:2fa500ef41dd58d43b4177b368a11da74bf310f417465a68dba9869e6b39be24"},
 ]
 
 [package.dependencies]
-botocore = "1.31.20"
+botocore = "1.31.25"
 colorama = ">=0.2.5,<0.4.5"
 docutils = ">=0.10,<0.17"
 PyYAML = ">=3.10,<6.1"
@@ -200,13 +200,13 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "botocore"
-version = "1.31.20"
+version = "1.31.25"
 description = "Low-level, data-driven core of boto 3."
 optional = false
 python-versions = ">= 3.7"
 files = [
-    {file = "botocore-1.31.20-py3-none-any.whl", hash = "sha256:be51c5352162700e7beb0aa27af394adbbf86f8e7a2ca0c437d448d0a7b2bdfb"},
-    {file = "botocore-1.31.20.tar.gz", hash = "sha256:485ef175cd011ebc965f4577d8cc02a226c46bd608dd2bb75ce6938328cff0fd"},
+    {file = "botocore-1.31.25-py3-none-any.whl", hash = "sha256:17cc6db84644251a5b519aeccd5eb1c313a18ef2e92616ec16182aa30c877152"},
+    {file = "botocore-1.31.25.tar.gz", hash = "sha256:b8a40b0ca1e3c8290a4c0d473c8e1575d2e8b2ddc3c61dd8814c3976357cac84"},
 ]
 
 [package.dependencies]
@@ -1538,4 +1538,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "4bbbc61a511284de6a427ecd3fda3f6e8c7009b94c6a34810b56d00406254ed1"
+content-hash = "ad9d01fe6d3e46c6a510fe3fe4cfee4fff10bb21dcfec088f69270d8040640b1"
