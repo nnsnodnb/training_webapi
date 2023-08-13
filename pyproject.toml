@@ -60,7 +60,7 @@ black = "^23.7.0"
 isort = "^5.12.0"
 flake8 = "^6.1.0"
 awscli = "^1.29.25"
-mypy = "^1.4"
+mypy = "^1.5"
 django-stubs = "^4.2.3"
 
 [build-system]
