@@ -524,18 +524,18 @@ pytz = "*"
 
 [[package]]
 name = "djangorestframework-simplejwt"
-version = "5.2.2"
+version = "5.3.0"
 description = "A minimal JSON Web Token authentication plugin for Django REST Framework"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "djangorestframework_simplejwt-5.2.2-py3-none-any.whl", hash = "sha256:4c0d2e2513e12587d93501ac091781684a216c3ee614eb3b5a10586aef5ca845"},
-    {file = "djangorestframework_simplejwt-5.2.2.tar.gz", hash = "sha256:d27d4bcac2c6394f678dea8b4d0d511c6e18a7f2eb8aaeeb8a7de601aeb77c42"},
+    {file = "djangorestframework_simplejwt-5.3.0-py3-none-any.whl", hash = "sha256:631d7ae2ed4365d7196a35d3cc0f6d382f7bd3361fb24c894f8f92b4da5db27d"},
+    {file = "djangorestframework_simplejwt-5.3.0.tar.gz", hash = "sha256:8e4c5dfca8d11c0b8a66dfd8a4e3fc1c6aa7ea188d10907ff91c942f4b52ed66"},
 ]
 
 [package.dependencies]
-django = "*"
-djangorestframework = "*"
+django = ">=3.2"
+djangorestframework = ">=3.10"
 pyjwt = ">=1.7.1,<3"
 
 [package.extras]
@@ -1539,4 +1539,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "7796523b96d77208022dd9e9498ee0d4d09d65f638a4855cc8d85c9c422a0dd4"
+content-hash = "f30356c7c666a5013702fa8265f30b236259f690dad74fc36304dd5ae84efa9e"
