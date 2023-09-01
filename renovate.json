@@ -3,4 +3,16 @@
   "extends": [
     "config:base"
   ]
+  "packageRules": [
+    {
+      "groupName": "AWS packages",
+      "packageNames": [
+        "awscli",
+        "boto3"
+      ],
+      "managers": [
+        "poetry"
+      ]
+    }
+  ]
 }
