@@ -35,3 +35,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m poetry install --no-root
+
+    - name: Migration
+      run: |
+        python -m poetry run python manage.py migrate
