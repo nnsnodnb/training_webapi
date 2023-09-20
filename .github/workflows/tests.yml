@@ -5,7 +5,24 @@ on:
 
 jobs:
   deps_install:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
+
+    services:
+      postgresql:
+        image: postgres:16.0
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_INITDB_ARGS: --encoding=UTF-8 --locale=C
+          POSTGRES_PASSWORD: training_very_secret_password
+          POSTGRES_NAME: training
+          POSTGRES_USER: training
+          TZ: Asia/Tokyo
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     name: Check installable dependencies
 
