@@ -4,10 +4,10 @@
 
 ## 動作確認及び開発環境
 
-- macOS Monterey (12.5)
+- macOS Ventura (13.5.2)
   - M1 Max
-- Docker version 20.10.17, build 100c701
-  - Docker Compose version v2.10.2
+- Docker version 24.0.5, build ced0996
+  - Docker Compose version v2.20.2-desktop.1
 - Finch
   - finch version v0.1.1
   - nerdctl Compose version v1.0.0
