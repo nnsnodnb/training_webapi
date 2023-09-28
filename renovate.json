@@ -12,7 +12,8 @@
       ],
       "managers": [
         "poetry"
-      ]
+      ],
+      "automerge": true
     }
   ]
 }
