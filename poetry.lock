@@ -458,17 +458,17 @@ Django = ">=3.2"
 
 [[package]]
 name = "django-maintenance-mode"
-version = "0.18.0"
-description = "django-maintenance-mode shows a 503 error page when maintenance-mode is on."
+version = "0.19.0"
+description = "shows a 503 error page when maintenance-mode is on."
 optional = false
 python-versions = "*"
 files = [
-    {file = "django-maintenance-mode-0.18.0.tar.gz", hash = "sha256:9fcc4db6c38f7170f5b8ea3d915406075fa7c6da86be58a117067057f706083d"},
-    {file = "django_maintenance_mode-0.18.0-py3-none-any.whl", hash = "sha256:c4dd2098279154c6a1221a3631ddf070cad1633320074cc457376498fd78f476"},
+    {file = "django-maintenance-mode-0.19.0.tar.gz", hash = "sha256:bd2b6677fe8bd348d5bf8fb94deacbe49db56e049d0815903e7baa6107be17d6"},
+    {file = "django_maintenance_mode-0.19.0-py3-none-any.whl", hash = "sha256:df8584aae291ebf545c3583fe39f6d478b81324419ac29098d0233eed643f1e1"},
 ]
 
 [package.dependencies]
-python-fsutil = ">=0.7.0"
+python-fsutil = ">=0.9.2,<1.0.0"
 
 [[package]]
 name = "django-stubs"
@@ -1549,4 +1549,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "f30356c7c666a5013702fa8265f30b236259f690dad74fc36304dd5ae84efa9e"
+content-hash = "8e8666955749b1039b044ee195336934ad9b061d9c60feda667c9e059526b7fb"
