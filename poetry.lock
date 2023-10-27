@@ -102,17 +102,17 @@ tests-no-zope = ["cloudpickle", "hypothesis", "mypy (>=1.1.1)", "pympler", "pyte
 
 [[package]]
 name = "awscli"
-version = "1.29.72"
+version = "1.29.73"
 description = "Universal Command Line Environment for AWS."
 optional = false
 python-versions = ">= 3.7"
 files = [
-    {file = "awscli-1.29.72-py3-none-any.whl", hash = "sha256:63026acce7cbb1905df3e270da41a5713126d34dd2d8be72d9ec688cbbc417b3"},
-    {file = "awscli-1.29.72.tar.gz", hash = "sha256:c545a7ca0fb761d2aba3805ffa2c80867a5f03ba5025f8861b54b38f22333970"},
+    {file = "awscli-1.29.73-py3-none-any.whl", hash = "sha256:963cfb22cd922d7199523ac0376b1ef40ddb800e34aa904dcc6c3204c412aaba"},
+    {file = "awscli-1.29.73.tar.gz", hash = "sha256:11c340e25ccfdd3b7bc3166d1fad17a85eeceae608854a7a764d322e986e68fb"},
 ]
 
 [package.dependencies]
-botocore = "1.31.72"
+botocore = "1.31.73"
 colorama = ">=0.2.5,<0.4.5"
 docutils = ">=0.10,<0.17"
 PyYAML = ">=3.10,<6.1"
@@ -179,17 +179,17 @@ wcwidth = ">=0.1.4"
 
 [[package]]
 name = "boto3"
-version = "1.28.72"
+version = "1.28.73"
 description = "The AWS SDK for Python"
 optional = false
 python-versions = ">= 3.7"
 files = [
-    {file = "boto3-1.28.72-py3-none-any.whl", hash = "sha256:73e2b56dcbe1b856274185c908dcb5973b007d62c74b646e6bd2ac09a303983a"},
-    {file = "boto3-1.28.72.tar.gz", hash = "sha256:cc7d939cdbb4ad3980274c96c589e95f028f740ac49a3547c8f4aaec6a7a6409"},
+    {file = "boto3-1.28.73-py3-none-any.whl", hash = "sha256:bbe377a288b6b12b526fae3b3d743318c6868626cf67e1e97f104345a5194b1e"},
+    {file = "boto3-1.28.73.tar.gz", hash = "sha256:a61cf96f7e196b1450afdf4856b7ea0e58080752e687b0011157be96934489be"},
 ]
 
 [package.dependencies]
-botocore = ">=1.31.72,<1.32.0"
+botocore = ">=1.31.73,<1.32.0"
 jmespath = ">=0.7.1,<2.0.0"
 s3transfer = ">=0.7.0,<0.8.0"
 
@@ -198,13 +198,13 @@ crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [[package]]
 name = "botocore"
-version = "1.31.72"
+version = "1.31.73"
 description = "Low-level, data-driven core of boto 3."
 optional = false
 python-versions = ">= 3.7"
 files = [
-    {file = "botocore-1.31.72-py3-none-any.whl", hash = "sha256:1a0f5063a9a5e1ef40907c67778625cf14a8c47c8e09cd2b3f9dc53a8adb52cf"},
-    {file = "botocore-1.31.72.tar.gz", hash = "sha256:37763f40c2fcc48114015fe43bbd75ec1aabef48b418e1a5e28cb1c350967260"},
+    {file = "botocore-1.31.73-py3-none-any.whl", hash = "sha256:6e9caaa7205e0c0505f4868a4053e96eaf3f4b6bce0368a46970a8efeeacb492"},
+    {file = "botocore-1.31.73.tar.gz", hash = "sha256:5334c22d5a3f4643931896137c57b2496fef005b039d87d8740e7a28eb31519d"},
 ]
 
 [package.dependencies]
