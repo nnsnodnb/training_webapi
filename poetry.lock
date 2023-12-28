@@ -561,13 +561,13 @@ files = [
 
 [[package]]
 name = "drf-rw-serializers"
-version = "1.0.5"
+version = "1.1.0"
 description = "Generic views, viewsets and mixins that extend the Django REST Framework ones adding separated serializers for read and write operations"
 optional = false
 python-versions = "*"
 files = [
-    {file = "drf-rw-serializers-1.0.5.tar.gz", hash = "sha256:6ced5cd508dcc55fd3fa9d60a0663ce6d1f96845c200ee9ac5731e3e646ec616"},
-    {file = "drf_rw_serializers-1.0.5-py2.py3-none-any.whl", hash = "sha256:12c0821f6f3d41d1eab3900bdae4825be5e5be6b1b8fa02d046678435f0279d5"},
+    {file = "drf-rw-serializers-1.1.0.tar.gz", hash = "sha256:3c0b9f02c1ea8003575228e1ccb2b1f4d27303774a1b135d51c002ef2ff3609b"},
+    {file = "drf_rw_serializers-1.1.0-py2.py3-none-any.whl", hash = "sha256:7c5363978c19ccab31ed89c11e8bf82f255d5dffb96d6df3c1ac972d1a2b9580"},
 ]
 
 [package.dependencies]
