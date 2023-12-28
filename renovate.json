@@ -1,19 +1,23 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:recommended"
   ],
+  "timezone": "Asia/Tokyo",
   "packageRules": [
     {
       "groupName": "AWS packages",
-      "packageNames": [
+      "matchPackageNames": [
         "awscli",
         "boto3"
       ],
-      "managers": [
+      "matchManagers": [
         "poetry"
       ],
-      "automerge": true
+      "automerge": true,
+      "schedule": [
+        "after 10am on Monday"
+      ]
     }
   ]
 }
