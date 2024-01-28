@@ -459,17 +459,17 @@ Django = ">=3.2"
 
 [[package]]
 name = "django-maintenance-mode"
-version = "0.21.0"
+version = "0.21.1"
 description = "shows a 503 error page when maintenance-mode is on."
 optional = false
 python-versions = "*"
 files = [
-    {file = "django-maintenance-mode-0.21.0.tar.gz", hash = "sha256:6e02a0410a9438d065a68fb61e647d3b711832d51944a9e8c9d6822bea206bf2"},
-    {file = "django_maintenance_mode-0.21.0-py3-none-any.whl", hash = "sha256:701df2f5067184e77887b740ba14d30d35287785f5af2386177ac0b28837d00b"},
+    {file = "django-maintenance-mode-0.21.1.tar.gz", hash = "sha256:b79afddb671c59972ae542e4fafbc99117d2d37991843eaaa837e328eed12b1b"},
+    {file = "django_maintenance_mode-0.21.1-py3-none-any.whl", hash = "sha256:c02fff0e386b7f8b2ab54479d3a0d336ae34014da22a7a2365ca96d5a2c1db94"},
 ]
 
 [package.dependencies]
-python-fsutil = ">=0.12.0,<1.0.0"
+python-fsutil = ">=0.13.1,<1.0.0"
 
 [[package]]
 name = "django-stubs"
@@ -1180,13 +1180,13 @@ six = ">=1.5"
 
 [[package]]
 name = "python-fsutil"
-version = "0.13.0"
+version = "0.13.1"
 description = "high-level file-system operations for lazy devs."
 optional = false
 python-versions = "*"
 files = [
-    {file = "python-fsutil-0.13.0.tar.gz", hash = "sha256:f40d37ba29524b1cef77bb206f1541d2d509ecf03a586709b8c2ec453804ab2e"},
-    {file = "python_fsutil-0.13.0-py3-none-any.whl", hash = "sha256:8cc999d9594da083eb59e6b4d10835ee331bde3658de48bda3202e5298a3ee59"},
+    {file = "python-fsutil-0.13.1.tar.gz", hash = "sha256:302b0a1739b85151df6e6fddb1593a8fb9648c655fad0fac6c66c21bce900c13"},
+    {file = "python_fsutil-0.13.1-py3-none-any.whl", hash = "sha256:b4ad4c57c243ba46ee5aacebe58ce7a6f62ddeff20ea53e52afc420884b5e544"},
 ]
 
 [[package]]
