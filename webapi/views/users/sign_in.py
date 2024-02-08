@@ -6,7 +6,7 @@ from webapi.serializers.tokens import ReadTokenSerializer, WriteTokenSerializer
 
 
 class TokenObtainPairView(BaseTokenObtainPairView):
-    serializer_class = WriteTokenSerializer
+    _serializer_class = "webapi.serializers.tokens.WriteTokenSerializer"
 
     @extend_schema(
         operation_id="signIn",

@@ -40,16 +40,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Install poetry
+      run: pipx install poetry
     - name: Set up Python environment
       uses: actions/setup-python@v5
       with:
         python-version: "3.11.4"
+        cache: "poetry"
+    - name: Install dependencies
+      run: poetry install --sync --no-root --with dev
     - name: mypy
       uses: tsuyoshicho/action-mypy@v4
       with:
         github_token: ${{ secrets.github_token }}
         reporter: github-pr-review
         level: warning
+        execute_command: poetry run mypy .
 
   # ------------------------------------------------------------------
   isort:

@@ -10,7 +10,7 @@ from .users import UserSerializer
 class ReadCommentSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(help_text="ID")
     content = serializers.CharField(help_text="コンテンツ")
-    image_ids = serializers.ListSerializer(
+    image_ids = serializers.ListField(
         child=serializers.CharField(),
         allow_empty=True,
         help_text="画像IDのリスト",
@@ -25,7 +25,7 @@ class ReadCommentSerializer(serializers.ModelSerializer):
 
 class WriteCommentSerializer(serializers.ModelSerializer):
     content = serializers.CharField(help_text="コンテンツ")
-    image_ids = serializers.ListSerializer(
+    image_ids = serializers.ListField(
         child=serializers.CharField(),
         allow_empty=True,
         help_text="画像IDのリスト",
