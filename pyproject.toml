@@ -37,7 +37,7 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-Django = "^5.0.7"
+Django = "^5.0.0"
 djangorestframework = "^3.14.0"
 djangorestframework-simplejwt = "5.3.1"
 drf-rw-serializers = "^1.0.5"
@@ -58,7 +58,7 @@ isort = "^5.12.0"
 flake8 = "^7.0.0"
 awscli = "^1.29.25"
 mypy = "^1.5"
-django-stubs = "^5.0.0"
+django-stubs = "^4.2.3"
 djangorestframework-stubs = {version = "^3.14", extras = ["compatible-mypy"]}
 
 [build-system]
