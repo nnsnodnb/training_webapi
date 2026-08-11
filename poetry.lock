@@ -476,37 +476,37 @@ python-fsutil = ">=0.13.1,<1.0.0"
 
 [[package]]
 name = "django-stubs"
-version = "5.2.2"
+version = "5.2.9"
 description = "Mypy stubs for Django"
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "django_stubs-5.2.2-py3-none-any.whl", hash = "sha256:79bd0fdbc78958a8f63e0b062bd9d03f1de539664476c0be62ade5f063c9e41e"},
-    {file = "django_stubs-5.2.2.tar.gz", hash = "sha256:2a04b510c7a812f88223fd7e6d87fb4ea98717f19c8e5c8b59691d83ad40a8a6"},
+    {file = "django_stubs-5.2.9-py3-none-any.whl", hash = "sha256:2317a7130afdaa76f6ff7f623650d7f3bf1b6c86a60f95840e14e6ec6de1a7cd"},
+    {file = "django_stubs-5.2.9.tar.gz", hash = "sha256:c192257120b08785cfe6f2f1c91f1797aceae8e9daa689c336e52c91e8f6a493"},
 ]
 
 [package.dependencies]
 django = "*"
-django-stubs-ext = ">=5.2.2"
-mypy = {version = ">=1.13,<1.18", optional = true, markers = "extra == \"compatible-mypy\""}
-tomli = {version = "*", markers = "python_version < \"3.11\""}
+django-stubs-ext = ">=5.2.9"
+mypy = {version = ">=1.13,<1.20", optional = true, markers = "extra == \"compatible-mypy\""}
+tomli = {version = "*", markers = "python_full_version < \"3.11\""}
 types-pyyaml = "*"
 typing-extensions = ">=4.11.0"
 
 [package.extras]
-compatible-mypy = ["mypy (>=1.13,<1.18)"]
+compatible-mypy = ["mypy (>=1.13,<1.20)"]
 oracle = ["oracledb"]
 redis = ["redis", "types-redis"]
 
 [[package]]
 name = "django-stubs-ext"
-version = "5.2.2"
+version = "6.0.9"
 description = "Monkey-patching and extensions for django-stubs"
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "django_stubs_ext-5.2.2-py3-none-any.whl", hash = "sha256:8833bbe32405a2a0ce168d3f75a87168f61bd16939caf0e8bf173bccbd8a44c5"},
-    {file = "django_stubs_ext-5.2.2.tar.gz", hash = "sha256:d9d151b919fe2438760f5bd938f03e1cb08c84d0651f9e5917f1313907e42683"},
+    {file = "django_stubs_ext-6.0.9-py3-none-any.whl", hash = "sha256:267cb4d0bc87a6c2a0edd0f0dfa59696efd3d21a86b1d346b502fe13c6ea28ef"},
+    {file = "django_stubs_ext-6.0.9.tar.gz", hash = "sha256:6777de6d0a059f55ea1d53839de84c2ae96eae131b75fd00c3ee8f6678d9f6d7"},
 ]
 
 [package.dependencies]
@@ -554,30 +554,29 @@ test = ["cryptography", "freezegun", "pytest", "pytest-cov", "pytest-django", "p
 
 [[package]]
 name = "djangorestframework-stubs"
-version = "3.16.1"
+version = "3.16.9"
 description = "PEP-484 stubs for django-rest-framework"
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "djangorestframework_stubs-3.16.1-py3-none-any.whl", hash = "sha256:0c8f05469473264603e450619d0466c3e4012ebed124cc0d52ac04dfa32ace00"},
-    {file = "djangorestframework_stubs-3.16.1.tar.gz", hash = "sha256:8e2662e2a751de5f535fbf7be03b534eb00a89bb9f1937d11a73f568dfb23dd1"},
+    {file = "djangorestframework_stubs-3.16.9-py3-none-any.whl", hash = "sha256:27b3e245d5f9c22ff6988d9e54388249f98f88608cc2b365b71e9f39dd096958"},
+    {file = "djangorestframework_stubs-3.16.9.tar.gz", hash = "sha256:b1abb97490c90c85eabcd09b8ecbadae1b9360f21ad3021abf830227c0129697"},
 ]
 
 [package.dependencies]
 django-stubs = [
-    {version = ">=5.2.1"},
+    {version = ">=5.2.9"},
     {version = "*", extras = ["compatible-mypy"], optional = true, markers = "extra == \"compatible-mypy\""},
 ]
-mypy = {version = ">=1.13,<1.17", optional = true, markers = "extra == \"compatible-mypy\""}
-requests = ">=2.0"
-types-PyYAML = "*"
-types-requests = "*"
+mypy = {version = ">=1.13,<1.21", optional = true, markers = "extra == \"compatible-mypy\""}
+types-pyyaml = "*"
 typing-extensions = ">=4.0"
 
 [package.extras]
-compatible-mypy = ["django-stubs[compatible-mypy]", "mypy (>=1.13,<1.17)"]
+compatible-mypy = ["django-stubs[compatible-mypy]", "mypy (>=1.13,<1.21)"]
 coreapi = ["coreapi (>=2.0.0)"]
-markdown = ["types-Markdown (>=0.1.5)"]
+markdown = ["types-markdown (>=0.1.5)"]
+requests = ["types-requests"]
 
 [[package]]
 name = "docutils"
@@ -1424,31 +1423,6 @@ python-versions = "*"
 files = [
     {file = "types-PyYAML-6.0.5.tar.gz", hash = "sha256:464e050914f3d1d83a8c038e1cf46da5cb96b7cd02eaa096bcaa03675edd8a2e"},
     {file = "types_PyYAML-6.0.5-py3-none-any.whl", hash = "sha256:2fd21310870addfd51db621ad9f3b373f33ee3cbb81681d70ef578760bd22d35"},
-]
-
-[[package]]
-name = "types-requests"
-version = "2.31.0.6"
-description = "Typing stubs for requests"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "types-requests-2.31.0.6.tar.gz", hash = "sha256:cd74ce3b53c461f1228a9b783929ac73a666658f223e28ed29753771477b3bd0"},
-    {file = "types_requests-2.31.0.6-py3-none-any.whl", hash = "sha256:a2db9cb228a81da8348b49ad6db3f5519452dd20a9c1e1a868c83c5fe88fd1a9"},
-]
-
-[package.dependencies]
-types-urllib3 = "*"
-
-[[package]]
-name = "types-urllib3"
-version = "1.26.25.14"
-description = "Typing stubs for urllib3"
-optional = false
-python-versions = "*"
-files = [
-    {file = "types-urllib3-1.26.25.14.tar.gz", hash = "sha256:229b7f577c951b8c1b92c1bc2b2fdb0b49847bd2af6d1cc2a2e3dd340f3bda8f"},
-    {file = "types_urllib3-1.26.25.14-py3-none-any.whl", hash = "sha256:9683bbb7fb72e32bfe9d2be6e04875fbe1b3eeec3cbb4ea231435aa7fd6b4f0e"},
 ]
 
 [[package]]
