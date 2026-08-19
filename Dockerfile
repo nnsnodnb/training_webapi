@@ -3,7 +3,7 @@ FROM gcr.io/distroless/base-debian13:latest
 
 ARG TARGETARCH
 
-COPY artifacts/${TARGETARCH}/Training /app/Training
+COPY --chmod=755 artifacts/${TARGETARCH}/Training /app/Training
 COPY Public /app/Public
 
 WORKDIR /app
