@@ -64,6 +64,7 @@ jobs:
           path: artifact/Training
 
   release:
+    name: Build & push container image
     runs-on: ubuntu-24.04
     needs: static_build
 

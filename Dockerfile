@@ -1,9 +1,9 @@
 # hadolint ignore=DL3007
 FROM gcr.io/distroless/base-debian13:latest
 
-ARG TARGET_ARCH
+ARG TARGETARCH
 
-COPY artifacts/${TARGET_ARCH}/Training /app/Training
+COPY artifacts/${TARGETARCH}/Training /app/Training
 COPY Public /app/Public
 
 WORKDIR /app
