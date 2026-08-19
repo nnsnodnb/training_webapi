@@ -24,6 +24,7 @@
 2. データベースをマイグレーション
 
 ```shell
+cd /path/to/download_dir
 ./Training migrate --yes
 ```
 
@@ -47,7 +48,6 @@ Migration successful
 3. 立ち上げます
 
 ```shell
-cd /path/to/download_dir
 ./Training serve --env production --hostname 0.0.0.0 --port 8080
 ```
 
