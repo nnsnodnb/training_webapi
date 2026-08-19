@@ -1,3 +1,4 @@
+# hadolint ignore=DL3007
 FROM gcr.io/distroless/base-debian13:latest
 
 ARG TARGET_ARCH
