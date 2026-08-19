@@ -293,16 +293,28 @@ Maintenance mode is set to off
 デバッグ用途としてコマンドを実装しています。  
 以下のコマンドを実行するとアクセストークンが取得されます。
 
-1. Docker
+1. macOS
+
+```shell
+./Training access-token -u <your-user-id>
+```
+
+2. Docker
 
 ```shell
 docker exec -t training-webapi /app/Training access-token -u <your-user-id>
 ```
 
-2. Container
+3. Container
 
 ```shell
 container exec -t training-webapi /app/Training access-token -u <your-user-id>
+```
+
+## Run tests
+
+```shell
+swift test
 ```
 
 ## License
