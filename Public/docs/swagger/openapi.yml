@@ -1,0 +1,766 @@
+openapi: 3.2.0
+info:
+  title: Training WebAPI
+  contact:
+    email: me@nnsnodnb.moe
+  license:
+    name: MIT
+    url: https://mit-license.org/
+  version: 1.0.0
+externalDocs:
+  description: GitHub
+  url: https://github.com/nnsnodnb/training_webapi
+servers:
+  - url: http://127.0.0.1:8080
+    description: Vapor
+tags:
+  - name: user
+    summary: ユーザーアカウント操作
+    description: ユーザー管理と認証に関する操作
+  - name: task
+    summary: タスク操作
+    description: タスク管理に関する操作
+  - name: comment
+    summary: コメント操作
+    description: コメント管理に関する操作
+  - name: image
+    summary: 画像操作
+    description: 画像管理に関する操作
+
+paths:
+  # User
+  /v1/users/sign-in/:
+    post:
+      tags:
+        - user
+      summary: サインイン
+      description: |
+        ユーザー名とパスワードの一致でリフレッシュトークンとアクセストークンを取得します。
+        サインインと新規登録はこのエンドポイントで行います。
+      operationId: signIn
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignIn'
+      responses:
+        '200':
+          description: サインイン成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokens'
+        '400':
+          description: サインイン失敗
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /v1/users/refresh/:
+    post:
+      tags:
+        - user
+      summary: アクセストークンの更新
+      description: |
+        リフレッシュトークンをペイロードに入れて送信することでアクセストークンを更新することができます。
+        リフレッシュトークンも毎回更新されます。
+      operationId: refreshAuthTokens
+      requestBody:
+        description: 認証トークンの更新
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshAuthTokens'
+      responses:
+        '200':
+          description: サインイン成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokens'
+  /v1/users/me/:
+    delete:
+      tags:
+        - user
+      summary: ユーザーの削除
+      description: 認証中のユーザーを削除します。
+      operationId: deleteUsersMe
+      security:
+        - bearerAuth: []
+      responses:
+        '204':
+          description: ユーザー削除完了
+        '401':
+          description: 未認証
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  # Task
+  /v1/tasks/:
+    get:
+      tags:
+        - task
+      summary: タスク一覧の取得
+      description: |
+        認証済みユーザーのタスク一覧を降順でページネーション取得します。ページングはデフォルトで20件ずつ取得できます。
+      operationId: getTasks
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: cursor
+          description: |
+            カーソルトークン（ページング処理で使用）
+            レスポンスで得られた `next` もしくは `previous` の値を指定
+          in: query
+          schema:
+            type: string
+            default: null
+        - name: size
+          description: ページサイズを指定
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 20
+      responses:
+        '200':
+          description: タスク取得完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskPagingResponse'
+        '400':
+          description: 無効トークンや無効なリクエスト
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: 未認証
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - task
+      summary: タスクの作成
+      description: 認証済みユーザーの新規タスクを作成します。
+      operationId: createTask
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpsertTask'
+      responses:
+        '201':
+          description: タスク作成成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '400':
+          description: 無効なペイロードや無効なリクエスト
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: 未認証
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v1/tasks/{taskId}/:
+    put:
+      tags:
+        - task
+      summary: タスクの更新
+      description: 認証済みユーザーが持つ指定されたタスクを更新します。
+      operationId: updateTask
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: taskId
+          description: 更新したいタスクIDを指定
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpsertTask'
+      responses:
+        '200':
+          description: タスク更新完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '400':
+          description: 無効なペイロードや無効なリクエスト
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: 未認証
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: 指定されたタスクが見つからない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - task
+      summary: タスクの削除
+      description: 認証済みユーザーが持つ指定されたタスクを削除します。
+      operationId: deleteTask
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: taskId
+          description: 削除したいタスクIDを指定
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+      responses:
+        '204':
+          description: タスク削除成功
+        '400':
+          description: 無効なペイロードや無効なリクエスト
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: 未認証
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: 指定されたタスクが見つからない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v1/tasks/{taskId}/status/:
+    patch:
+      tags:
+        - task
+      summary: タスクのステータスを更新
+      description: 認証済みユーザーが持つ指定されたタスクのステータスを更新します。
+      operationId: updateTaskStatus
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: taskId
+          description: ステータスを更新したいタスクIDを指定
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  $ref: '#/components/schemas/TaskStatus'
+              required:
+                - status
+      responses:
+        '200':
+          description: タスクステータス更新完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '400':
+          description: 無効なペイロードや無効なリクエスト
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: 未認証
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: 指定されたタスクが見つからない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  # Comment
+  /v1/tasks/{taskId}/comments/:
+    get:
+      tags:
+        - comment
+      summary: 指定されたタスクのコメント一覧の取得
+      description: |
+        認証済みユーザーの指定したタスクのコメント一覧を昇順でページネーション取得します。
+        ページングはデフォルトで20件ずつ取得できます。
+      operationId: getTaskComments
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: taskId
+          description: コメントを取得したいタスクIDを指定
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - name: cursor
+          description: |
+            カーソルトークン（ページング処理で使用）
+            レスポンスで得られた `next` もしくは `previous` の値を指定
+          in: query
+          schema:
+            type: string
+            default: null
+        - name: size
+          description: ページサイズを指定
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 20
+      responses:
+        '200':
+          description: コメント取得完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentPagingResponse'
+        '400':
+          description: 無効トークンや無効なリクエスト
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: 未認証
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: 指定したタスクが見つからない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - comment
+      summary: 指定されたタスクへのコメントの作成
+      description: 認証済みユーザーの指定したタスクへ新規コメントを作成します。
+      operationId: createTaskComments
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: taskId
+          description: コメントを作成したいタスクIDを指定
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpsertComment'
+      responses:
+        '201':
+          description: コメント作成完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '400':
+          description: 無効なペイロードや無効なリクエスト
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: 未認証
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: 指定したタスクが見つからない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /v1/tasks/{taskId}/comments/{commentId}:
+    put:
+      tags:
+        - comment
+      summary: 指定されたタスク内の指定されたコメントの更新
+      description: 認証済みユーザーが持つ指定されたタスク内の指定されたコメントを更新します。
+      operationId: updateTaskComment
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: taskId
+          description: 更新したいコメントを含むタスクIDを指定
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - name: commentId
+          description: 更新したいコメントIDを指定
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpsertComment'
+      responses:
+        '200':
+          description: コメント更新完了
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '400':
+          description: 無効なペイロードや無効なリクエスト
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: 未認証
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: 指定したタスクもしくはコメントが見つからない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - comment
+      summary: 指定されたタスク内の指定されたコメントの削除
+      description: 認証済みユーザーが持つ指定されたタスク内の指定されたコメントを削除します。
+      operationId: deleteTaskComment
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: taskId
+          description: コメントを作成したいタスクIDを指定
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - name: commentId
+          description: 更新したいコメントIDを指定
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+      responses:
+        '204':
+          description: コメント削除完了
+        '400':
+          description: 無効なリクエスト
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: 未認証
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: 指定したタスクもしくはコメントが見つからない
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  # Image
+  /v1/images/:
+    post:
+      tags:
+        - image
+      summary: 画像アップロード
+      description: |
+        画像のアップロードを行います。一括で4枚まで同時にアップロード可能で1回のリクエストで最大15MBまでアップロードができます。アップロードされたらファイルまでのパスがレスポンスで得られます。ここで得られたファイルパスを該当のエンドポイントのペイロードに入れることで画像として設定できます。
+      operationId: uploadImage
+      security:
+        - bearerAuth: []
+      requestBody: 
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadImage'
+      responses:
+        '200':
+          description: アップロード成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageIDs'
+        '400':
+          description: アップロード失敗
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: 未認証
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+          example: theUser
+        date_joined:
+          type: number
+          format: double
+          example: 1787054647
+      required:
+        - id
+        - username
+        - date_joined
+    SignIn:
+      type: object
+      properties:
+        username:
+          type: string
+          example: theUser
+        password:
+          type: string
+          example: 12345678
+      required:
+        - username
+        - password
+    RefreshAuthTokens:
+      type: object
+      properties:
+        refresh:
+          type: string
+          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3ODc2NDYzNTEuMDU2NTk2LCJ1c2VySUQiOiIxQjUwQkU5QS02RDY0LTRGNTgtODI4Ny0yNjdGODczQjczNzAiLCJhdWQiOiJ0cmFpbmluZy1hcGkiLCJzdWIiOiIxQjUwQkU5QS02RDY0LTRGNTgtODI4Ny0yNjdGODczQjczNzAiLCJpYXQiOjE3ODcwNDE1NTEuMDU2NTk2fQ.kgjgES30Mbi8qNiU8q3jdYjYRtB0Ej8dleuWpnIBFWg
+      required:
+        - refresh
+    AuthTokens:
+      type: object
+      properties:
+        refresh:
+          type: string
+          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3ODc2NDYzNTEuMDU2NTk2LCJ1c2VySUQiOiIxQjUwQkU5QS02RDY0LTRGNTgtODI4Ny0yNjdGODczQjczNzAiLCJhdWQiOiJ0cmFpbmluZy1hcGkiLCJzdWIiOiIxQjUwQkU5QS02RDY0LTRGNTgtODI4Ny0yNjdGODczQjczNzAiLCJpYXQiOjE3ODcwNDE1NTEuMDU2NTk2fQ.kgjgES30Mbi8qNiU8q3jdYjYRtB0Ej8dleuWpnIBFWg
+        access:
+          type: string
+          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJ0cmFpbmluZy1hcGkiLCJleHAiOjE3ODcwNDUxNTEuMDU2NTk2LCJ1c2VySUQiOiIxQjUwQkU5QS02RDY0LTRGNTgtODI4Ny0yNjdGODczQjczNzAiLCJpYXQiOjE3ODcwNDE1NTEuMDU2NTk2LCJzdWIiOiIxQjUwQkU5QS02RDY0LTRGNTgtODI4Ny0yNjdGODczQjczNzAifQ.Xk9Nzg3uNnFtRlnrqHcmNwuOvh3wjPpL8SdvLucmd34
+      required:
+        - refresh
+        - access
+    TaskPagingResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'
+          minItems: 0
+          maxItems: 50
+        next:
+          type: string
+        previous:
+          type: string
+      required:
+        - items
+    Task:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          example: タスクタイトル
+        thumbnail:
+          type: string
+          example: /images/1B50BE9A-6D64-4F58-8287-267F873B7370/3E224D7F-9682-4156-AD53-8F77268F3C32.png
+        status:
+          $ref: '#/components/schemas/TaskStatus'
+        user:
+          $ref: '#/components/schemas/User'
+        created:
+          type: number
+          format: double
+          example: 1787054647
+        updated:
+          type: number
+          format: double
+          example: 1787054647
+      required:
+        - id
+        - title
+        - status
+        - user
+        - created
+        - updated
+    UpsertTask:
+      type: object
+      properties:
+        title:
+          type: string
+          example: タスクタイトル
+        thumbnail:
+          type: string
+          example: /images/1B50BE9A-6D64-4F58-8287-267F873B7370/3E224D7F-9682-4156-AD53-8F77268F3C32.png
+        status:
+          $ref: '#/components/schemas/TaskStatus'
+      required:
+        - title
+        - status
+    TaskStatus:
+      type: string
+      enum:
+        - backlog
+        - in_progress
+        - in_review
+        - finished
+    CommentPagingResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+          minItems: 0
+          maxItems: 50
+        next:
+          type: string
+        previous:
+          type: string
+      required:
+        - items
+    Comment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        content:
+          type: string
+          example: コメント
+        image_ids:
+          type: array
+          items:
+            type: string
+          example: [/images/1B50BE9A-6D64-4F58-8287-267F873B7370/3E224D7F-9682-4156-AD53-8F77268F3C32.png]
+        task:
+          $ref: '#/components/schemas/Task'
+        user:
+          $ref: '#/components/schemas/User'
+        created:
+          type: number
+          format: double
+          example: 1787054647
+      required:
+        - id
+        - content
+        - image_ids
+        - task
+        - user
+        - created
+    UpsertComment:
+      type: object
+      properties:
+        content:
+          type: string
+        image_ids:
+          type: array
+          items:
+            type: array
+          example: [/images/1B50BE9A-6D64-4F58-8287-267F873B7370/3E224D7F-9682-4156-AD53-8F77268F3C32.png]
+      required:
+        - content
+        - image_ids
+    UploadImage:
+      type: object
+      properties:
+        items[]:
+          type: array
+          items:
+            type: string
+            format: binary
+          minItems: 1
+          maxItems: 4
+      required:
+        - items[]
+    ImageIDs:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: string
+            example: /images/1B50BE9A-6D64-4F58-8287-267F873B7370/3E224D7F-9682-4156-AD53-8F77268F3C32.png
+    Error:
+      type: object
+      properties:
+        reason:
+          type: string
+        error:
+          type: boolean
+          example: true
+      required:
+        - reason
+        - error
+  requestBodies:
+    {}
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

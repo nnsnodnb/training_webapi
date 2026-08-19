@@ -1,0 +1,107 @@
+name: Release
+
+on:
+  push:
+    tags:
+    - '*.*.*'
+
+jobs:
+  macos_build:
+    name: Build Swift for macOS
+    runs-on: macos-26
+
+    strategy:
+      matrix:
+        swift_arch: ['x86_64', 'arm64']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - name: Build
+        run: swift build -c release --arch "${{ matrix.swift_arch }}"
+      - name: Prepare artifact
+        run: |
+          mkdir -p artifact
+          cp ".build/${{ matrix.swift_arch }}-apple-macosx/release/Training" "artifact/Training"
+      - name: Upload artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
+        with:
+          name: training-${{ matrix.swift_arch }}
+          path: artifact/Training
+
+  static_build:
+    name: Build Swift Linux Static binary
+    runs-on: ubuntu-24.04
+
+    strategy:
+      matrix:
+        include:
+          - arch: amd64
+            swift_arch: x86_64
+          - arch: arm64
+            swift_arch: aarch64
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - name: Install Swift Linux Static SDK
+        env:
+          SWIFT_VERSION: '6.3.3'
+          CHECKSUM: '87c3eaf908e67c0e13a84367119e12273cec1d2cd3d81f7d74bb36722d6b607b'
+        run: |
+          swift sdk install \
+            "https://download.swift.org/swift-${SWIFT_VERSION}-release/static-sdk/swift-${SWIFT_VERSION}-RELEASE/swift-${SWIFT_VERSION}-RELEASE_static-linux-0.1.0.artifactbundle.tar.gz" --checksum "${CHECKSUM}"
+      - name: Build
+        run: swift build -c release --swift-sdk "${{ matrix.swift_arch }}-swift-linux-musl"
+      - name: Prepare artifact
+        run: |
+          mkdir -p artifact
+          cp ".build/${{ matrix.swift_arch }}-swift-linux-musl/release/Training" "artifact/Training"
+      - name: Upload artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
+        with:
+          name: training-${{ matrix.arch }}
+          path: artifact/Training
+
+  release:
+    runs-on: ubuntu-24.04
+    needs: static_build
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - name: Download amd64 (x86_64) binary
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8.0.1
+        with:
+          name: training-amd64
+          path: artifacts/amd64
+      - name: Download arm64 binary
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8.0.1
+        with:
+          name: training-arm64
+          path: artifacts/arm64
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@96fe6ef7f33517b61c61be40b68a1882f3264fb8  # v4.2.0
+      - name: Setup QEMU Buildx
+        uses: docker/setup-buildx-action@bb05f3f5519dd87d3ba754cc423b652a5edd6d2c  # v4.2.0
+      - name: Get the tag name
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> "${GITHUB_ENV}"
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f  # v4.6.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN}}
+      - name: Build and push to Docker Container Registries
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a  # v7.3.0
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/nnsnodnb/training_webapi:${{ env.TAG_NAME }}
+            ghcr.io/nnsnodnb/training_webapi:latest

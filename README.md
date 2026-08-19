@@ -4,13 +4,10 @@
 
 ## 動作確認及び開発環境
 
-- macOS Ventura (13.5.2)
-  - M1 Max
-- Docker version 24.0.5, build ced0996
-  - Docker Compose version v2.20.2-desktop.1
-- Finch
-  - finch version v0.1.1
-  - nerdctl Compose version v1.0.0
+- macOS Taho (26.6.1)
+  - M2 Ultra
+- Docker version 29.7.2
+- Container 1.2.2
 
 ## 始め方
 
@@ -28,75 +25,112 @@ brew install --cask docker
 
 2. 立ち上げます
 
-すでにこのリポジトリがローカルにクローンもしくはダウンロードされているとします。
+```shell
+docker pull ghcr.io/nnsnodnb/training_webapi:latest
+docker run -d -p 8080:8080 --name training-webapi ghcr.io/nnsnodnb/training_webapi:latest
+```
+
+3. データベースをマイグレーション
 
 ```shell
-make docker_setup
+docker exec -t training-webapi /app/Training migrate --yes
 ```
 
-しばらくするとプロンプトが現れるので
+上記コマンドを実行してデータベースをマイグレーションします。  
+この操作は、基本的には初回のみ必要です。
 
 ```shell
-docker compose logs -f backend
+Migrate Command: Prepare
+The following migration(s) will be prepared:
++ Training.InitialMigrations on <default>
++ Training.AddUserFieldInCommentMigrations on <default>
+Would you like to continue?
+y/n> yes
+[ INFO ] [Migrator] Starting prepare [database-id: sqlite, migration: Training.InitialMigrations]
+[ INFO ] [Migrator] Finished prepare [database-id: sqlite, migration: Training.InitialMigrations]
+[ INFO ] [Migrator] Starting prepare [database-id: sqlite, migration: Training.AddUserFieldInCommentMigrations]
+[ INFO ] [Migrator] Finished prepare [database-id: sqlite, migration: Training.AddUserFieldInCommentMigrations]
+Migration successful
 ```
 
-と入力して
+4. 確認
 
-```text
-training_backend  | 184 static files copied to '/app/staticfiles'.
-training_backend  | [2021-11-23 14:51:07 +0000] [52] [INFO] Starting gunicorn 20.1.0
-training_backend  | [2021-11-23 14:51:07 +0000] [52] [INFO] Listening at: unix:tmp/gunicorn.sock (52)
-training_backend  | [2021-11-23 14:51:07 +0000] [52] [INFO] Using worker: gevent
-training_backend  | [2021-11-23 14:51:07 +0000] [55] [INFO] Booting worker with pid: 55
+```shell
+docker logs training-webapi
 ```
 
-上記のような表示が出るまで待ってください。上記のような表示が出たら control + C で抜け出して大丈夫です！
+上記コマンドを実行して以下のように立ち上がっていたらアプリケーションは起動しています。
 
-`http://127.0.0.1` でアクセス可能です。  
+```
+[ NOTICE ] Server started on http://0.0.0.0:8080
+```
+
+`http://127.0.0.1:8080` でアクセス可能です。  
 それではがんばりましょう！
 
 </details>
 
-### Finch
+### container
 
 <details>
 
 <summary>開く</summary>
 
-1. finch をインストールしてください
+1. container をインストールしてください
+
+https://github.com/apple/container#initial-install
+
+2. 立ち上げます
 
 ```shell
-brew install --cask finch
-finch vm init
+container i pull ghcr.io/nnsnodnb/training_webapi:latest
+container run -d --rm --name training-webapi ghcr.io/nnsnodnb/training_webapi:latest
 ```
 
-3. 立ち上げます
-
-すでにこのリポジトリがローカルにクローンもしくはダウンロードされているとします。
+3. データベースをマイグレーション
 
 ```shell
-make finch_setup
+container exec -t training-webapi /app/Training migrate --yes
 ```
 
-しばらくするとプロンプトが現れるので
+上記コマンドを実行してデータベースをマイグレーションします。  
+この操作は、基本的には初回のみ必要です。
 
 ```shell
-finch compose logs -f backend
+Migrate Command: Prepare
+The following migration(s) will be prepared:
++ Training.InitialMigrations on <default>
++ Training.AddUserFieldInCommentMigrations on <default>
+Would you like to continue?
+y/n> yes
+[ INFO ] [Migrator] Starting prepare [database-id: sqlite, migration: Training.InitialMigrations]
+[ INFO ] [Migrator] Finished prepare [database-id: sqlite, migration: Training.InitialMigrations]
+[ INFO ] [Migrator] Starting prepare [database-id: sqlite, migration: Training.AddUserFieldInCommentMigrations]
+[ INFO ] [Migrator] Finished prepare [database-id: sqlite, migration: Training.AddUserFieldInCommentMigrations]
+Migration successful
 ```
 
-と入力して
+4. 確認
 
-```text
-training_backend  | 184 static files copied to '/app/staticfiles'.
-training_backend  | [2021-11-23 14:51:07 +0000] [52] [INFO] Starting gunicorn 20.1.0
-training_backend  | [2021-11-23 14:51:07 +0000] [52] [INFO] Listening at: unix:tmp/gunicorn.sock (52)
-training_backend  | [2021-11-23 14:51:07 +0000] [52] [INFO] Using worker: gevent
-training_backend  | [2021-11-23 14:51:07 +0000] [55] [INFO] Booting worker with pid: 55
+```shell
+container logs training-webapi
 ```
 
-上記のような表示が出るまで待ってください。上記のような表示が出たら control + C で抜け出して大丈夫です！
+上記コマンドを実行して以下のように立ち上がっていたらアプリケーションは起動しています。
 
-`http://127.0.0.1` でアクセス可能です。  
+```
+[ NOTICE ] Server started on http://0.0.0.0:8080
+```
+
+コンテナの IP アドレスは以下のように確認ができます。
+
+```shell
+container ls
+ID               IMAGE                                                OS     ARCH   STATE    IP               CPUS  MEMORY   STARTED
+training-webapi  training_webapi:latest                               linux  arm64  running  192.168.64.9/24  4     1024 MB  2026-08-19T05:50:10Z
+```
+
+上記の例であれば `http://192.168.64.9:8080` でアクセス可能です。  
 それではがんばりましょう！
 
 </details>
@@ -105,22 +139,22 @@ training_backend  | [2021-11-23 14:51:07 +0000] [55] [INFO] Booting worker with 
 
 ### ドキュメント
 
-ユーザがタスクを作って、それぞれのタスクに対してコメントをすることが可能です。  
-またユーザが作ったリソースについては作ったユーザのみがアクセス可能です。
+ユーザーがタスクを作って、それぞれのタスクに対してコメントをすることが可能です。  
+またユーザーが作ったリソースについては作ったユーザーのみがアクセス可能です。
 
-詳細なドキュメントについては、上記セクションでサーバを起動して `http://{{ WebAPI の IPv4 アドレス }}/docs/swagger` にアクセスして確認してください。
+詳細なドキュメントについては、上記セクションでサーバーを起動して `http://{{ WebAPI の IPv4 アドレス }}/docs/swagger/index.html` にアクセスして確認してください。
 
 ### 認可
 
 JWT を使用した認可を行います。
 
-`POST /v1/users/sign-in` に対してユーザ名とパスワードを投げるとリフレッシュトークン(`refresh`) とアクセストークン(`access`) が取得できます。
+`POST /v1/users/sign-in/` に対してユーザ名とパスワードを投げるとリフレッシュトークン(`refresh`) とアクセストークン(`access`) が取得できます。
 
 <details>
 <summary>Example</summary>
 
 ```shell
-curl -X POST http://127.0.0.1/v1/users/sign-in \
+curl -X POST http://127.0.0.1:8080/v1/users/sign-in/ \
      -H "Content-Type: application/json" \
      -H "Accept: application/json" \
      -d "{\"username\": \"sample-username\", \"password\": \"super-secret-password\"}"
@@ -132,17 +166,18 @@ curl -X POST http://127.0.0.1/v1/users/sign-in \
 - `refresh` : 1週間
 - `access` : 1時間
 
-アクセストークンの有効期限が切れた場合は `/v1/users/refresh` に `refresh` をキーにリフレッシュトークンを送信してください。
+アクセストークンの有効期限が切れた場合は `/v1/users/refresh/` に `refresh` をキーにリフレッシュトークンを送信してください。
 
 ### 画像リソースの配信
 
-この Web API では画像を扱うことが可能になっています。ストレージについては AWS S3 互換の MinIO を使用しています。  
-容量制限については1回につき [15MB](dockerfiles/files/default.config#L9) としています。
+この Web API では画像を扱うことが可能になっています。ストレージについてはディレクトリに保存しています。  
+コンテナ内の `/app/Public` に配置されています。  
+また、容量制限については1回につき **15MB** としています。
 
-- `/v1/tasks`
-- `/v1/tasks/{id}`
-- `/v1/tasks/{id}/comments`
-- `/v1/tasks/{id}/comments/{comment_id}`
+- `/v1/tasks/`
+- `/v1/tasks/{id}/`
+- `/v1/tasks/{id}/comments/`
+- `/v1/tasks/{id}/comments/{comment_id}/`
 
 画像の ID として Web API からのレスポンスでキーが取得できます。このキーとホスト情報を組み合わせて URL を生成してください。
 
@@ -152,37 +187,44 @@ curl -X POST http://127.0.0.1/v1/users/sign-in \
 Web API から以下のように返ってきたら
 
 ```text
-training-store/images/e0b92214/8b69/4281/bcf6/67a7c4e88c90/83d34abb1fb5c77c0855ccae94fca4a9d74d4129.png
+/images/1B50BE9A-6D64-4F58-8287-267F873B7370/3E224D7F-9682-4156-AD53-8F77268F3C32.png
 ```
 
-Web API が起動しているマシンの IP アドレスが `192.168.100.32` であるなら
+Web API が起動しているマシンの IP アドレスが `127.0.0.1` であるなら
 
 ```text
-http://192.168.100.32:9000/training-store/images/e0b92214/8b69/4281/bcf6/67a7c4e88c90/83d34abb1fb5c77c0855ccae94fca4a9d74d4129.png
+http://127.0.0.1:8080/images/1B50BE9A-6D64-4F58-8287-267F873B7370/3E224D7F-9682-4156-AD53-8F77268F3C32.png
 ```
 
 上記のようにしてください。
 
 </details>
 
-### オリジン間リソース共有について
+## オリジン間リソース共有について
 
-`^http(|s)://(localhost|127.0.0.1):\d+$` に一致するホストの場合、許可しています。
+リクエスト内の Origin ヘッダーの値を許可しています。
 
-- `http://localhost:3000`
-- `https://127.0.0.1:3000`
-
-などが該当します。
-
-```shell
-python scripts/check_cors.py --url http://127.0.0.1:3000
-```
-
-で確認できます。
-
-### メンテナンスモード
+## メンテナンスモード
 
 下記コマンドでメンテナンスモードを切り替えることができます。
+
+1. Docker
+
+```shell
+docker exec -t training-webapi /app/Training maintenance on  # メンテナンスモードに入る
+Maintenance mode is set to on
+docker exec -t training-webapi /app/Training maintenance off # メンテナンスモードから抜ける
+Maintenance mode is set to off
+```
+
+2. Container
+
+```shell
+container exec -t training-webapi /app/Training maintenance on  # メンテナンスモードに入る
+Maintenance mode is set to on
+container exec -t training-webapi /app/Training maintenance off # メンテナンスモードから抜ける
+Maintenance mode is set to off
+```
 
 任意のエンドポイントへのアクセスで以下のようなレスポンスが返ってきます。
 
@@ -195,18 +237,21 @@ python scripts/check_cors.py --url http://127.0.0.1:3000
 }
 ```
 
+## アクセストークンの取得
+
+デバッグ用途としてコマンドを実装しています。  
+以下のコマンドを実行するとアクセストークンが取得されます。
+
 1. Docker
 
 ```shell
-make docker_maintenance_on
-make docker_maintenance_off
+docker exec -t training-webapi /app/Training access-token -u <your-user-id>
 ```
 
-2. Finch
+2. Container
 
 ```shell
-make finch_maintenance_on
-make finch_maintenance_off
+container exec -t training-webapi /app/Training access-token -u <your-user-id>
 ```
 
 ## License

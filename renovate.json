@@ -3,21 +3,5 @@
   "extends": [
     "config:recommended"
   ],
-  "timezone": "Asia/Tokyo",
-  "packageRules": [
-    {
-      "groupName": "AWS packages",
-      "matchPackageNames": [
-        "awscli",
-        "boto3"
-      ],
-      "matchManagers": [
-        "poetry"
-      ],
-      "automerge": true,
-      "schedule": [
-        "after 10am on Monday"
-      ]
-    }
-  ]
+  "timezone": "Asia/Tokyo"
 }

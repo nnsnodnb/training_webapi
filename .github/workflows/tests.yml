@@ -1,58 +1,26 @@
 name: Test
 
 on:
-  push: {}
+  pull_request:
+  push:
+    branches: [main]
 
 jobs:
-  deps_install:
-    runs-on: ubuntu-latest
-
-    services:
-      postgresql:
-        image: postgres:16.2
-        ports:
-          - "5432:5432"
-        env:
-          POSTGRES_INITDB_ARGS: --encoding=UTF-8 --locale=C
-          POSTGRES_PASSWORD: training_very_secret_password
-          POSTGRES_NAME: training
-          POSTGRES_USER: training
-          TZ: Asia/Tokyo
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    name: Check installable dependencies
+  tests:
+    runs-on: ubuntu-24.04
+    container: swift:6.3.3-bookworm
 
     steps:
-    - uses: actions/checkout@v4
-
-    - name: Setup Python 3.11
-      uses: actions/setup-python@v5
+    - name: Checkout
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+    - name: Cache
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  # v6.1.0
       with:
-        python-version: "3.11.4"
-
-    - name: Bootstrap poetry
-      run: |
-        python -m ensurepip
-        python -m pip install --upgrade pip
-        python -m pip install poetry
-        python -m poetry config virtualenvs.in-project true
-
-    - name: Cache poetry dependencies
-      uses: actions/cache@v4
-      with:
-        path: .venv
-        key: venv-${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+        path: |
+          .build/checkouts
+          .build/repositories
+        key: ${{ runner.os }}-swift-6.3.3-${{ hashFiles('Package.resolved') }}
         restore-keys: |
-          ${{ runner.os }}-poetry-
-
-    - name: Install dependencies
-      run: |
-        python -m poetry install --no-root
-
-    - name: Migration
-      run: |
-        python -m poetry run python manage.py migrate
+          ${{ runner.os }}-swift-6.3.3-
+    - name: Run tests
+      run: swift test
