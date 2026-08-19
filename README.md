@@ -11,6 +11,57 @@
 
 ## 始め方
 
+### macOS
+
+<details>
+
+<summary>開く</summary>
+
+1. ダウンロード
+
+[Releases](https://github.com/nnsnodnb/training_webapi/releases/latest) から CPU アーキテクチャを選択して、 `training-macOS-<your-arch>.zip` をダウンロード・展開する
+
+2. データベースをマイグレーション
+
+```shell
+./Training migrate --yes
+```
+
+上記コマンドを実行してデータベースをマイグレーションします。  
+この操作は、基本的には初回のみ必要です。
+
+```shell
+Migrate Command: Prepare
+The following migration(s) will be prepared:
++ Training.InitialMigrations on <default>
++ Training.AddUserFieldInCommentMigrations on <default>
+Would you like to continue?
+y/n> yes
+[ INFO ] [Migrator] Starting prepare [database-id: sqlite, migration: Training.InitialMigrations]
+[ INFO ] [Migrator] Finished prepare [database-id: sqlite, migration: Training.InitialMigrations]
+[ INFO ] [Migrator] Starting prepare [database-id: sqlite, migration: Training.AddUserFieldInCommentMigrations]
+[ INFO ] [Migrator] Finished prepare [database-id: sqlite, migration: Training.AddUserFieldInCommentMigrations]
+Migration successful
+```
+
+3. 立ち上げます
+
+```shell
+cd /path/to/download_dir
+./Training serve --env production --hostname 0.0.0.0 --port 8080
+```
+
+上記コマンドを実行して以下のように立ち上がっていたらアプリケーションは起動しています。
+
+```
+[ NOTICE ] Server started on http://0.0.0.0:8080
+```
+
+`http://127.0.0.1:8080` でアクセス可能です。  
+それではがんばりましょう！
+
+</details>
+
 ### Docker
 
 <details>
