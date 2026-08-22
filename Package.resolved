@@ -1,5 +1,5 @@
 {
-  "originHash" : "ea62994b80dd645a2f74b0a3123b3afa7be5e0a9429984579edfc033d4dedbb7",
+  "originHash" : "53fd2c4520e84c095a820f1afb28f61d2568f96ebe59d02895de9fa043f89664",
   "pins" : [
     {
       "identity" : "argon2swift",
@@ -347,8 +347,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/nnsnodnb/vapor-cursor-pagination.git",
       "state" : {
-        "revision" : "87df9c41908cc861e3e956ff9e9cab6de10e548f",
-        "version" : "0.1.1"
+        "revision" : "a79b3cd2825fb9cb25853b4d0e220da339980473",
+        "version" : "0.1.2"
       }
     },
     {
