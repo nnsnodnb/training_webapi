@@ -33,6 +33,7 @@ jobs:
   static_build:
     name: Build Swift Linux Static binary
     runs-on: ubuntu-24.04
+    container: ghcr.io/nnsnodnb/swift-static-linux-sdk:6.3.3-bookworm
 
     strategy:
       matrix:
@@ -45,13 +46,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
-      - name: Install Swift Linux Static SDK
-        env:
-          SWIFT_VERSION: '6.3.3'
-          CHECKSUM: '87c3eaf908e67c0e13a84367119e12273cec1d2cd3d81f7d74bb36722d6b607b'
-        run: |
-          swift sdk install \
-            "https://download.swift.org/swift-${SWIFT_VERSION}-release/static-sdk/swift-${SWIFT_VERSION}-RELEASE/swift-${SWIFT_VERSION}-RELEASE_static-linux-0.1.0.artifactbundle.tar.gz" --checksum "${CHECKSUM}"
       - name: Build
         run: swift build -c release --swift-sdk "${{ matrix.swift_arch }}-swift-linux-musl"
       - name: Prepare artifact
