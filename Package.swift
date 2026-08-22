@@ -21,7 +21,7 @@ let package = Package(
     .package(url: "https://github.com/apple/swift-nio.git", from: "2.101.3"),
     // 💧 A server-side Swift web framework.
     .package(url: "https://github.com/vapor/vapor.git", from: "4.122.0"),
-    .package(url: "https://github.com/nnsnodnb/vapor-cursor-pagination.git", from: "0.1.1"),
+    .package(url: "https://github.com/nnsnodnb/vapor-cursor-pagination.git", from: "0.1.2"),
   ],
   targets: [
     .executableTarget(
