@@ -1,35 +1,37 @@
 # training_webapi
 
-何かを新しい技術を学習したいというお気持ちがあるけど、 API 作るの面倒だしちょっと使えそうなものだけでも作っておくかと思って作った Web API です。
+I wanted to learn some new technology, but building an API from scratch felt like a hassle, so I decided to build something that might be useful enough to actually use.
 
-## 動作確認及び開発環境
+- [日本語README.md](README.ja.md)
+
+## Environment
 
 - macOS Taho (26.6.1)
   - M2 Ultra
 - Docker version 29.7.2
 - Container 1.2.2
 
-## 始め方
+## Getting Started
 
 ### macOS
 
 <details>
 
-<summary>開く</summary>
+<summary>Open</summary>
 
-1. ダウンロード
+1. Download
 
-[Releases](https://github.com/nnsnodnb/training_webapi/releases/latest) から CPU アーキテクチャを選択して、 `training-macOS-<your-arch>.zip` をダウンロード・展開する
+From [Releases](https://github.com/nnsnodnb/training_webapi/releases/latest), select the CPU architecture that matches your environment, then download and extract `training-macOS-<your-arch>.zip`.
 
-2. データベースをマイグレーション
+2. Migrate the database
 
 ```shell
 cd /path/to/download_dir
 ./Training migrate --yes
 ```
 
-上記コマンドを実行してデータベースをマイグレーションします。  
-この操作は、基本的には初回のみ必要です。
+Run the command above to migrate the database.  
+This is generally only required the first time.
 
 ```shell
 Migrate Command: Prepare
@@ -45,20 +47,20 @@ y/n> yes
 Migration successful
 ```
 
-3. 立ち上げます
+3. Start the application
 
 ```shell
 ./Training serve --env production --hostname 0.0.0.0 --port 8080
 ```
 
-上記コマンドを実行して以下のように立ち上がっていたらアプリケーションは起動しています。
+If the application starts and displays the following message, it is up and running.
 
 ```
 [ NOTICE ] Server started on http://0.0.0.0:8080
 ```
 
-`http://127.0.0.1:8080` でアクセス可能です。  
-それではがんばりましょう！
+You can access it at http://127.0.0.1:8080.
+Good luck!
 
 </details>
 
@@ -66,29 +68,29 @@ Migration successful
 
 <details>
 
-<summary>開く</summary>
+<summary>Open</summary>
 
-1. Docker をインストールしてください
+1. Install Docker
 
 ```shell
 brew install --cask docker
 ```
 
-2. 立ち上げます
+2. Start the application
 
 ```shell
 docker pull ghcr.io/nnsnodnb/training_webapi:latest
 docker run -d -p 8080:8080 --name training-webapi ghcr.io/nnsnodnb/training_webapi:latest
 ```
 
-3. データベースをマイグレーション
+3. Migrate the database
 
 ```shell
 docker exec -t training-webapi /app/Training migrate --yes
 ```
 
-上記コマンドを実行してデータベースをマイグレーションします。  
-この操作は、基本的には初回のみ必要です。
+Run the command above to migrate the database.
+This is generally only required the first time.
 
 ```shell
 Migrate Command: Prepare
@@ -104,48 +106,48 @@ y/n> yes
 Migration successful
 ```
 
-4. 確認
+4. Check the logs
 
 ```shell
 docker logs training-webapi
 ```
 
-上記コマンドを実行して以下のように立ち上がっていたらアプリケーションは起動しています。
+If the application has started and displays the following message, it is up and running.
 
 ```
 [ NOTICE ] Server started on http://0.0.0.0:8080
 ```
 
-`http://127.0.0.1:8080` でアクセス可能です。  
-それではがんばりましょう！
+You can access it at http://127.0.0.1:8080.
+Good luck!
 
 </details>
 
-### container
+### Container
 
 <details>
 
-<summary>開く</summary>
+<summary>Open</summary>
 
-1. container をインストールしてください
+1. Install Container
 
 https://github.com/apple/container#initial-install
 
-2. 立ち上げます
+2. Start the application
 
 ```shell
 container i pull ghcr.io/nnsnodnb/training_webapi:latest
 container run -d --rm --name training-webapi ghcr.io/nnsnodnb/training_webapi:latest
 ```
 
-3. データベースをマイグレーション
+3. Migrate the database
 
 ```shell
 container exec -t training-webapi /app/Training migrate --yes
 ```
 
-上記コマンドを実行してデータベースをマイグレーションします。  
-この操作は、基本的には初回のみ必要です。
+Run the command above to migrate the database.  
+This is generally only required the first time.
 
 ```shell
 Migrate Command: Prepare
@@ -161,19 +163,19 @@ y/n> yes
 Migration successful
 ```
 
-4. 確認
+4. Check the logs
 
 ```shell
 container logs training-webapi
 ```
 
-上記コマンドを実行して以下のように立ち上がっていたらアプリケーションは起動しています。
+If the application has started and displays the following message, it is up and running.
 
 ```
 [ NOTICE ] Server started on http://0.0.0.0:8080
 ```
 
-コンテナの IP アドレスは以下のように確認ができます。
+You can check the container's IP address with the following command:
 
 ```shell
 container ls
@@ -181,27 +183,27 @@ ID               IMAGE                                                OS     ARC
 training-webapi  training_webapi:latest                               linux  arm64  running  192.168.64.9/24  4     1024 MB  2026-08-19T05:50:10Z
 ```
 
-上記の例であれば `http://192.168.64.9:8080` でアクセス可能です。  
-それではがんばりましょう！
+In the example above, you can access the application at `http://192.168.64.9:8080`.
+Good luck!
 
 </details>
 
-## API 仕様
+## API Specification
 
-### ドキュメント
+### Documentation
 
-ユーザーがタスクを作って、それぞれのタスクに対してコメントをすることが可能です。  
-またユーザーが作ったリソースについては作ったユーザーのみがアクセス可能です。
+Users can create tasks and add comments to each task.  
+Resources created by a user can only be accessed by the user who created them.
 
-詳細なドキュメントについては、上記セクションでサーバーを起動して `http://{{ WebAPI の IPv4 アドレス }}/docs/swagger/index.html` にアクセスして確認してください。
+For detailed documentation, start the server as described in the sections above and access `http://{{ WebAPI IPv4 address }}/docs/swagger/index.html`.
 
-### 認可
+### Authorization
 
-JWT を使用した認可を行います。
-
-`POST /v1/users/sign-in/` に対してユーザ名とパスワードを投げるとリフレッシュトークン(`refresh`) とアクセストークン(`access`) が取得できます。
+Authorization is implemented using JWT.  
+Send a username and password to `POST /v1/users/sign-in/` to obtain a refresh token (`refresh`) and an access token (`access`).
 
 <details>
+
 <summary>Example</summary>
 
 ```shell
@@ -210,88 +212,98 @@ curl -X POST http://127.0.0.1:8080/v1/users/sign-in/ \
      -H "Accept: application/json" \
      -d "{\"username\": \"sample-username\", \"password\": \"super-secret-password\"}"
 ```
+
 </details>
 
-#### 有効期限
+### Expiration
 
-- `refresh` : 1週間
-- `access` : 1時間
+- `refresh`: 1 week
+- `access`: 1 hour
 
-アクセストークンの有効期限が切れた場合は `/v1/users/refresh/` に `refresh` をキーにリフレッシュトークンを送信してください。
+When the access token expires, send the refresh token to `/v1/users/refresh/` using refresh as the key.
 
-### 画像リソースの配信
+### Serving Image Resources
 
-この Web API では画像を扱うことが可能になっています。ストレージについてはディレクトリに保存しています。  
-コンテナ内の `/app/Public` に配置されています。  
-また、容量制限については1回につき **15MB** としています。
+This Web API supports handling images. Images are stored in a directory.  
+They are stored under `/app/Public` inside the container.  
+The size limit is 15 MB per upload.
 
 - `/v1/tasks/`
 - `/v1/tasks/{id}/`
 - `/v1/tasks/{id}/comments/`
 - `/v1/tasks/{id}/comments/{comment_id}/`
 
-画像の ID として Web API からのレスポンスでキーが取得できます。このキーとホスト情報を組み合わせて URL を生成してください。
+The image ID can be obtained from the response returned by the Web API. Combine this key with the host information to construct the URL.
 
 <details>
 <summary>Example</summary>
 
-Web API から以下のように返ってきたら
+If the Web API returns the following:
 
-```text
+```
 /images/1B50BE9A-6D64-4F58-8287-267F873B7370/3E224D7F-9682-4156-AD53-8F77268F3C32.png
 ```
 
-Web API が起動しているマシンの IP アドレスが `127.0.0.1` であるなら
+If the IP address of the machine running the Web API is `127.0.0.1`:
 
-```text
+```
 http://127.0.0.1:8080/images/1B50BE9A-6D64-4F58-8287-267F873B7370/3E224D7F-9682-4156-AD53-8F77268F3C32.png
 ```
 
-上記のようにしてください。
+Use the URL as shown above.
 
 </details>
 
-## オリジン間リソース共有について
+## Cross-Origin Resource Sharing
 
-リクエスト内の Origin ヘッダーの値を許可しています。
+The value of the `Origin` header in the request is allowed.
 
-## メンテナンスモード
+## Maintenance Mode
 
-下記コマンドでメンテナンスモードを切り替えることができます。
+You can toggle maintenance mode using the commands below.
 
-1. Docker
+1. macOS
 
 ```shell
-docker exec -t training-webapi /app/Training maintenance on  # メンテナンスモードに入る
+./Training maintenance on  # Enter maintenance mode
 Maintenance mode is set to on
-docker exec -t training-webapi /app/Training maintenance off # メンテナンスモードから抜ける
+./Training maintenance off # Exit maintenance mode
+Maintenance mode is set to off
+```
+
+2. Docker
+
+```shell
+docker exec -t training-webapi /app/Training maintenance on  # Enter maintenance mode
+Maintenance mode is set to on
+docker exec -t training-webapi /app/Training maintenance off # Exit maintenance mode
 Maintenance mode is set to off
 ```
 
 2. Container
 
 ```shell
-container exec -t training-webapi /app/Training maintenance on  # メンテナンスモードに入る
+container exec -t training-webapi /app/Training maintenance on  # Enter maintenance mode
 Maintenance mode is set to on
-container exec -t training-webapi /app/Training maintenance off # メンテナンスモードから抜ける
+container exec -t training-webapi /app/Training maintenance off # Exit maintenance mode
 Maintenance mode is set to off
 ```
 
-任意のエンドポイントへのアクセスで以下のようなレスポンスが返ってきます。
+Accessing any endpoint will return a response similar to the following:
 
 ```json
 {
   "error_detail": {
-    "title": "現在サービスはメンテナンス中です。",
-    "body": "終了は2021年11月28日 2時00分を予定しています。"
+    "title": "The service is currently under maintenance.",
+    "body": "Maintenance is scheduled to end at 2:00 AM on November 28, 2021."
   }
 }
 ```
 
-## アクセストークンの取得
+## Obtaining an Access Token
 
-デバッグ用途としてコマンドを実装しています。  
-以下のコマンドを実行するとアクセストークンが取得されます。
+A command for debugging purposes is provided.  
+Running the following command will retrieve an access token.
 
 1. macOS
 
@@ -300,6 +312,7 @@ Maintenance mode is set to off
 ```
 
 2. Docker
+
 
 ```shell
 docker exec -t training-webapi /app/Training access-token -u <your-user-id>
@@ -311,7 +324,7 @@ docker exec -t training-webapi /app/Training access-token -u <your-user-id>
 container exec -t training-webapi /app/Training access-token -u <your-user-id>
 ```
 
-## Run tests
+##  Run tests
 
 ```shell
 swift test
