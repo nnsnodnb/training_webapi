@@ -84,7 +84,7 @@ docker run -d -p 8080:8080 --name training-webapi ghcr.io/nnsnodnb/training_weba
 3. データベースをマイグレーション
 
 ```shell
-docker exec -t training-webapi /app/Training migrate --yes
+docker exec -t training-webapi  migrate --yes
 ```
 
 上記コマンドを実行してデータベースをマイグレーションします。  
@@ -141,7 +141,7 @@ container run -d --rm --name training-webapi ghcr.io/nnsnodnb/training_webapi:la
 3. データベースをマイグレーション
 
 ```shell
-container exec -t training-webapi /app/Training migrate --yes
+container exec -t training-webapi migrate --yes
 ```
 
 上記コマンドを実行してデータベースをマイグレーションします。  
@@ -271,18 +271,18 @@ Maintenance mode is set to off
 2. Docker
 
 ```shell
-docker exec -t training-webapi /app/Training maintenance on  # メンテナンスモードに入る
+docker exec -t training-webapi maintenance on  # メンテナンスモードに入る
 Maintenance mode is set to on
-docker exec -t training-webapi /app/Training maintenance off # メンテナンスモードから抜ける
+docker exec -t training-webapi maintenance off # メンテナンスモードから抜ける
 Maintenance mode is set to off
 ```
 
 3. Container
 
 ```shell
-container exec -t training-webapi /app/Training maintenance on  # メンテナンスモードに入る
+container exec -t training-webapi maintenance on  # メンテナンスモードに入る
 Maintenance mode is set to on
-container exec -t training-webapi /app/Training maintenance off # メンテナンスモードから抜ける
+container exec -t training-webapi maintenance off # メンテナンスモードから抜ける
 Maintenance mode is set to off
 ```
 
@@ -311,13 +311,13 @@ Maintenance mode is set to off
 2. Docker
 
 ```shell
-docker exec -t training-webapi /app/Training access-token -u <your-user-id>
+docker exec -t training-webapi access-token -u <your-user-id>
 ```
 
 3. Container
 
 ```shell
-container exec -t training-webapi /app/Training access-token -u <your-user-id>
+container exec -t training-webapi access-token -u <your-user-id>
 ```
 
 ## テスト実行

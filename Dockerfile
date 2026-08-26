@@ -1,12 +1,14 @@
-# hadolint ignore=DL3007
-FROM gcr.io/distroless/base-debian13:latest
+FROM gcr.io/distroless/base-debian13:nonroot
 
 ARG TARGETARCH
 
-COPY --chmod=755 artifacts/${TARGETARCH}/Training /app/Training
-COPY Public /app/Public
+COPY --chmod=755 --chown=nonroot artifacts/${TARGETARCH}/Training /app/Training
+COPY --chown=nonroot Public /app/Public
 
 WORKDIR /app
+
+# hadolint ignore=DL3066
+USER nonroot:nonroot
 
 EXPOSE 8080
 
