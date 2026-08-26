@@ -86,7 +86,7 @@ docker run -d -p 8080:8080 --name training-webapi ghcr.io/nnsnodnb/training_weba
 3. Migrate the database
 
 ```shell
-docker exec -t training-webapi /app/Training migrate --yes
+docker exec -t training-webapi migrate --yes
 ```
 
 Run the command above to migrate the database.
@@ -274,18 +274,18 @@ Maintenance mode is set to off
 2. Docker
 
 ```shell
-docker exec -t training-webapi /app/Training maintenance on  # Enter maintenance mode
+docker exec -t training-webapi maintenance on  # Enter maintenance mode
 Maintenance mode is set to on
-docker exec -t training-webapi /app/Training maintenance off # Exit maintenance mode
+docker exec -t training-webapi maintenance off # Exit maintenance mode
 Maintenance mode is set to off
 ```
 
 2. Container
 
 ```shell
-container exec -t training-webapi /app/Training maintenance on  # Enter maintenance mode
+container exec -t training-webapi maintenance on  # Enter maintenance mode
 Maintenance mode is set to on
-container exec -t training-webapi /app/Training maintenance off # Exit maintenance mode
+container exec -t training-webapi maintenance off # Exit maintenance mode
 Maintenance mode is set to off
 ```
 
@@ -315,13 +315,13 @@ Running the following command will retrieve an access token.
 
 
 ```shell
-docker exec -t training-webapi /app/Training access-token -u <your-user-id>
+docker exec -t training-webapi access-token -u <your-user-id>
 ```
 
 3. Container
 
 ```shell
-container exec -t training-webapi /app/Training access-token -u <your-user-id>
+container exec -t training-webapi access-token -u <your-user-id>
 ```
 
 ##  Run tests
