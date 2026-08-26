@@ -82,8 +82,8 @@ jobs:
           path: artifacts/arm64
       - name: Install aarch64-linux-gnu-strip
         run: |
-          apt-get update
-          apt-get install -y binutils-aarch64-linux-gnu
+          sudo apt-get update
+          sudo apt-get install -y binutils-aarch64-linux-gnu
       - name: Strip artifacts
         run: |
           strip --verbose artifacts/amd64/Training
