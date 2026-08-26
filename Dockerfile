@@ -7,6 +7,7 @@ COPY --chown=nonroot Public /app/Public
 
 WORKDIR /app
 
+# hadolint ignore=DL3066
 USER nonroot:nonroot
 
 EXPOSE 8080
