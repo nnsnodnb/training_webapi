@@ -52,7 +52,6 @@ jobs:
         run: |
           mkdir -p artifact
           cp ".build/${{ matrix.swift_arch }}-swift-linux-musl/release/Training" "artifact/Training"
-          strip artifact/Training
       - name: Upload artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
         with:
@@ -81,6 +80,10 @@ jobs:
         with:
           name: training-${{ runner.os }}-arm64
           path: artifacts/arm64
+      - name: Strip artifacts
+        run: |
+          strip --verbose artifacts/amd64/Training
+          strip --verbose artifacts/arm64/Training
       - name: Setup QEMU
         uses: docker/setup-qemu-action@96fe6ef7f33517b61c61be40b68a1882f3264fb8  # v4.2.0
       - name: Setup QEMU Buildx
