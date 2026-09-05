@@ -10,9 +10,6 @@ info:
 externalDocs:
   description: GitHub
   url: https://github.com/nnsnodnb/training_webapi
-servers:
-  - url: http://127.0.0.1:8080
-    description: Vapor
 tags:
   - name: user
     summary: ユーザーアカウント操作
