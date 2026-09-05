@@ -1,7 +1,7 @@
 import Fluent
 import FluentSQLiteDriver
-import NIOSSL
 import JWT
+import NIOSSL
 import Vapor
 
 /// configures your application

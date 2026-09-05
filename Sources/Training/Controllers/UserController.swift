@@ -32,6 +32,7 @@ struct UserController: RouteCollection {
     }
 
     let authenticateUser: UserDTO
+    // swiftlint:disable:next first_where
     if let user = try await User.query(on: request.db)
       .filter(\.$username == username)
       .first() {

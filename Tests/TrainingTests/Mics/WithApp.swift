@@ -10,7 +10,7 @@ import Foundation
 @testable import Training
 import VaporTesting
 
-func withMigrationApp(_ test: (Application) async throws -> ()) async throws {
+func withMigrationApp(_ test: (Application) async throws -> Void) async throws {
   let app = try await Application.make(.testing)
   do {
     try await configure(app, inMemory: true)

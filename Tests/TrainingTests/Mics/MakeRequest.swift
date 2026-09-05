@@ -8,7 +8,7 @@
 import Foundation
 import VaporTesting
 
-func makeRequest(_ test: (Request) async throws -> ()) async throws {
+func makeRequest(_ test: (Request) async throws -> Void) async throws {
   let app = try await Application.make(.testing)
   app.http.server.configuration.hostname = "127.0.0.1"
   app.http.server.configuration.port = 8080

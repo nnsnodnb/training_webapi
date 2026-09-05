@@ -40,6 +40,7 @@ struct MaintenanceCommand: AsyncCommand {
       } else {
         throw Error.invalidArgument
       }
+      // swiftlint:disable:next line_length
       let maintenanceTextFilePath = "\(context.application.directory.workingDirectory)\(MaintenanceMiddleware.maintenanceTextFileName)"
       _ = FileManager.default.createFile(atPath: maintenanceTextFilePath, contents: mode.rawValue.data(using: .utf8))
       context.console.output("Maintenance mode is set to \(signature.mode)", style: .success, newLine: true)

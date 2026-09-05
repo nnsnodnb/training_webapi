@@ -26,7 +26,7 @@ struct CommentController: RouteCollection {
           comment.put(use: update)
           comment.delete(use: delete)
         }
-    }
+      }
   }
 
   @Sendable
@@ -37,11 +37,13 @@ struct CommentController: RouteCollection {
       throw Abort(.notFound)
     }
     // 自分のタスクであるか検証する
-    guard try await Task.query(on: request.db)
+    // swiftlint:disable:next first_where
+    let task = try await Task.query(on: request.db)
       .join(User.self, on: \Task.$user.$id == \User.$id)
       .filter(User.self, \.$id == userID)
       .filter(Task.self, \.$id == taskID)
-      .first() != nil else {
+      .first()
+    guard task != nil else {
       throw Abort(.notFound)
     }
     let page = try await Comment.query(on: request.db)
@@ -78,10 +80,12 @@ struct CommentController: RouteCollection {
     guard let taskID = UUID(uuidString: uuidString) else {
       throw Abort(.notFound)
     }
-    guard try await Task.query(on: request.db)
+    // swiftlint:disable:next first_where
+    let task = try await Task.query(on: request.db)
       .filter(\.$id == taskID)
       .filter(\.$user.$id == userID) // 自分のタスク
-      .first() != nil else {
+      .first()
+    guard task != nil else {
       throw Abort(.notFound)
     }
 
@@ -92,6 +96,7 @@ struct CommentController: RouteCollection {
 
     try await comment.save(on: request.db)
 
+    // swiftlint:disable:next first_where
     let created = try await Comment.query(on: request.db)
       .with(\.$task) { builder in
         builder
