@@ -254,6 +254,61 @@ Use the URL as shown above.
 
 </details>
 
+## WebSocket
+
+You can receive real-time data via WebSocket when comments on tasks are updated.  
+Like the Web API, authentication is required.
+
+Below is an example connection using [wscat](https://github.com/websockets/wscat).  
+Please replace `:taskID` and `${ACCESS_TOKEN}` with your own values.
+
+```shell
+wscat -c http://127.0.0.1:8080/v1/tasks/:taskID/comments/ws \
+       -H "Authorization: Bearer ${ACCESS_TOKEN}"
+Connected (press CTRL+C to quit)
+> 
+```
+
+This WebSocket endpoint only accepts PING messages. Any other messages sent will not be responded to.  
+Data is pushed in the following cases:
+
+- When a new comment is created (`POST /v1/tasks/:taskID/comments/`)
+- When a comment is updated (`PUT /v1/tasks/:taskID/comments/:commentID`)
+- When a comment is deleted (`DELETE /v1/tasks/:taskID/comments/:commentID`)
+
+### Data Payload Format
+
+1. When a new comment is created
+
+```json
+{
+   "mode": "created",
+   "comment": {...}
+}
+```
+
+The structure of `comment` is the same as in the Web API response.
+
+2. When a comment is updated
+
+```json
+{
+   "mode": "modified",
+   "comment": {...}
+}
+```
+
+The structure of `comment` is the same as in the Web API response.
+
+3. When a comment is deleted
+
+```json
+{
+   "mode": "deleted",
+   "comment_id": ":commentID"
+}
+```
+
 ## Cross-Origin Resource Sharing
 
 The value of the `Origin` header in the request is allowed.
