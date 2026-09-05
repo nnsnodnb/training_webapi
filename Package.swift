@@ -1,29 +1,36 @@
 // swift-tools-version:6.3
 import PackageDescription
 
+var dependencies: [PackageDescription.Package.Dependency] = [
+  .package(
+    url: "https://github.com/tmthecoder/Argon2Swift.git",
+    revision: "53543623fefe68461b7eeea03d7f96677c2fd76d", // v1.0.4
+  ),
+  // 🔑 JSON Web Token signing and verification with support for JWS and JWK.
+  .package(url: "https://github.com/vapor/jwt.git", from: "5.1.2"),
+  // 🗄 An ORM for SQL and NoSQL databases.
+  .package(url: "https://github.com/vapor/fluent.git", from: "4.13.0"),
+  // 🪶 Fluent driver for SQLite.
+  .package(url: "https://github.com/vapor/fluent-sqlite-driver.git", from: "4.9.0"),
+  // 🔵 Non-blocking, event-driven networking for Swift. Used for custom executors
+  .package(url: "https://github.com/apple/swift-nio.git", from: "2.102.0"),
+  // 💧 A server-side Swift web framework.
+  .package(url: "https://github.com/vapor/vapor.git", from: "4.122.1"),
+  .package(url: "https://github.com/nnsnodnb/vapor-cursor-pagination.git", from: "0.1.2"),
+]
+
+#if os(macOS)
+dependencies += [
+  .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins.git", from: "0.65.1"),
+]
+#endif
+
 let package = Package(
   name: "Training",
   platforms: [
     .macOS(.v13)
   ],
-  dependencies: [
-    .package(
-      url: "https://github.com/tmthecoder/Argon2Swift.git",
-      revision: "53543623fefe68461b7eeea03d7f96677c2fd76d", // v1.0.4
-    ),
-    // 🔑 JSON Web Token signing and verification with support for JWS and JWK.
-    .package(url: "https://github.com/vapor/jwt.git", from: "5.1.2"),
-    // 🗄 An ORM for SQL and NoSQL databases.
-    .package(url: "https://github.com/vapor/fluent.git", from: "4.13.0"),
-    // 🪶 Fluent driver for SQLite.
-    .package(url: "https://github.com/vapor/fluent-sqlite-driver.git", from: "4.9.0"),
-    .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins.git", from: "0.65.1"),
-    // 🔵 Non-blocking, event-driven networking for Swift. Used for custom executors
-    .package(url: "https://github.com/apple/swift-nio.git", from: "2.102.0"),
-    // 💧 A server-side Swift web framework.
-    .package(url: "https://github.com/vapor/vapor.git", from: "4.122.1"),
-    .package(url: "https://github.com/nnsnodnb/vapor-cursor-pagination.git", from: "0.1.2"),
-  ],
+  dependencies: dependencies,
   targets: [
     .executableTarget(
       name: "Training",
@@ -53,6 +60,7 @@ let package = Package(
   ]
 )
 
+// MARK: - Target.Dependency
 extension PackageDescription.Target.Dependency {
   static var argon2Swift: Self {
     .product(name: "Argon2Swift", package: "Argon2Swift")
@@ -83,22 +91,27 @@ extension PackageDescription.Target.Dependency {
   }
 }
 
+#if os(macOS)
+// MARK: - Target.PluginUsage
 extension PackageDescription.Target.PluginUsage {
   static var swiftLintPlugins: Self {
     .plugin(name: "SwiftLintBuildToolPlugin", package: "swiftLintPlugins")
   }
 }
 
-var swiftSettings: [SwiftSetting] { [
-  .enableUpcomingFeature("ExistentialAny"),
-  .enableUpcomingFeature("InternalImportsByDefault"),
-  .enableUpcomingFeature("MemberImportVisibility"),
-  .enableUpcomingFeature("InferIsolatedConformances"),
-  .enableUpcomingFeature("ImmutableWeakCaptures"),
-] }
-
 for target in package.targets {
   target.plugins = [
     .swiftLintPlugins,
+  ]
+}
+#endif
+
+var swiftSettings: [SwiftSetting] {
+  [
+    .enableUpcomingFeature("ExistentialAny"),
+    .enableUpcomingFeature("InternalImportsByDefault"),
+    .enableUpcomingFeature("MemberImportVisibility"),
+    .enableUpcomingFeature("InferIsolatedConformances"),
+    .enableUpcomingFeature("ImmutableWeakCaptures"),
   ]
 }
