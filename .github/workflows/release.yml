@@ -47,8 +47,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       - name: Build
-        env:
-          SWIFTPM_PLUGINS_DISABLED: 1
         run: swift build -c release --swift-sdk "${{ matrix.swift_arch }}-swift-linux-musl"
       - name: Prepare artifact
         run: |
