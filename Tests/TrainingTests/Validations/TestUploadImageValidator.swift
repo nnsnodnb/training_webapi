@@ -70,7 +70,34 @@ struct TestUploadImageValidator {
     let data = try Data(contentsOf: url)
 
     try await makeRequest { request in
-      let files = (0...4).map { File(data: ByteBuffer(data: data), filename: "red_\($0).jpg") }
+      let files = (0..<4).map { File(data: ByteBuffer(data: data), filename: "empty_\($0).txt") }
+      let body = ImageDTO(items: files)
+      try request.content.encode(body)
+
+      #expect(throws: ValidationsError.self) {
+        try UploadImageValidator.validate(content: request)
+      }
+    }
+  }
+
+  @Test("images field contains a non-image to failure")
+  func validateImagesIsNotOnlyImage() async throws {
+    guard let textURL = Bundle.module.url(forResource: "empty", withExtension: "txt") else {
+      Issue.record("Not found empty.txt in TrainingTests target")
+      return
+    }
+    guard let imageURL = Bundle.module.url(forResource: "red", withExtension: "jpg") else {
+      Issue.record("Not found red.jpg in TrainingTests target")
+      return
+    }
+    let textData = try Data(contentsOf: textURL)
+    let imageData = try Data(contentsOf: imageURL)
+
+    try await makeRequest { request in
+      let files = [
+        File(data: ByteBuffer(data: textData), filename: "empty.txt"),
+        File(data: ByteBuffer(data: imageData), filename: "red.jpg"),
+      ]
       let body = ImageDTO(items: files)
       try request.content.encode(body)
 
