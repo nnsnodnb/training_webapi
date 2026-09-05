@@ -70,7 +70,7 @@ struct TestUploadImageValidator {
     let data = try Data(contentsOf: url)
 
     try await makeRequest { request in
-      let files = (0...4).map { File(data: ByteBuffer(data: data), filename: "empty_\($0).txt") }
+      let files = (0..<4).map { File(data: ByteBuffer(data: data), filename: "empty_\($0).txt") }
       let body = ImageDTO(items: files)
       try request.content.encode(body)
 
