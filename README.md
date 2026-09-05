@@ -263,7 +263,7 @@ Below is an example connection using [wscat](https://github.com/websockets/wscat
 Please replace `:taskID` and `${ACCESS_TOKEN}` with your own values.
 
 ```shell
-wscat -c http://127.0.0.1:8080/v1/tasks/:taskID/comments/ws \
+wscat -c ws://127.0.0.1:8080/v1/tasks/:taskID/comments/ws \
        -H "Authorization: Bearer ${ACCESS_TOKEN}"
 Connected (press CTRL+C to quit)
 > 

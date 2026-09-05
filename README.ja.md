@@ -260,7 +260,7 @@ Web API 同様に認証を必要としています。
 また、 `:taskID` や `${ACCESS_TOKEN}` は自分のものに置き換えてください。
 
 ```shell
-wscat -c http://127.0.0.1:8080/v1/tasks/:taskID/comments/ws \
+wscat -c ws://127.0.0.1:8080/v1/tasks/:taskID/comments/ws \
       -H "Authorization: Bearer ${ACCESS_TOKEN}"
 Connected (press CTRL+C to quit)
 > 
