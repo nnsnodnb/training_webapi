@@ -80,7 +80,7 @@ struct TestUploadImageValidator {
     }
   }
 
-  @Test("images field is not only image to failure")
+  @Test("images field contains a non-image to failure")
   func validateImagesIsNotOnlyImage() async throws {
     guard let textURL = Bundle.module.url(forResource: "empty", withExtension: "txt") else {
       Issue.record("Not found empty.txt in TrainingTests target")
