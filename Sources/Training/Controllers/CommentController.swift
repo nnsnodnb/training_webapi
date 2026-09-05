@@ -7,10 +7,14 @@
 
 import Fluent
 import Foundation
+import NIOWebSocket
 import Vapor
 import VaporCursorPagination
 
 struct CommentController: RouteCollection {
+  // MARK: - Properties
+  private let webSocketService = WebSocketService()
+
   func boot(routes: any RoutesBuilder) throws {
     routes
       .grouped(JWTBearerAuthenticator())
@@ -21,6 +25,8 @@ struct CommentController: RouteCollection {
 
         comments.get(use: index)
         comments.post(use: create)
+
+        comments.webSocket("ws", onUpgrade: commentsWebSocket)
 
         comments.group(":commentID") { comment in
           comment.put(use: update)
@@ -112,6 +118,11 @@ struct CommentController: RouteCollection {
     let dto = created.toOutputDTO()
     let response = Response(status: .created)
     try response.content.encode(dto)
+
+    let streamComment = StreamComment(mode: .created(dto))
+    let key = WebSocketService.Key(taskID: taskID, userID: userID)
+    try await webSocketService.send(streamComment, to: key)
+
     return response
   }
 
@@ -152,7 +163,13 @@ struct CommentController: RouteCollection {
     let removeImageIDs = oldImageIDs.filter { !updateComment.imageIDs.contains($0) }
     try await comment.update(on: request.db)
     removeItems(request: request, imageIDs: removeImageIDs, in: userID)
-    return comment.toOutputDTO()
+    let dto = comment.toOutputDTO()
+
+    let streamComment = StreamComment(mode: .modified(dto))
+    let key = WebSocketService.Key(taskID: taskID, userID: userID)
+    try await webSocketService.send(streamComment, to: key)
+
+    return dto
   }
 
   @Sendable
@@ -187,7 +204,43 @@ struct CommentController: RouteCollection {
     let imageIDs = comment.imageIDs
     try await comment.delete(on: request.db)
     removeItems(request: request, imageIDs: imageIDs, in: userID)
+
+    let streamComment = StreamComment(mode: .deleted(commentID))
+    let key = WebSocketService.Key(taskID: taskID, userID: userID)
+    try await webSocketService.send(streamComment, to: key)
+
     return .noContent
+  }
+
+  @Sendable
+  func commentsWebSocket(request: Request, webSocket: WebSocket) async {
+    guard
+      let userID = try? request.auth.require(UserDTO.self).toModel().requireID(),
+      let taskUUIDString = try? request.parameters.require("taskID"),
+      let taskID = UUID(uuidString: taskUUIDString)
+    else {
+      try? await webSocket.close(code: .policyViolation)
+      return
+    }
+
+    // swiftlint:disable:next first_where
+    let task = try? await Task.query(on: request.db)
+      .join(User.self, on: \Task.$user.$id == \User.$id)
+      .filter(User.self, \.$id == userID)
+      .filter(Task.self, \.$id == taskID)
+      .first()
+    guard task != nil else {
+      try? await webSocket.close(code: .policyViolation)
+      return
+    }
+
+    let key = WebSocketService.Key(taskID: taskID, userID: userID)
+    webSocket.onClose.whenComplete { _ in
+      Swift::Task {
+        await webSocketService.remove(forKey: key)
+      }
+    }
+    await webSocketService.add(webSocket, forKey: key)
   }
 
   private func removeItems(request: Request, imageIDs: [String], in userID: UUID) {
@@ -203,6 +256,37 @@ struct CommentController: RouteCollection {
         }
         await group.waitForAll()
       }
+    }
+  }
+}
+
+// MARK: - WebSocketService
+private extension CommentController {
+  actor WebSocketService {
+    // MARK: - Key
+    struct Key: Hashable {
+      // MARK: - Properties
+      let taskID: Task.IDValue
+      let userID: User.IDValue
+    }
+
+    // MARK: - Properties
+    private var sockets: [Key: WebSocket] = [:]
+
+    func add(_ socket: WebSocket, forKey key: Key) {
+      sockets[key] = socket
+    }
+
+    func remove(forKey key: Key) {
+      sockets.removeValue(forKey: key)
+    }
+
+    func send(_ streamComment: StreamComment, to key: Key) throws {
+      guard let socket = sockets[key] else { return }
+      let encoder = JSONEncoder()
+      encoder.dateEncodingStrategy = .millisecondsSince1970
+      let data = try encoder.encode(streamComment)
+      socket.send(data)
     }
   }
 }
