@@ -11,7 +11,7 @@ import Vapor
 extension Validator where T == [File] {
   static func mimeTypeIsImage() -> Validator<T> {
     .custom("mime_type must be image") { file in
-      file.lazy.contains(where: { $0.contentType?.type == "image" })
+      file.allSatisfy({ $0.contentType?.type == "image" })
     }
   }
 }
