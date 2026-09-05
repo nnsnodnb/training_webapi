@@ -49,6 +49,8 @@ jobs:
       - name: Install unzip
         run: apt-get update && apt-get install -y unzip
       - name: Build
+        env:
+          SWIFTPM_PLUGINS_DISABLED: 1
         run: swift build -c release --swift-sdk "${{ matrix.swift_arch }}-swift-linux-musl"
       - name: Prepare artifact
         run: |
