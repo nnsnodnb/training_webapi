@@ -1,0 +1,28 @@
+name: SwiftLint
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/swiftlint.yml"
+      - ".swiftlint.yml"
+      - "**/*.swift"
+
+jobs:
+  swiftlint:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: nnsnodnb/action-swiftlint@a353c9762a6c856eac886c6c4f0292e800d6dbb2 # v1.0.0
+        with:
+          github_token: ${{ secrets.github_token }}
+          workdir: NowPlayingPackage
+          reporter: github-pr-review
+          level: warning
+          fail_level: error

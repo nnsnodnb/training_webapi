@@ -17,6 +17,7 @@ let package = Package(
     .package(url: "https://github.com/vapor/fluent.git", from: "4.13.0"),
     // 🪶 Fluent driver for SQLite.
     .package(url: "https://github.com/vapor/fluent-sqlite-driver.git", from: "4.9.0"),
+    .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins.git", from: "0.65.1"),
     // 🔵 Non-blocking, event-driven networking for Swift. Used for custom executors
     .package(url: "https://github.com/apple/swift-nio.git", from: "2.102.0"),
     // 💧 A server-side Swift web framework.
@@ -82,6 +83,12 @@ extension PackageDescription.Target.Dependency {
   }
 }
 
+extension PackageDescription.Target.PluginUsage {
+  static var swiftLintPlugins: Self {
+    .plugin(name: "SwiftLintBuildToolPlugin", package: "swiftLintPlugins")
+  }
+}
+
 var swiftSettings: [SwiftSetting] { [
   .enableUpcomingFeature("ExistentialAny"),
   .enableUpcomingFeature("InternalImportsByDefault"),
@@ -89,3 +96,9 @@ var swiftSettings: [SwiftSetting] { [
   .enableUpcomingFeature("InferIsolatedConformances"),
   .enableUpcomingFeature("ImmutableWeakCaptures"),
 ] }
+
+for target in package.targets {
+  target.plugins = [
+    .swiftLintPlugins,
+  ]
+}

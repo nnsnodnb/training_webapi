@@ -102,6 +102,7 @@ struct TaskController: RouteCollection {
           let taskID = UUID(uuidString: uuidString) else {
       throw Abort(.badRequest)
     }
+    // swiftlint:disable:next first_where
     guard let task = try await Task.query(on: request.db)
       .filter(\.$user.$id == userID)
       .filter(\.$id == taskID)
