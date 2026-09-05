@@ -251,6 +251,61 @@ http://127.0.0.1:8080/images/1B50BE9A-6D64-4F58-8287-267F873B7370/3E224D7F-9682-
 
 </details>
 
+## WebSocket
+
+タスクのコメントに対して WebSocket によるリアルタイムデータの配信を受け取ることができます。  
+Web API 同様に認証を必要としています。
+
+以下は、 [wscat](https://github.com/websockets/wscat) をインストールした状態での接続例です。  
+また、 `:taskID` や `${ACCESS_TOKEN}` は自分のものに置き換えてください。
+
+```shell
+wscat -c http://127.0.0.1:8080/v1/tasks/:taskID/comments/ws \
+      -H "Authorization: Bearer ${ACCESS_TOKEN}"
+Connected (press CTRL+C to quit)
+> 
+```
+
+この WebSocket エンドポイントでは、 PING 送信のみ受け付けています。その他の送信には応答しません。  
+以下の場合に、データが配信されます。
+
+- 新しくコメントが作成されたとき (`POST /v1/tasks/:taskID/comments/`)
+- コメントが編集されたとき (`PUT /v1/tasks/:taskID/comments/:commentID`)
+- コメントが削除されたとき (`DELETE /v1/tasks/:taskID/comments/:commentID`)
+
+### データ配信の形式
+
+1. 新しくコメントが作成されたとき
+
+```json
+{
+  "mode": "created",
+  "comment": {...}
+}
+```
+
+`comment` の構造は Web API でレスポンスに含まれるコメントの構造と同じです。
+
+2. コメントが編集されたとき
+
+```json
+{
+  "mode": "modified",
+  "comment": {...}
+}
+```
+
+`comment` の構造は Web API でレスポンスに含まれるコメントの構造と同じです。
+
+3. コメントが削除されたとき
+
+```json
+{
+  "mode": "deleted",
+  "comment_id": ":commentID"
+}
+```
+
 ## オリジン間リソース共有について
 
 リクエスト内の Origin ヘッダーの値を許可しています。
