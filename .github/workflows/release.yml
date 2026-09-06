@@ -31,17 +31,19 @@ jobs:
           path: artifact/Training
 
   static_build:
-    name: Build Swift Linux Static binary
-    runs-on: ubuntu-24.04
-    container: ghcr.io/nnsnodnb/swift-static-linux-sdk:6.3.3-bookworm
-
     strategy:
       matrix:
         include:
           - arch: amd64
             swift_arch: x86_64
+            runner: ubuntu-24.04
           - arch: arm64
             swift_arch: aarch64
+            runner: ubuntu-24.04-arm
+
+    name: Build Swift Linux Static binary for ${{ matrix.arch }}
+    container: ghcr.io/nnsnodnb/swift-static-linux-sdk:6.3.3-bookworm
+    runs-on: ${{ matrix.runner }}
 
     steps:
       - name: Checkout
@@ -52,6 +54,7 @@ jobs:
         run: |
           mkdir -p artifact
           cp ".build/${{ matrix.swift_arch }}-swift-linux-musl/release/Training" "artifact/Training"
+          strip --verbose artifact/Training
       - name: Upload artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
         with:
@@ -60,7 +63,7 @@ jobs:
 
   release:
     name: Build & push container image
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     needs: static_build
 
     permissions:
@@ -80,14 +83,6 @@ jobs:
         with:
           name: training-${{ runner.os }}-arm64
           path: artifacts/arm64
-      - name: Install aarch64-linux-gnu-strip
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y binutils-aarch64-linux-gnu
-      - name: Strip artifacts
-        run: |
-          strip --verbose artifacts/amd64/Training
-          aarch64-linux-gnu-strip --verbose artifacts/arm64/Training
       - name: Setup QEMU
         uses: docker/setup-qemu-action@1f40c72289eff860ee54a304f1438e3cff362e0a  # v4.3.0
       - name: Setup QEMU Buildx
