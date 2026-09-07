@@ -23,7 +23,6 @@ jobs:
         run: |
           mkdir -p artifact
           cp ".build/${{ matrix.swift_arch }}-apple-macosx/release/Training" "artifact/Training"
-          cp -R "Public" "artifact/Public"
       - name: Upload artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
         with:
@@ -61,7 +60,7 @@ jobs:
           name: training-${{ runner.os }}-${{ matrix.arch }}
           path: artifact/Training
 
-  release:
+  release_container:
     name: Build & push container image
     runs-on: ubuntu-24.04-arm
     needs: static_build
@@ -104,3 +103,46 @@ jobs:
           tags: |
             ghcr.io/nnsnodnb/training_webapi:${{ env.TAG_NAME }}
             ghcr.io/nnsnodnb/training_webapi:latest
+
+  publish_release:
+    name: Publish GitHub release
+    runs-on: macos-26
+    if: startsWith(github.ref, 'refs/tags/')
+    needs:
+      - macos_build
+      - release_container
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - name: Download artifact for x86_64 macOS binary
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8.0.1
+        with:
+          name: training-macOS-x86_64
+          path: artifacts/x86_64
+      - name: Download artifact for arm64 macOS binary
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8.0.1
+        with:
+          name: training-macOS-arm64
+          path: artifacts/arm64
+      - name: Create Universal binary zip for macOS
+        run: |
+          lipo -create \
+            artifacts/x86_64/Training \
+            artifacts/arm64/Training \
+            -output artifacts/Training
+          strip artifacts/Training
+          zip -j artifacts/macOS-universal.zip artifacts/Training
+          zip -r artifacts/macOS-universal.zip Public
+      - name: Get the tag name
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> "${GITHUB_ENV}"
+      - uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
+        with:
+          name: v${{ env.TAG_NAME }}
+          files: |
+            artifacts/macOS-universal.zip
+          generate_release_notes: true
+          draft: true
