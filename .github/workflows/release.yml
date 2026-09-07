@@ -135,7 +135,7 @@ jobs:
             artifacts/arm64/Training \
             -output artifacts/Training
           strip artifacts/Training
-          zip -j artifacts/macOS-universal.zip artifacts/macos/Training
+          zip -j artifacts/macOS-universal.zip artifacts/Training
           zip -r artifacts/macOS-universal.zip Public
       - name: Get the tag name
         run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> "${GITHUB_ENV}"
