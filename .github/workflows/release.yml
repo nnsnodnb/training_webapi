@@ -122,43 +122,27 @@ jobs:
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8.0.1
         with:
           name: training-macOS-x86_64
-          path: artifacts/macos/x86_64
+          path: artifacts/x86_64
       - name: Download artifact for arm64 macOS binary
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8.0.1
         with:
           name: training-macOS-arm64
-          path: artifacts/macos/arm64
-      - name: Download artifacts for amd64 Linux binary
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8.0.1
-        with:
-          name: training-Linux-amd64
-          path: artifacts/linux/amd64
-      - name: Download artifacts for arm64 Linux binary
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8.0.1
-        with:
-          name: training-Linux-arm64
-          path: artifacts/linux/arm64
+          path: artifacts/arm64
       - name: Create Universal binary zip for macOS
         run: |
           lipo -create \
-            artifacts/macos/x86_64/Training \
-            artifacts/macos/arm64/Training \
-            -output artifacts/macos/Training
-          strip artifacts/macos/Training
-          zip -j artifacts/macos/macOS-universal.zip artifacts/macos/Training
-          zip -r artifacts/macos/macOS-universal.zip Public
-      - name: Zip Linux binaries
-        run: |
-          zip -j artifacts/linux/amd64/linux-amd64.zip artifacts/linux/amd64/Training
-          zip -j artifacts/linux/arm64/linux-arm64.zip artifacts/linux/arm64/Training
+            artifacts/x86_64/Training \
+            artifacts/arm64/Training \
+            -output artifacts/Training
+          strip artifacts/Training
+          zip -j artifacts/macOS-universal.zip artifacts/macos/Training
+          zip -r artifacts/macOS-universal.zip Public
       - name: Get the tag name
         run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> "${GITHUB_ENV}"
       - uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
         with:
           name: v${{ env.TAG_NAME }}
           files: |
-            artifacts/macos/macOS-universal.zip
-            artifacts/linux/amd64/linux-amd64.zip
-            artifacts/linux/arm64/linux-arm64.zip
+            artifacts/macOS-universal.zip
           generate_release_notes: true
           draft: true
