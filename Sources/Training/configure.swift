@@ -36,6 +36,7 @@ func configure(_ app: Application, inMemory: Bool = false) async throws {
   // Commands
   app.asyncCommands.use(AccessTokenCommand(), as: "access-token")
   app.asyncCommands.use(MaintenanceCommand(), as: "maintenance")
+  app.asyncCommands.use(CreateDummy(), as: "create-dummy")
   // Logging
   // app.logger.logLevel = .debug
 }
