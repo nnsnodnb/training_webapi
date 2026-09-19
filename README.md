@@ -6,10 +6,10 @@ I wanted to learn some new technology, but building an API from scratch felt lik
 
 ## Environment
 
-- macOS Taho (26.6.1)
+- macOS Taho (26.6.2)
   - M2 Ultra
 - Docker version 29.7.2
-- Container 1.2.2
+- Container 1.4.1
 
 ## Getting Started
 
