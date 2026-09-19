@@ -12,14 +12,18 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+    - name: Install Swift
+      uses: swift-actions/setup-swift@7ca6abe6b3b0e8b5421b88be48feee39cbf52c6a  # v2.4.0
+      with:
+        swift-version: '6.4.0'
     - name: Cache
       uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  # v6.1.0
       with:
         path: |
           .build/checkouts
           .build/repositories
-        key: ${{ runner.os }}-swift-6.3.3-${{ hashFiles('Package.resolved') }}
+        key: ${{ runner.os }}-swift-6.4.0-${{ hashFiles('Package.resolved') }}
         restore-keys: |
-          ${{ runner.os }}-swift-6.3.3-
+          ${{ runner.os }}-swift-6.4.0-
     - name: Run tests
       run: swift test

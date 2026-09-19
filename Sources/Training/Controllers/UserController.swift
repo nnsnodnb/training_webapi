@@ -99,7 +99,7 @@ struct UserController: RouteCollection {
     Swift::Task.detached(priority: .background) {
       let userDirectory = "\(request.application.directory.publicDirectory)images/\(userID.uuidString)/"
       guard FileManager.default.fileExists(atPath: userDirectory) else { return }
-      try FileManager.default.removeItem(atPath: userDirectory)
+      try? FileManager.default.removeItem(atPath: userDirectory)
     }
     return Response(status: .noContent)
   }
