@@ -7,6 +7,7 @@ on:
 
 jobs:
   tests:
+    container: ghcr.io/nnsnodnb/swift-static-linux-sdk:6.4.0-bookworm
     runs-on: ubuntu-24.04-arm
 
     steps:
@@ -18,8 +19,14 @@ jobs:
         path: |
           .build/checkouts
           .build/repositories
-        key: ${{ runner.os }}-swift-6.3.3-${{ hashFiles('Package.resolved') }}
+        key: ${{ runner.os }}-swift-6.4.0-${{ hashFiles('Package.resolved') }}
         restore-keys: |
-          ${{ runner.os }}-swift-6.3.3-
+          ${{ runner.os }}-swift-6.4.0-
+    - name: Install xcbeautify
+      run: |
+        apt-get update && apt-get install -y make
+        git clone https://github.com/cpisciotta/xcbeautify.git
+        cd xcbeautify
+        make install
     - name: Run tests
-      run: swift test
+      run: swift test | xcbeautify --renderer github-actions
