@@ -41,7 +41,7 @@ jobs:
             runner: ubuntu-24.04-arm
 
     name: Build Swift Linux Static binary for ${{ matrix.arch }}
-    container: ghcr.io/nnsnodnb/swift-static-linux-sdk:6.4.0-bookworm
+    container: ghcr.io/nnsnodnb/swift-static-linux-sdk:6.4.0-trixie
     runs-on: ${{ matrix.runner }}
 
     steps:
