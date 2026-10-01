@@ -8,7 +8,7 @@ on:
 jobs:
   tests:
     container: ghcr.io/nnsnodnb/swift-static-linux-sdk:6.4.0-bookworm
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-26.04-arm
 
     steps:
     - name: Checkout
