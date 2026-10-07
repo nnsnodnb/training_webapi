@@ -20,7 +20,7 @@ jobs:
           mkdir -p artifact
           cp ".build/out/Products/Release/Training" "artifact/Training"
       - name: Upload artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9  # v7.0.2
         with:
           name: training-${{ runner.os }}-arm64
           path: artifact/Training
@@ -51,7 +51,7 @@ jobs:
           cp ".build/out/Products/Release-staticlinux-${{ matrix.swift_arch }}/Training" "artifact/Training"
           strip --verbose artifact/Training
       - name: Upload artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9  # v7.0.2
         with:
           name: training-${{ runner.os }}-${{ matrix.arch }}
           path: artifact/Training
