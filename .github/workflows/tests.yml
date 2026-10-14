@@ -7,7 +7,7 @@ on:
 
 jobs:
   tests:
-    container: ghcr.io/nnsnodnb/swift-static-linux-sdk:6.4.1-bookworm
+    container: ghcr.io/nnsnodnb/swift-static-linux-sdk:6.4.1-trixie
     runs-on: ubuntu-26.04-arm
 
     steps:
