@@ -3,5 +3,11 @@
   "extends": [
     "config:recommended"
   ],
-  "timezone": "Asia/Tokyo"
+  "timezone": "Asia/Tokyo",
+  "packageRules": [
+    {
+      "matchManagers": ["github-actions"],
+      "minimumReleaseAge": "1 day"
+    }
+  ]
 }
