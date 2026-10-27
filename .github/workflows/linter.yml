@@ -7,9 +7,9 @@ jobs:
     runs-on: ubuntu-26.04
     steps:
     - name: Checkout
-      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      uses: actions/checkout@v7.0.1
     - name: Run actionlint
-      uses: reviewdog/action-actionlint@6a9ff88b9bb9c12ff3d7340e267f0f59effaa7cd  # v1.80.1
+      uses: reviewdog/action-actionlint@v1.80.1
       with:
         github_token: ${{ secrets.github_token }}
         reporter: github-pr-review
@@ -19,9 +19,9 @@ jobs:
     runs-on: ubuntu-26.04
     steps:
     - name: Checkout
-      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      uses: actions/checkout@v7.0.1
     - name: run hadolint
-      uses: reviewdog/action-hadolint@1df92335c6c70880e301926d46148aeb27de1912  # v1.55.0
+      uses: reviewdog/action-hadolint@v1.55.0
       with:
         reporter: github-pr-review
         level: warning
