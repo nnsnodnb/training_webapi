@@ -5,7 +5,7 @@ version: 'v0.0.3'
 workflows:
     '.github/workflows/linter.yml':
         - 'actions/checkout@v7.0.1'
-        - 'reviewdog/action-actionlint@v1.80.1'
+        - 'reviewdog/action-actionlint@v1.81.0'
         - 'reviewdog/action-hadolint@v1.55.0'
     '.github/workflows/recompute-package-resolved.yml':
         - 'actions/cache@v6.1.0'
@@ -84,9 +84,9 @@ dependencies:
         commit: 'sha1-a353c9762a6c856eac886c6c4f0292e800d6dbb2'
         owner_id: 9856514
         repo_id: 1177750665
-    'reviewdog/action-actionlint@v1.80.1':
-        ref: 'v1.80.1'
-        commit: 'sha1-6a9ff88b9bb9c12ff3d7340e267f0f59effaa7cd'
+    'reviewdog/action-actionlint@v1.81.0':
+        ref: 'v1.81.0'
+        commit: 'sha1-5d802a8ebdcb24d712925118c3a4596f571d8fcd'
         owner_id: 48765237
         repo_id: 385059686
     'reviewdog/action-hadolint@v1.55.0':
