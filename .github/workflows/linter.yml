@@ -9,7 +9,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v7.0.1
     - name: Run actionlint
-      uses: reviewdog/action-actionlint@v1.80.1
+      uses: reviewdog/action-actionlint@v1.81.0
       with:
         github_token: ${{ secrets.github_token }}
         reporter: github-pr-review
