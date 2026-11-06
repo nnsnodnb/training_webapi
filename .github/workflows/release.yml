@@ -126,7 +126,7 @@ jobs:
           zip -r artifacts/macOS-portable.zip Public
       - name: Get the tag name
         run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> "${GITHUB_ENV}"
-      - uses: softprops/action-gh-release@v3.0.3
+      - uses: softprops/action-gh-release@v3.0.4
         with:
           name: v${{ env.TAG_NAME }}
           files: |
