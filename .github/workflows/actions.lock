@@ -18,7 +18,7 @@ workflows:
         - 'docker/login-action@v4.7.0'
         - 'docker/setup-buildx-action@v4.4.1'
         - 'docker/setup-qemu-action@v4.4.0'
-        - 'softprops/action-gh-release@v3.0.3'
+        - 'softprops/action-gh-release@v3.0.4'
     '.github/workflows/renovate.yml':
         - 'actions/checkout@v7.0.1'
         - 'suzuki-shunsuke/github-action-renovate-config-validator@v2.4.1'
@@ -94,9 +94,9 @@ dependencies:
         commit: 'sha1-1df92335c6c70880e301926d46148aeb27de1912'
         owner_id: 48765237
         repo_id: 226392298
-    'softprops/action-gh-release@v3.0.3':
-        ref: 'v3.0.3'
-        commit: 'sha1-efb35369e0ad2afab669f228072c1b0d510eae64'
+    'softprops/action-gh-release@v3.0.4':
+        ref: 'v3.0.4'
+        commit: 'sha1-8a0cd651e5b2365bd640854a3fa5dfc70e4875f3'
         owner_id: 2242
         repo_id: 204253808
     'suzuki-shunsuke/github-action-renovate-config-validator@v2.4.1':
