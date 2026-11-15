@@ -6,7 +6,7 @@ workflows:
     '.github/workflows/linter.yml':
         - 'actions/checkout@v7.0.1'
         - 'reviewdog/action-actionlint@v1.81.1'
-        - 'reviewdog/action-hadolint@v1.55.0'
+        - 'reviewdog/action-hadolint@v1.56.0'
     '.github/workflows/recompute-package-resolved.yml':
         - 'actions/cache@v6.1.0'
         - 'actions/checkout@v7.0.1'
@@ -89,9 +89,9 @@ dependencies:
         commit: 'sha1-619a81ec64ff8c0211cd6146eb2b21e8f1d7f440'
         owner_id: 48765237
         repo_id: 385059686
-    'reviewdog/action-hadolint@v1.55.0':
-        ref: 'v1.55.0'
-        commit: 'sha1-1df92335c6c70880e301926d46148aeb27de1912'
+    'reviewdog/action-hadolint@v1.56.0':
+        ref: 'v1.56.0'
+        commit: 'sha1-a3bc84c51f4ddbcbc5b91d950d0b66c15c88b113'
         owner_id: 48765237
         repo_id: 226392298
     'softprops/action-gh-release@v3.0.4':
